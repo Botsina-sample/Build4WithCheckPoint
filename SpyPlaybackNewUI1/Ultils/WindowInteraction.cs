@@ -16,6 +16,10 @@ namespace SpyandPlaybackTestTool.Ultils
 
         private const int SW_MINIMIZE = 6;
 
+        /// <summary>
+        /// Focus the application and maximize size
+        /// </summary>
+        /// <param name="targetWindow"></param>
         public static void FocusWindow(Process targetWindow)
         {
             IntPtr hWnd = targetWindow.MainWindowHandle;
@@ -26,6 +30,10 @@ namespace SpyandPlaybackTestTool.Ultils
             }
         }
 
+        /// <summary>
+        /// Focus the application
+        /// </summary>
+        /// <param name="targetWindow"></param>
         public static void FocusWindowNormal(Process targetWindow)
         {
             IntPtr hWnd = targetWindow.MainWindowHandle;
@@ -36,6 +44,11 @@ namespace SpyandPlaybackTestTool.Ultils
             }
         }
 
+        /// <summary>
+        /// Get process name
+        /// </summary>
+        /// <param name="ProcessName"></param>
+        /// <returns></returns>
         public static Process GetProcess(string ProcessName)
         {
             try

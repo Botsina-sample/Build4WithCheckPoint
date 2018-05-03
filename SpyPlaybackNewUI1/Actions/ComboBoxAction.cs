@@ -5,23 +5,22 @@ namespace SpyandPlaybackTestTool.Actions
 {
     internal class ComboBoxAction : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             AutomationElement a = UiElement.AutomationElement;
-
-            //Console.WriteLine(a.Current.AutomationId);
 
             ExpandCollapsePattern expandCollapsePattern = a.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
             expandCollapsePattern.Expand();
             var components = a.FindAll(TreeScope.Subtree, Condition.TrueCondition);
 
-            var comboBoxEditItemCondition = new System.Windows.Automation.PropertyCondition(AutomationElement.ClassNameProperty, "ListBoxItem");
+            var comboBoxEditItemCondition = new PropertyCondition(AutomationElement.ClassNameProperty, "ListBoxItem");
             var listItems = a.FindAll(TreeScope.Subtree, comboBoxEditItemCondition);//It can only get one item in the list (the first one).
-            Console.WriteLine(listItems.Count.ToString());
+
+            foreach (AutomationElement a5 in listItems)
+            {
+                (a5.GetCurrentPattern(SelectionItemPattern.Pattern) as SelectionItemPattern).Select();
+            }
+
             switch (PlaybackObject.action)
             {
                 case "SetText":

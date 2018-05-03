@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpyandPlaybackTestTool.Actions
 {
     internal class TabItemAction : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             switch (PlaybackObject.action)
@@ -22,7 +14,7 @@ namespace SpyandPlaybackTestTool.Actions
                         if (UiElement.AutomationElement.Current.IsEnabled)
                         {
                             UiElement.AsTabItem().Click();
-                     
+
                             Result = true;
                         }
                         else
@@ -40,17 +32,17 @@ namespace SpyandPlaybackTestTool.Actions
                 case "IsSelected":
                     try
                     {
-                     
-                        if(UiElement.AsTabItem().IsSelected)
+                        if (UiElement.AsTabItem().IsSelected)
                         {
                             Result = true;
-                        } else
+                        }
+                        else
                         {
                             Result = false;
                             return;
                         }
-
-                    } catch(Exception)
+                    }
+                    catch (Exception)
                     {
                         Result = false;
                     }

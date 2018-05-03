@@ -11,82 +11,6 @@ namespace SpyandPlaybackTestTool.Actions
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
 
-        //public override void ExecuteCheckPoint()
-        //{
-        //    CpResult = new bool[4];
-        //    for (int i = 0; i < 4; i++)
-        //        CpResult[i] = false;
-        //    if (cpIsEmpty == true)
-        //    {
-        //        try
-        //        {
-        //            object a = UiElement.AsTextBox().Text;
-        //            object b = "";
-
-        //            if (a.Equals(b))
-        //                CpResult[0] = true;
-        //            else
-        //                CpResult[0] = false;
-        //        }
-        //        catch (Exception)
-        //        {
-        //            CpResult[0] = false;
-        //        }
-        //    }
-        //    if (cpIsReadOnly == true)
-        //    {
-        //        try
-        //        {
-        //            if (UiElement.AsTextBox().IsReadOnly)
-        //                CpResult[1] = true;
-        //            else
-        //                CpResult[1] = false;
-        //        }
-        //        catch (Exception)
-        //        {
-        //            CpResult[1] = false;
-        //        }
-        //    }
-
-        //    if (cpIsEqual==true)
-        //    {
-        //        try
-        //        {
-
-        //            string a = UiElement.AsTextBox().Text;
-        //            string b = this.expectedVal;
-
-        //            if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
-        //            {
-        //                a = "0";
-        //                b = a;
-        //            }
-
-        //            if (a.Equals(b))
-        //                CpResult[2] = true;
-        //            else
-        //                CpResult[2] = false;
-        //        }
-        //        catch (Exception)
-        //        {
-        //            CpResult[2] = false;
-        //        }
-        //    }
-        //    if (cpIsEnabled == true)
-        //    {
-        //        try
-        //        {
-        //            if (UiElement.AsTextBox().IsEnabled)
-        //                CpResult[3] = true;
-        //            else
-        //                CpResult[3] = false;
-        //        }
-        //        catch (Exception)
-        //        {
-        //            CpResult[3] = false;
-        //        }
-        //    }
-        //}
         public override void DoExecute()
         {
             switch (PlaybackObject.action)
@@ -95,6 +19,7 @@ namespace SpyandPlaybackTestTool.Actions
                     try
                     {
                         #region vinh's date validation
+
                         //if (UiElement.AsTextBox().Text == "__/__/____")
                         //{
                         //    if (PlaybackObject.text.Count() == 8)
@@ -126,7 +51,7 @@ namespace SpyandPlaybackTestTool.Actions
                         //else
                         //{
 
-                        #endregion
+                        #endregion vinh's date validation
 
                         bool CapsLockOn = (((ushort)GetKeyState(0x14)) & 0xffff) != 0;
                         if (CapsLockOn == true)
@@ -147,7 +72,6 @@ namespace SpyandPlaybackTestTool.Actions
                         {
                             Result = false;
                         }
-
                         else
                             Result = true;
                     }
@@ -157,84 +81,83 @@ namespace SpyandPlaybackTestTool.Actions
                         Result = false;
                     }
                     break;
-                #region actions
-                //case "IsEmpty":
 
-                //    try
-                //    {
-                //        object a = UiElement.AsTextBox().Text;
-                //        object b = "";
+                case "IsEmpty":
 
-                //        if (a.Equals(b))
-                //            Result = true;
-                //        else
-                //            Result = false;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        Result = false;
-                //    }
+                    try
+                    {
+                        object a = UiElement.AsTextBox().Text;
+                        object b = "";
 
-                //    break;
+                        if (a.Equals(b))
+                            Result = true;
+                        else
+                            Result = false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
 
-                //case "IsEqual":
+                    break;
 
-                //    try
-                //    {
+                case "IsEqual":
 
-                //        string a = UiElement.AsTextBox().Text;
-                //        string b = PlaybackObject.text;
+                    try
+                    {
+                        string a = UiElement.AsTextBox().Text;
+                        string b = PlaybackObject.text;
 
-                //        if(string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
-                //        {
-                //            a = "0";
-                //            b = a;
-                //        }
+                        if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
+                        {
+                            a = "0";
+                            b = a;
+                        }
 
-                //        if (a.Equals(b))
-                //            Result = true;
-                //        else
-                //            Result = false;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        Result = false;
-                //    }
+                        if (a.Equals(b))
+                            Result = true;
+                        else
+                            Result = false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
 
-                //    break;
+                    break;
 
-                //case "IsReadOnly":
+                case "IsReadOnly":
 
-                //    try
-                //    {
-                //        if (UiElement.AsTextBox().IsReadOnly)
-                //            Result = true;
-                //        else
-                //            Result = false;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        Result = false;
-                //    }
+                    try
+                    {
+                        if (UiElement.AsTextBox().IsReadOnly)
+                            Result = true;
+                        else
+                            Result = false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
 
-                //    break;
+                    break;
 
-                //case "IsEnabled":
+                case "IsEnabled":
 
-                //    try
-                //    {
-                //        if (UiElement.AsTextBox().IsEnabled)
-                //            Result = true;
-                //        else
-                //            Result = false;
-                //    }
-                //    catch (Exception)
-                //    {
-                //        Result = false;
-                //    }
+                    try
+                    {
+                        if (UiElement.AsTextBox().IsEnabled)
+                            Result = true;
+                        else
+                            Result = false;
+                    }
+                    catch (Exception)
+                    {
+                        Result = false;
+                    }
 
-                //    break;
-                #endregion 
+                    break;
+
                 default:
                     //Result = false;
                     //Thread.Sleep(2000);

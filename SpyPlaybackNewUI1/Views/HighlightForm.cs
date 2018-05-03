@@ -16,6 +16,8 @@ namespace SpyandPlaybackTestTool
 {
     public partial class HighlightForm : Form
     {
+        private static HighlightForm _instance;
+
         public string ProcessName { get; set; }//nhớ sửa lại bỏ vào AUT path
         private Gu.Wpf.UiAutomation.Application App;
         private IReadOnlyList<UiElement> ElementList;
@@ -27,6 +29,7 @@ namespace SpyandPlaybackTestTool
         private Process thisProc = Process.GetCurrentProcess();
 
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        public Process AUTPROC;
 
         #region UiElement Functions
 
@@ -46,6 +49,15 @@ namespace SpyandPlaybackTestTool
         {
             InitializeComponent();
             dataGridView1.RowHeadersVisible = false;
+        }
+
+        public static HighlightForm GetInstance()
+        {
+            if (_instance == null || (_instance.IsDisposed))
+            {
+                _instance = new HighlightForm();
+            }
+            return _instance;
         }
 
         public void spy()
@@ -89,6 +101,8 @@ namespace SpyandPlaybackTestTool
                 log.Info("SPY DONE OF HIGHLIGHT");
 
                 dataGridView1.AllowUserToAddRows = false;
+
+                comboBox1.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -96,6 +110,10 @@ namespace SpyandPlaybackTestTool
             }
         }
 
+        /// <summary>
+        /// Draw a rectangle outside UI component's border
+        /// </summary>
+        /// <param name="objectID"></param>
         public void highlight(int objectID)
         {
             var curtime = DateTime.Now;
@@ -104,8 +122,8 @@ namespace SpyandPlaybackTestTool
             {
                 log.Info("BEGIN HIGHLIGHT");
                 Process targetProcess = WindowInteraction.GetProcess(ProcessName);
-                DoSpy.GetMainWindow();
-                ElementList = DoSpy.SearchbyFramework("WPF");
+                GrabAUT.GetMainWindow();
+                ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 SpyObjectList = new SpyObject[ElementList.Count];
                 int SpyObjectIndex = 0;
@@ -165,15 +183,9 @@ namespace SpyandPlaybackTestTool
             }
         }
 
-        private void HighlightForm_Load(object sender, EventArgs e)
-        {
-            spy();
-
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-
-            dataGridView1.MultiSelect = false;
-        }
-
+        /// <summary>
+        /// Capture UI component to png file
+        /// </summary>
         private void captureIt()
         {
             var curtime = DateTime.Now.Second;
@@ -333,9 +345,48 @@ namespace SpyandPlaybackTestTool
             this.Show();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void HighlightForm_Load(object sender, EventArgs e)
         {
             spy();
+        }
+
+        private void HighlightForm_Activated(object sender, EventArgs e)
+        {
+            if (ProcessForm.isAttached.Equals(false))
+            {
+                ProcessForm.targetproc = null;
+                comboBox1.Enabled = false;
+                dataGridView1.Visible = false;
+                AUTPROC = null;
+                this.Close();
+                WindowInteraction.FocusWindowNormal(thisProc);
+            }
+            else if (ProcessForm.isAttached.Equals(true))
+            {
+                AUTPROC = WindowInteraction.GetProcess(ProcessForm.targetproc);
+                comboBox1.Enabled = true;
+                dataGridView1.Visible = true;
+
+                timer1.Start();
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                if (AUTPROC.HasExited)
+                {
+                    timer1.Stop();
+                    comboBox1.Enabled = false;
+                    dataGridView1.Visible = false;
+                    ProcessForm.targetproc = null;
+                    ProcessForm.isAttached = false;
+                    AUTPROC = null;
+                }
+            }
+            catch
+            { }
         }
     }
 }

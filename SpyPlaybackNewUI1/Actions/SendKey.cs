@@ -5,10 +5,6 @@ namespace SpyandPlaybackTestTool.Actions
 {
     internal class SendKey : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             try
