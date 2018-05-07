@@ -62,13 +62,7 @@
 //}
 #endregion
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 using Gu.Wpf.UiAutomation;
-=======
->>>>>>> 2ce5e3a5c1465a69dec9e480c64d73a27be85ae8
-=======
->>>>>>> 2ce5e3a5c1465a69dec9e480c64d73a27be85ae8
 using System;
 using System.Windows.Automation;
 
@@ -106,8 +100,6 @@ namespace SpyandPlaybackTestTool.Actions
                 case "Select":
                     try
                     {
-<<<<<<< HEAD
-<<<<<<< HEAD
                         //AutomationElement a = UiElement.AutomationElement;
                         //ExpandCollapsePattern expandCollapsePattern = a.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
                         //expandCollapsePattern.Expand();
@@ -116,14 +108,6 @@ namespace SpyandPlaybackTestTool.Actions
                         //expandCollapsePattern.Collapse();
                         UiElement.AsComboBox().Select(PlaybackObject.itemIndex);
                         UiElement.AsComboBox().Collapse();
-=======
-                        UiElement.AsComboBox().SelectedIndex = PlaybackObject.itemIndex;
-                        //UiElement.AsComboBox().Collapse();
->>>>>>> 2ce5e3a5c1465a69dec9e480c64d73a27be85ae8
-=======
-                        UiElement.AsComboBox().SelectedIndex = PlaybackObject.itemIndex;
-                        //UiElement.AsComboBox().Collapse();
->>>>>>> 2ce5e3a5c1465a69dec9e480c64d73a27be85ae8
                         Result = true;
                     }
                     catch (Exception)

@@ -2706,33 +2706,5 @@ namespace SpyandPlaybackTestTool
                 clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
             }
         }
-
-        private void btnDeleteScripts_Click(object sender, EventArgs e)
-        {
-            if (clbTestScriptList.SelectedItems.Count <= 0)
-            {
-                return;
-            }
-            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-            if (dialogResult == DialogResult.Yes)
-            {
-                scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
-                clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
-            }
-        }
-
-        private void btnDeleteScripts_Click(object sender, EventArgs e)
-        {
-            if (clbTestScriptList.SelectedItems.Count <= 0)
-            {
-                return;
-            }
-            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-            if (dialogResult == DialogResult.Yes)
-            {
-                scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
-                clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
-            }
-        }
     }
 }

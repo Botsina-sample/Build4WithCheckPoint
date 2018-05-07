@@ -65,8 +65,6 @@ C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug
 C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CopyComplete
 C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
 C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
-<<<<<<< HEAD
-<<<<<<< HEAD
 C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe.config
 C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe
 C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.pdb
@@ -89,7 +87,3 @@ C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxC
 C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CoreCompileInputs.cache
 C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
 C:\Users\Kiet\Desktop\Build 4.0.1-05072018\Build4WithCheckPoint-CompleteTextBoxCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
-=======
->>>>>>> 2ce5e3a5c1465a69dec9e480c64d73a27be85ae8
-=======
->>>>>>> 2ce5e3a5c1465a69dec9e480c64d73a27be85ae8
