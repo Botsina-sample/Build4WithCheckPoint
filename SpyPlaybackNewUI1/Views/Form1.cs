@@ -769,15 +769,6 @@ namespace SpyandPlaybackTestTool
                             {
                                 PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
                             }
-
-                            if (PlaybackObjectList[pbindex].type == "ComboBox")
-                            {
-                                PlaybackObjectList[pbindex].itemIndex = 0;
-                            }
-                            else
-                            {
-                                PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
-                            }
                         }
                     }
                     else if (PlaybackObjectList[pbindex].action == "SetText" ||
