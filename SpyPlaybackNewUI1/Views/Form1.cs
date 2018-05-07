@@ -123,14 +123,12 @@ namespace SpyandPlaybackTestTool
             (dataGridView1.Columns[0] as DataGridViewCheckBoxColumn).TrueValue = true;
             (dataGridView1.Columns[0] as DataGridViewCheckBoxColumn).FalseValue = false;
 
-            //dataGridView2.AllowUserToResizeRows = false;
+
             foreach (DataGridViewColumn col in dataGridView2.Columns)
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.RowHeadersVisible = false;
-            //dataGridView2.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            //dataGridView2.Columns[1].Visible = false;
-         
+
 
             redcircleTip.Visible = true;
             greencircleTip.Visible = false;
@@ -138,10 +136,8 @@ namespace SpyandPlaybackTestTool
             textBox1.Enabled = false;
             comboBox1.Enabled = false;
 
-            //this.MaximumSize = new Size(XX, YY);
             this.MinimumSize = new Size(1280, 720);
 
-            //pf.Show();
         }
 
         private void btnAttach_Click(object sender, EventArgs e)
