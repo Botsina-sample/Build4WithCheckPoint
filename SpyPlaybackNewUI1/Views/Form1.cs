@@ -161,7 +161,7 @@ namespace SpyandPlaybackTestTool
             else if (ProcessForm.isAttached.Equals(true))
             {
                 AUTPROC = WindowInteraction.GetProcess(ProcessForm.targetproc);
-                WindowInteraction.FocusWindow(thisProc);
+                WindowInteraction.FocusWindowNormal(thisProc);
                 toolStripStatusLabel1.Text = ProcessForm.targetproc;
                 redcircleTip.Visible = false;
                 greencircleTip.Visible = true;
@@ -204,9 +204,7 @@ namespace SpyandPlaybackTestTool
         // Spy Button
         private void button1_Click(object sender, EventArgs e)
         {
-            Th_SPY = new Thread(() => Spy("normal"));
-            Th_SPY.Start();
-            Th_SPY.Join();
+            Spy("normal");
         }
 
         /// <summary>
@@ -291,7 +289,7 @@ namespace SpyandPlaybackTestTool
 
                 textBox1.Enabled = true;
                 comboBox1.Enabled = true;
-                //WindowInteraction.FocusWindow(thisProc);
+                //WindowInteraction.FocusWindowNormal(thisProc);
                 dataGridView1.AllowUserToAddRows = false;
                 textBox1.Text = "";
                 comboBox1.SelectedIndex = 0;
@@ -300,7 +298,7 @@ namespace SpyandPlaybackTestTool
                 //CaptureToImage.DoCapture(ProcessName);
                 if (mode == "normal")
                 {
-                    WindowInteraction.FocusWindow(thisProc);
+                    WindowInteraction.FocusWindowNormal(thisProc);
                 }
                 if (mode == "respy")
                 {
@@ -314,28 +312,28 @@ namespace SpyandPlaybackTestTool
                     log.Error(DateTime.Now + " - AUT NOT FOUND");
                     ConsolePanelPush.AppendText(DateTime.Now + " - AUT NOT FOUND");
                     ConsolePanelPush.AppendText(Environment.NewLine);
-                    WindowInteraction.FocusWindow(thisProc);
+                    WindowInteraction.FocusWindowNormal(thisProc);
                 }
                 else if (ex.HResult == excode.NOT_WPF_PROGRAM)
                 {
                     log.Error("CANNOT SPY THIS PROGRAM");
                     ConsolePanelPush.AppendText(DateTime.Now + " - CANNOT SPY THIS PROGRAM");
                     ConsolePanelPush.AppendText(Environment.NewLine);
-                    WindowInteraction.FocusWindow(thisProc);
+                    WindowInteraction.FocusWindowNormal(thisProc);
                 }
                 else if (ex.HResult == excode.OBJECT_NULL)
                 {
                     log.Error("AUT NOT FOUND");
                     ConsolePanelPush.AppendText(DateTime.Now + " - AUT NOT FOUND" + Environment.NewLine);
                     // ConsolePanelPush.AppendText();
-                    WindowInteraction.FocusWindow(thisProc);
+                    WindowInteraction.FocusWindowNormal(thisProc);
                 }
                 else
                 {
                     log.Error("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
                     ConsolePanelPush.AppendText("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
                     ConsolePanelPush.AppendText(Environment.NewLine);
-                    WindowInteraction.FocusWindow(thisProc);
+                    WindowInteraction.FocusWindowNormal(thisProc);
                 }
             }
         }
@@ -387,7 +385,7 @@ namespace SpyandPlaybackTestTool
             ConsolePanelPush.AppendText(DateTime.Now + " - " + "DONE PLAYBACK");
             log.Info("DONE PLAYBACK");
             ConsolePanelPush.AppendText(Environment.NewLine);
-            //WindowInteraction.FocusWindow(thisProc);
+            //WindowInteraction.FocusWindowNormal(thisProc);
         }
 
         /// <summary>
@@ -412,7 +410,7 @@ namespace SpyandPlaybackTestTool
                 {
                     if (stop_playback.Equals(true))
                     {
-                        WindowInteraction.FocusWindow(thisProc);
+                        WindowInteraction.FocusWindowNormal(thisProc);
                         return;
                     }
 
@@ -624,7 +622,7 @@ namespace SpyandPlaybackTestTool
                     pf.Hide();
                     playbackstatus = false;
                     playbackprogress = 100;
-                    WindowInteraction.FocusWindow(thisProc);
+                    WindowInteraction.FocusWindowNormal(thisProc);
                 }
             }
             catch (Exception ex)
@@ -677,7 +675,7 @@ namespace SpyandPlaybackTestTool
                     ConsolePanelPush.AppendText(DateTime.Now + " - " + ex.HResult + " --- " + ex.Message);
                     ConsolePanelPush.AppendText(Environment.NewLine);
                 }
-                WindowInteraction.FocusWindow(thisProc);
+                WindowInteraction.FocusWindowNormal(thisProc);
             }
         }
 
@@ -792,7 +790,7 @@ namespace SpyandPlaybackTestTool
                     if (stop_playback.Equals(true))
                     {
                         pf.Hide();
-                        WindowInteraction.FocusWindow(thisProc);
+                        WindowInteraction.FocusWindowNormal(thisProc);
 
                         return;
                     }
@@ -984,7 +982,7 @@ namespace SpyandPlaybackTestTool
                 ConsolePanelPush.AppendText(Environment.NewLine);
 
                 pf.Hide();
-                WindowInteraction.FocusWindow(thisProc);
+                WindowInteraction.FocusWindowNormal(thisProc);
                 Th_PBTSTEP.Join();
             }
             catch (Exception ex)
@@ -1030,7 +1028,7 @@ namespace SpyandPlaybackTestTool
                     ConsolePanelPush.AppendText(Environment.NewLine);
                 }
             }
-            WindowInteraction.FocusWindow(thisProc);
+            WindowInteraction.FocusWindowNormal(thisProc);
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -1922,7 +1920,7 @@ namespace SpyandPlaybackTestTool
             {
                 ConsolePanelPush.AppendText("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
                 ConsolePanelPush.AppendText(Environment.NewLine);
-                WindowInteraction.FocusWindow(thisProc);
+                WindowInteraction.FocusWindowNormal(thisProc);
                 System.Windows.Forms.MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -2202,7 +2200,7 @@ namespace SpyandPlaybackTestTool
                     }
                     else
                     {
-                        WindowInteraction.FocusWindow(thisProc);
+                        WindowInteraction.FocusWindowNormal(thisProc);
                         ConsolePanelPush.AppendText(DateTime.Now + " - " + "CANCEL SCENARIO PLAYBACK" + Environment.NewLine);
                         return;
                     }
@@ -2218,7 +2216,7 @@ namespace SpyandPlaybackTestTool
 
                 ScenarioStatus = false;
 
-                WindowInteraction.FocusWindow(thisProc);
+                WindowInteraction.FocusWindowNormal(thisProc);
 
                 pf.Hide();
             }

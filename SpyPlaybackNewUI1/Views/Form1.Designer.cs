@@ -70,6 +70,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnPlaybackScenario = new System.Windows.Forms.Button();
             this.btnQuickSave = new System.Windows.Forms.Button();
+            this.btnDeleteScripts = new System.Windows.Forms.Button();
             this.btnMoveUpCLB = new System.Windows.Forms.Button();
             this.btnMoveDownCLB = new System.Windows.Forms.Button();
             this.clbTestScriptList = new System.Windows.Forms.CheckedListBox();
@@ -104,7 +105,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.btnDeleteScripts = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -610,6 +610,18 @@
             this.btnQuickSave.UseVisualStyleBackColor = true;
             this.btnQuickSave.Click += new System.EventHandler(this.btnQuickSave_Click);
             // 
+            // btnDeleteScripts
+            // 
+            this.btnDeleteScripts.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteScripts.BackgroundImage")));
+            this.btnDeleteScripts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDeleteScripts.Location = new System.Drawing.Point(85, 1);
+            this.btnDeleteScripts.Margin = new System.Windows.Forms.Padding(1);
+            this.btnDeleteScripts.Name = "btnDeleteScripts";
+            this.btnDeleteScripts.Size = new System.Drawing.Size(40, 40);
+            this.btnDeleteScripts.TabIndex = 30;
+            this.btnDeleteScripts.UseVisualStyleBackColor = true;
+            this.btnDeleteScripts.Click += new System.EventHandler(this.btnDeleteScripts_Click);
+            // 
             // btnMoveUpCLB
             // 
             this.btnMoveUpCLB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -909,7 +921,7 @@
             this.rtxtScript.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtxtScript.Location = new System.Drawing.Point(6, 64);
             this.rtxtScript.Name = "rtxtScript";
-            this.rtxtScript.Size = new System.Drawing.Size(611, 369);
+            this.rtxtScript.Size = new System.Drawing.Size(611, 367);
             this.rtxtScript.TabIndex = 0;
             this.rtxtScript.Text = "";
             // 
@@ -967,18 +979,6 @@
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // btnDeleteScripts
-            // 
-            this.btnDeleteScripts.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteScripts.BackgroundImage")));
-            this.btnDeleteScripts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnDeleteScripts.Location = new System.Drawing.Point(85, 1);
-            this.btnDeleteScripts.Margin = new System.Windows.Forms.Padding(1);
-            this.btnDeleteScripts.Name = "btnDeleteScripts";
-            this.btnDeleteScripts.Size = new System.Drawing.Size(40, 40);
-            this.btnDeleteScripts.TabIndex = 30;
-            this.btnDeleteScripts.UseVisualStyleBackColor = true;
-            this.btnDeleteScripts.Click += new System.EventHandler(this.btnDeleteScripts_Click);
             // 
             // Form1
             // 

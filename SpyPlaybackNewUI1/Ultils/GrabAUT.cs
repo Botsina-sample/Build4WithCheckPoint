@@ -58,7 +58,7 @@ namespace SpyandPlaybackTestTool.Ultils
             }
             catch
             {
-                //T1.Join();
+       
                 throw new Exception("This process cannot be attached");
             }
         }
