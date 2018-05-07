@@ -12,15 +12,8 @@ namespace SpyandPlaybackTestTool.Ultils
     {
         public static Gu.Wpf.UiAutomation.Application App { get; set; }
         public static Gu.Wpf.UiAutomation.Window MainWindow { get; set; }
-        public static Process thisProc = Process.GetCurrentProcess();
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public static string theMessage { get; set; }
-
-
-
-
-
-
 
         #region UiElement Functions
 
@@ -34,6 +27,7 @@ namespace SpyandPlaybackTestTool.Ultils
             try
             {
                 Process AttachProcess = WindowInteraction.GetProcess(ProcessForm.targetproc);
+                
                 App = Application.Attach(AttachProcess.Id);
                 MainWindow = App.MainWindow;
 
@@ -41,6 +35,7 @@ namespace SpyandPlaybackTestTool.Ultils
             catch
             {
                 throw new Exception("Cannot found MainWindow");
+                //System.Windows.Forms.MessageBox.Show("CANNOT ATTACH THIS PROCESS");
             }
            
         }

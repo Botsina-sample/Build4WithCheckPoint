@@ -7,10 +7,6 @@ namespace SpyandPlaybackTestTool.Actions
 {
     internal class ComboBoxEditAction : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             AutomationElement a = UiElement.AutomationElement;
@@ -22,7 +18,7 @@ namespace SpyandPlaybackTestTool.Actions
                 case "SetText":
                     try
                     {
-                        var Editor = a.FindFirst(TreeScope.Subtree, new System.Windows.Automation.PropertyCondition(AutomationElement.AutomationIdProperty, "PART_Editor"));
+                        var Editor = a.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.AutomationIdProperty, "PART_Editor"));
                         ((ValuePattern)Editor.GetCurrentPattern(ValuePattern.Pattern)).SetValue(PlaybackObject.text);
                         expandCollapsePattern.Collapse();
                         Result = true;
@@ -37,9 +33,9 @@ namespace SpyandPlaybackTestTool.Actions
                 case "Select":
                     try
                     {
-                        if (cbxEditItems[PlaybackObject.itemIndex].AutomationElement.FindFirst(TreeScope.Subtree, new System.Windows.Automation.PropertyCondition(AutomationElement.ClassNameProperty, "CheckEdit")) != null)
+                        if (cbxEditItems[PlaybackObject.itemIndex].AutomationElement.FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.ClassNameProperty, "CheckEdit")) != null)
                         {
-                            var checkBox = cbxEditItems[PlaybackObject.itemIndex].FindFirst(TreeScope.Subtree, new System.Windows.Automation.PropertyCondition(AutomationElement.ClassNameProperty, "CheckEdit"));
+                            var checkBox = cbxEditItems[PlaybackObject.itemIndex].FindFirst(TreeScope.Subtree, new PropertyCondition(AutomationElement.ClassNameProperty, "CheckEdit"));
                             checkBox.AsCheckBox().Click();
                             SendKeys.SendWait("{ENTER}");
                         }

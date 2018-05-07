@@ -4,10 +4,6 @@ namespace SpyandPlaybackTestTool.Actions
 {
     internal class ButtonAction : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             switch (PlaybackObject.action)

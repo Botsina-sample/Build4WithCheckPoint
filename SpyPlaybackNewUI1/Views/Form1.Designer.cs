@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -71,6 +70,7 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnPlaybackScenario = new System.Windows.Forms.Button();
             this.btnQuickSave = new System.Windows.Forms.Button();
+            this.btnDeleteScripts = new System.Windows.Forms.Button();
             this.btnMoveUpCLB = new System.Windows.Forms.Button();
             this.btnMoveDownCLB = new System.Windows.Forms.Button();
             this.clbTestScriptList = new System.Windows.Forms.CheckedListBox();
@@ -85,6 +85,14 @@
             this.btnMoveUp = new System.Windows.Forms.Button();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.TestSteps = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Index1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutomationId1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Actions = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.InputValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CheckPoint = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tpgPlaybackScript = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnPlaybackTestScript = new System.Windows.Forms.Button();
@@ -96,16 +104,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
-            this.TestSteps = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Index1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutomationId1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Actions = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.InputValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SetCpBtnColumn = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.SaveCpColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -196,15 +195,16 @@
             // InspectorToolStripMenuItem
             // 
             this.InspectorToolStripMenuItem.Name = "InspectorToolStripMenuItem";
-            this.InspectorToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.InspectorToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.InspectorToolStripMenuItem.Text = "Inspector";
             this.InspectorToolStripMenuItem.Click += new System.EventHandler(this.InspectorToolStripMenuItem_Click);
             // 
             // viewLogsToolStripMenuItem
             // 
             this.viewLogsToolStripMenuItem.Name = "viewLogsToolStripMenuItem";
-            this.viewLogsToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.viewLogsToolStripMenuItem.Text = "View logs";
+            this.viewLogsToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.viewLogsToolStripMenuItem.Text = "View Logs";
+            this.viewLogsToolStripMenuItem.Click += new System.EventHandler(this.viewLogsToolStripMenuItem_Click);
             // 
             // helpsToolStripMenuItem
             // 
@@ -246,7 +246,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(395, 82);
+            this.groupBox1.Size = new System.Drawing.Size(446, 82);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Spy";
@@ -263,6 +263,7 @@
             this.btnAttach.TabIndex = 9;
             this.btnAttach.UseVisualStyleBackColor = false;
             this.btnAttach.Click += new System.EventHandler(this.btnAttach_Click);
+            this.btnAttach.MouseEnter += new System.EventHandler(this.btnAttach_MouseEnter);
             // 
             // btnAdd
             // 
@@ -274,6 +275,7 @@
             this.btnAdd.TabIndex = 4;
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.btnAdd.MouseEnter += new System.EventHandler(this.btnAdd_MouseEnter);
             // 
             // button1
             // 
@@ -285,6 +287,7 @@
             this.button1.TabIndex = 2;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.MouseEnter += new System.EventHandler(this.button1_MouseEnter);
             // 
             // comboBox1
             // 
@@ -296,6 +299,9 @@
             "All",
             "Interactive Controls",
             "TextBox",
+            "CheckBox",
+            "TabItem",
+            "RichTextBox",
             "Button",
             "RadioButton",
             "ComboBox",
@@ -303,7 +309,7 @@
             "DataGrid"});
             this.comboBox1.Location = new System.Drawing.Point(244, 50);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(148, 21);
+            this.comboBox1.Size = new System.Drawing.Size(198, 21);
             this.comboBox1.TabIndex = 6;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged_1);
             // 
@@ -313,7 +319,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(244, 16);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(148, 22);
+            this.textBox1.Size = new System.Drawing.Size(198, 22);
             this.textBox1.TabIndex = 5;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
             // 
@@ -421,7 +427,7 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer4);
             this.splitContainer3.Size = new System.Drawing.Size(1306, 500);
-            this.splitContainer3.SplitterDistance = 395;
+            this.splitContainer3.SplitterDistance = 446;
             this.splitContainer3.TabIndex = 0;
             // 
             // splitContainer5
@@ -440,7 +446,7 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.groupBox5);
-            this.splitContainer5.Size = new System.Drawing.Size(395, 500);
+            this.splitContainer5.Size = new System.Drawing.Size(446, 500);
             this.splitContainer5.SplitterDistance = 82;
             this.splitContainer5.TabIndex = 16;
             // 
@@ -450,7 +456,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(395, 414);
+            this.groupBox5.Size = new System.Drawing.Size(446, 414);
             this.groupBox5.TabIndex = 0;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Spy Object List";
@@ -465,9 +471,11 @@
             this.Names,
             this.Type});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(3, 18);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(389, 393);
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(440, 393);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
@@ -476,10 +484,12 @@
             this.Select.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Select.HeaderText = "Select";
             this.Select.Name = "Select";
+            this.Select.ReadOnly = true;
             this.Select.Width = 43;
             // 
             // Index
             // 
+            this.Index.FillWeight = 59.71831F;
             this.Index.HeaderText = "Index";
             this.Index.Name = "Index";
             this.Index.ReadOnly = true;
@@ -488,20 +498,23 @@
             // AutomationId
             // 
             this.AutomationId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.AutomationId.FillWeight = 110.0698F;
             this.AutomationId.HeaderText = "AutomationId";
             this.AutomationId.Name = "AutomationId";
             this.AutomationId.ReadOnly = true;
             // 
             // Names
             // 
+            this.Names.FillWeight = 138.0625F;
             this.Names.HeaderText = "Names";
             this.Names.Name = "Names";
             this.Names.ReadOnly = true;
-            this.Names.Width = 120;
+            this.Names.Width = 122;
             // 
             // Type
             // 
             this.Type.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Type.FillWeight = 92.14939F;
             this.Type.HeaderText = "Type";
             this.Type.Name = "Type";
             this.Type.ReadOnly = true;
@@ -521,8 +534,8 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer4.Size = new System.Drawing.Size(907, 500);
-            this.splitContainer4.SplitterDistance = 179;
+            this.splitContainer4.Size = new System.Drawing.Size(856, 500);
+            this.splitContainer4.SplitterDistance = 219;
             this.splitContainer4.TabIndex = 0;
             // 
             // groupBox6
@@ -531,7 +544,7 @@
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(0, 0);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(179, 500);
+            this.groupBox6.Size = new System.Drawing.Size(219, 500);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Scenario";
@@ -552,7 +565,7 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.clbTestScriptList);
-            this.splitContainer6.Size = new System.Drawing.Size(173, 479);
+            this.splitContainer6.Size = new System.Drawing.Size(213, 479);
             this.splitContainer6.SplitterDistance = 42;
             this.splitContainer6.TabIndex = 0;
             // 
@@ -560,12 +573,13 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnPlaybackScenario);
             this.flowLayoutPanel1.Controls.Add(this.btnQuickSave);
+            this.flowLayoutPanel1.Controls.Add(this.btnDeleteScripts);
             this.flowLayoutPanel1.Controls.Add(this.btnMoveUpCLB);
             this.flowLayoutPanel1.Controls.Add(this.btnMoveDownCLB);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(173, 42);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(213, 42);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnPlaybackScenario
@@ -596,13 +610,25 @@
             this.btnQuickSave.UseVisualStyleBackColor = true;
             this.btnQuickSave.Click += new System.EventHandler(this.btnQuickSave_Click);
             // 
+            // btnDeleteScripts
+            // 
+            this.btnDeleteScripts.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteScripts.BackgroundImage")));
+            this.btnDeleteScripts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDeleteScripts.Location = new System.Drawing.Point(85, 1);
+            this.btnDeleteScripts.Margin = new System.Windows.Forms.Padding(1);
+            this.btnDeleteScripts.Name = "btnDeleteScripts";
+            this.btnDeleteScripts.Size = new System.Drawing.Size(40, 40);
+            this.btnDeleteScripts.TabIndex = 30;
+            this.btnDeleteScripts.UseVisualStyleBackColor = true;
+            this.btnDeleteScripts.Click += new System.EventHandler(this.btnDeleteScripts_Click);
+            // 
             // btnMoveUpCLB
             // 
             this.btnMoveUpCLB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMoveUpCLB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveUpCLB.BackgroundImage")));
             this.btnMoveUpCLB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnMoveUpCLB.Location = new System.Drawing.Point(85, 1);
+            this.btnMoveUpCLB.Location = new System.Drawing.Point(127, 1);
             this.btnMoveUpCLB.Margin = new System.Windows.Forms.Padding(1);
             this.btnMoveUpCLB.Name = "btnMoveUpCLB";
             this.btnMoveUpCLB.Size = new System.Drawing.Size(40, 40);
@@ -616,7 +642,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMoveDownCLB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveDownCLB.BackgroundImage")));
             this.btnMoveDownCLB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnMoveDownCLB.Location = new System.Drawing.Point(127, 1);
+            this.btnMoveDownCLB.Location = new System.Drawing.Point(169, 1);
             this.btnMoveDownCLB.Margin = new System.Windows.Forms.Padding(1);
             this.btnMoveDownCLB.Name = "btnMoveDownCLB";
             this.btnMoveDownCLB.Size = new System.Drawing.Size(40, 40);
@@ -627,14 +653,16 @@
             // clbTestScriptList
             // 
             this.clbTestScriptList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.clbTestScriptList.CheckOnClick = true;
             this.clbTestScriptList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clbTestScriptList.FormattingEnabled = true;
             this.clbTestScriptList.HorizontalScrollbar = true;
             this.clbTestScriptList.Location = new System.Drawing.Point(0, 0);
             this.clbTestScriptList.Margin = new System.Windows.Forms.Padding(0);
             this.clbTestScriptList.Name = "clbTestScriptList";
-            this.clbTestScriptList.Size = new System.Drawing.Size(173, 433);
+            this.clbTestScriptList.Size = new System.Drawing.Size(213, 433);
             this.clbTestScriptList.TabIndex = 27;
+            this.clbTestScriptList.ThreeDCheckBoxes = true;
             this.clbTestScriptList.SelectedIndexChanged += new System.EventHandler(this.clbTestScriptList_SelectedIndexChanged_1);
             this.clbTestScriptList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.clbTestScriptList_KeyDown);
             // 
@@ -644,7 +672,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(724, 500);
+            this.groupBox4.Size = new System.Drawing.Size(633, 500);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Playback";
@@ -657,9 +685,8 @@
             this.tctrlPlayback.Location = new System.Drawing.Point(3, 18);
             this.tctrlPlayback.Name = "tctrlPlayback";
             this.tctrlPlayback.SelectedIndex = 0;
-            this.tctrlPlayback.Size = new System.Drawing.Size(718, 479);
+            this.tctrlPlayback.Size = new System.Drawing.Size(627, 479);
             this.tctrlPlayback.TabIndex = 16;
-            this.tctrlPlayback.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl1_Selected);
             // 
             // tpgPlaybackTable
             // 
@@ -668,7 +695,7 @@
             this.tpgPlaybackTable.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackTable.Name = "tpgPlaybackTable";
             this.tpgPlaybackTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackTable.Size = new System.Drawing.Size(710, 453);
+            this.tpgPlaybackTable.Size = new System.Drawing.Size(619, 453);
             this.tpgPlaybackTable.TabIndex = 0;
             this.tpgPlaybackTable.Text = "Playback Table";
             this.tpgPlaybackTable.UseVisualStyleBackColor = true;
@@ -696,6 +723,7 @@
             this.btnPlaybackTestSteps.TabIndex = 3;
             this.btnPlaybackTestSteps.UseVisualStyleBackColor = true;
             this.btnPlaybackTestSteps.Click += new System.EventHandler(this.btnPlaybackTestSteps_Click);
+            this.btnPlaybackTestSteps.MouseEnter += new System.EventHandler(this.btnPlaybackTestSteps_MouseEnter);
             // 
             // btnCreateTestScript
             // 
@@ -707,6 +735,7 @@
             this.btnCreateTestScript.TabIndex = 4;
             this.btnCreateTestScript.UseVisualStyleBackColor = true;
             this.btnCreateTestScript.Click += new System.EventHandler(this.btnCreateTestScript_Click);
+            this.btnCreateTestScript.MouseEnter += new System.EventHandler(this.btnCreateTestScript_MouseEnter);
             // 
             // btnSendKeyorWaitEnable
             // 
@@ -718,6 +747,7 @@
             this.btnSendKeyorWaitEnable.TabIndex = 7;
             this.btnSendKeyorWaitEnable.UseVisualStyleBackColor = true;
             this.btnSendKeyorWaitEnable.Click += new System.EventHandler(this.btnSendKeyorWaitEnable_Click);
+            this.btnSendKeyorWaitEnable.MouseEnter += new System.EventHandler(this.btnSendKeyorWaitEnable_MouseEnter);
             // 
             // btnRemove
             // 
@@ -729,6 +759,7 @@
             this.btnRemove.TabIndex = 5;
             this.btnRemove.UseVisualStyleBackColor = true;
             this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            this.btnRemove.MouseEnter += new System.EventHandler(this.btnRemove_MouseEnter);
             // 
             // btnMoveUp
             // 
@@ -741,6 +772,7 @@
             this.btnMoveUp.TabIndex = 5;
             this.btnMoveUp.UseVisualStyleBackColor = true;
             this.btnMoveUp.Click += new System.EventHandler(this.btnMoveUp_Click);
+            this.btnMoveUp.MouseEnter += new System.EventHandler(this.btnMoveUp_MouseEnter);
             // 
             // btnMoveDown
             // 
@@ -753,9 +785,11 @@
             this.btnMoveDown.TabIndex = 6;
             this.btnMoveDown.UseVisualStyleBackColor = true;
             this.btnMoveDown.Click += new System.EventHandler(this.btnMoveDown_Click);
+            this.btnMoveDown.MouseEnter += new System.EventHandler(this.btnMoveDown_MouseEnter);
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AllowDrop = true;
             this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -768,16 +802,72 @@
             this.Type1,
             this.Actions,
             this.InputValue,
-            this.SetCpBtnColumn,
-            this.SaveCpColumn});
+            this.CheckPoint});
             this.dataGridView2.Location = new System.Drawing.Point(6, 64);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(698, 382);
+            this.dataGridView2.Size = new System.Drawing.Size(607, 382);
             this.dataGridView2.TabIndex = 1;
-            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick_1);
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
+            this.dataGridView2.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView2_CellValidating);
+            this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
+            this.dataGridView2.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridView2_UserDeletedRow);
+            this.dataGridView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView2_DragDrop);
+            this.dataGridView2.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView2_DragOver);
             this.dataGridView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView2_KeyDown);
+            this.dataGridView2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView2_MouseDown);
+            this.dataGridView2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView2_MouseMove);
+            // 
+            // TestSteps
+            // 
+            this.TestSteps.HeaderText = "Test Steps";
+            this.TestSteps.Name = "TestSteps";
+            // 
+            // Index1
+            // 
+            this.Index1.HeaderText = "Index";
+            this.Index1.Name = "Index1";
+            this.Index1.ReadOnly = true;
+            // 
+            // AutomationId1
+            // 
+            this.AutomationId1.HeaderText = "AutomationId";
+            this.AutomationId1.Name = "AutomationId1";
+            this.AutomationId1.ReadOnly = true;
+            // 
+            // Name1
+            // 
+            this.Name1.HeaderText = "Name";
+            this.Name1.Name = "Name1";
+            this.Name1.ReadOnly = true;
+            // 
+            // Type1
+            // 
+            this.Type1.HeaderText = "Type";
+            this.Type1.Name = "Type1";
+            this.Type1.ReadOnly = true;
+            // 
+            // Actions
+            // 
+            this.Actions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Actions.HeaderText = "Actions";
+            this.Actions.Name = "Actions";
+            // 
+            // InputValue
+            // 
+            this.InputValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.InputValue.HeaderText = "Input Value";
+            this.InputValue.Name = "InputValue";
+            // 
+            // CheckPoint
+            // 
+            this.CheckPoint.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.CheckPoint.HeaderText = "CheckPoint";
+            this.CheckPoint.MinimumWidth = 50;
+            this.CheckPoint.Name = "CheckPoint";
+            this.CheckPoint.Text = "";
+            this.CheckPoint.Width = 71;
             // 
             // tpgPlaybackScript
             // 
@@ -786,7 +876,7 @@
             this.tpgPlaybackScript.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackScript.Name = "tpgPlaybackScript";
             this.tpgPlaybackScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackScript.Size = new System.Drawing.Size(710, 453);
+            this.tpgPlaybackScript.Size = new System.Drawing.Size(619, 453);
             this.tpgPlaybackScript.TabIndex = 1;
             this.tpgPlaybackScript.Text = "Playback Script";
             this.tpgPlaybackScript.UseVisualStyleBackColor = true;
@@ -797,7 +887,7 @@
             this.flowLayoutPanel3.Controls.Add(this.btnCreateTestSteps);
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 6);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(695, 55);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(701, 55);
             this.flowLayoutPanel3.TabIndex = 12;
             // 
             // btnPlaybackTestScript
@@ -831,7 +921,7 @@
             this.rtxtScript.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtxtScript.Location = new System.Drawing.Point(6, 64);
             this.rtxtScript.Name = "rtxtScript";
-            this.rtxtScript.Size = new System.Drawing.Size(698, 373);
+            this.rtxtScript.Size = new System.Drawing.Size(611, 367);
             this.rtxtScript.TabIndex = 0;
             this.rtxtScript.Text = "";
             // 
@@ -890,68 +980,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // timer2
-            // 
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // TestSteps
-            // 
-            this.TestSteps.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.TestSteps.HeaderText = "Test Steps";
-            this.TestSteps.Name = "TestSteps";
-            this.TestSteps.Width = 82;
-            // 
-            // Index1
-            // 
-            this.Index1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Index1.HeaderText = "Index";
-            this.Index1.Name = "Index1";
-            this.Index1.Width = 60;
-            // 
-            // AutomationId1
-            // 
-            this.AutomationId1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.AutomationId1.HeaderText = "AutomationId";
-            this.AutomationId1.Name = "AutomationId1";
-            // 
-            // Name1
-            // 
-            this.Name1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Name1.HeaderText = "Name";
-            this.Name1.Name = "Name1";
-            // 
-            // Type1
-            // 
-            this.Type1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Type1.HeaderText = "Type";
-            this.Type1.Name = "Type1";
-            // 
-            // Actions
-            // 
-            this.Actions.HeaderText = "Actions";
-            this.Actions.Name = "Actions";
-            // 
-            // InputValue
-            // 
-            this.InputValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.InputValue.HeaderText = "Input Value";
-            this.InputValue.Name = "InputValue";
-            // 
-            // SetCpBtnColumn
-            // 
-            this.SetCpBtnColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.SetCpBtnColumn.DataPropertyName = "CheckPoint";
-            this.SetCpBtnColumn.HeaderText = "CheckPoint";
-            this.SetCpBtnColumn.Name = "SetCpBtnColumn";
-            this.SetCpBtnColumn.Text = "CheckPoint";
-            this.SetCpBtnColumn.ToolTipText = "CheckPoint";
-            // 
-            // SaveCpColumn
-            // 
-            this.SaveCpColumn.HeaderText = "SCC";
-            this.SaveCpColumn.Name = "SaveCpColumn";
-            this.SaveCpColumn.Visible = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -967,6 +995,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Spy & Playback";
             this.Activated += new System.EventHandler(this.Form1_Activated);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.menuStrip1.ResumeLayout(false);
@@ -1021,7 +1050,6 @@
         }
 
         #endregion
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
@@ -1081,13 +1109,13 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
-        private System.Windows.Forms.ToolStripMenuItem viewLogsToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel greencircleTip;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripStatusLabel redcircleTip;
-        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripMenuItem viewLogsToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn TestSteps;
         private System.Windows.Forms.DataGridViewTextBoxColumn Index1;
         private System.Windows.Forms.DataGridViewTextBoxColumn AutomationId1;
@@ -1095,8 +1123,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Type1;
         private System.Windows.Forms.DataGridViewComboBoxColumn Actions;
         private System.Windows.Forms.DataGridViewTextBoxColumn InputValue;
-        private System.Windows.Forms.DataGridViewButtonColumn SetCpBtnColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SaveCpColumn;
+        private System.Windows.Forms.DataGridViewButtonColumn CheckPoint;
+        private System.Windows.Forms.Button btnDeleteScripts;
     }
 }
 

@@ -72,17 +72,15 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="Gu.Wpf.UiAutomation, Version=0.2.2.0, Culture=neutral, PublicKeyToken=14cccbf48e03496d, processorArchitecture=MSIL">
-      <HintPath>..\packages\Gu.Wpf.UiAutomation.0.2.2.0\lib\net45\Gu.Wpf.UiAutomation.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Gu.Wpf.UiAutomation, Version=0.2.3.1, Culture=neutral, PublicKeyToken=14cccbf48e03496d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gu.Wpf.UiAutomation.0.2.3.1\lib\net45\Gu.Wpf.UiAutomation.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
@@ -104,24 +102,26 @@
     <Compile Include="Actions\AbsAction.cs" />
     <Compile Include="Actions\ButtonAction.cs" />
     <Compile Include="Actions\CheckBoxAction.cs" />
-    <Compile Include="Actions\CheckPoint.cs" />
     <Compile Include="Actions\ComboBoxAction.cs" />
     <Compile Include="Actions\ComboBoxEditAction.cs" />
     <Compile Include="Actions\DataGridAction.cs" />
     <Compile Include="Actions\PasswordBoxAction.cs" />
     <Compile Include="Actions\PressEnter.cs" />
     <Compile Include="Actions\RadioButtonAction.cs" />
+    <Compile Include="Actions\RichTextBoxAction.cs" />
     <Compile Include="Actions\SendKey.cs" />
     <Compile Include="Actions\TabItemAction.cs" />
     <Compile Include="Actions\TextBoxAction.cs" />
     <Compile Include="Actions\WaitEnable.cs" />
+    <Compile Include="CheckPoints\AbsCheckPoints.cs" />
+    <Compile Include="CheckPoints\TextBoxCheckPoint.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Ultils\CaptureToImage.cs" />
-    <Compile Include="Ultils\DoSpy.cs" />
+    <Compile Include="Ultils\GrabAUT.cs" />
     <Compile Include="Views\AboutWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +161,12 @@
     <Compile Include="Ultils\ScriptFile.cs" />
     <Compile Include="Ultils\Users.cs" />
     <Compile Include="Ultils\WindowInteraction.cs" />
+    <Compile Include="Views\ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Views\AboutWindow.resx">
       <DependentUpon>AboutWindow.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -184,6 +190,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -224,6 +233,5 @@
   <ItemGroup>
     <None Include="Images\detective.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

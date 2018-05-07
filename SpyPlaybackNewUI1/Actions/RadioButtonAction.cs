@@ -4,10 +4,6 @@ namespace SpyandPlaybackTestTool.Actions
 {
     internal class RadioButtonAction : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             switch (PlaybackObject.action)
@@ -17,7 +13,6 @@ namespace SpyandPlaybackTestTool.Actions
                     {
                         //if (UiElement.AsRadioButton().IsChecked == false)
                         //{
-
                         //}
 
                         UiElement.AsRadioButton().Click();
@@ -33,10 +28,11 @@ namespace SpyandPlaybackTestTool.Actions
                 case "IsChecked":
                     try
                     {
-                        if(UiElement.AsRadioButton().IsChecked == true)
+                        if (UiElement.AsRadioButton().IsChecked == true)
                         {
                             Result = true;
-                        } else
+                        }
+                        else
                         {
                             Result = false;
                         }

@@ -1,21 +1,67 @@
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe.config
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.pdb
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.dll
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\log4net.dll
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.dll
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.pdb
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.xml
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\log4net.xml
-E:\junk\Build 4\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.xml
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojResolveAssemblyReference.cache
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.AboutWindow.resources
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Form1.resources
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.HighlightForm.resources
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.ProcessForm.resources
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Properties.Resources.resources
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.GenerateResource.Cache
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CoreCompileInputs.cache
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
-E:\junk\Build 4\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.CheckPointForm.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe.config
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.pdb
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.dll
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\log4net.dll
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.pdb
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.xml
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\log4net.xml
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojResolveAssemblyReference.cache
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.AboutWindow.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Form1.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.HighlightForm.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.ProcessForm.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Properties.Resources.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.ProgressForm.resources
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.GenerateResource.Cache
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CoreCompileInputs.cache
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
+C:\Users\Kiet\Desktop\SpyAndPlayback\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.CheckPointForm.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe.config
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.pdb
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.dll
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\log4net.dll
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.dll
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.pdb
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.xml
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\log4net.xml
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.xml
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojResolveAssemblyReference.cache
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.AboutWindow.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.CheckPointForm.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Form1.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.HighlightForm.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.ProcessForm.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Properties.Resources.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.ProgressForm.resources
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.GenerateResource.Cache
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CoreCompileInputs.cache
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
+E:\junk\Build 4\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe.config
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.exe
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\SpyandPlaybackTestTool.pdb
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.dll
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\log4net.dll
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.pdb
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.xml
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\log4net.xml
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojResolveAssemblyReference.cache
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.AboutWindow.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.CheckPointForm.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Form1.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.HighlightForm.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.ProcessForm.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Properties.Resources.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.ProgressForm.resources
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.GenerateResource.cache
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CoreCompileInputs.cache
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CopyComplete
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
+C:\Users\davis\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb

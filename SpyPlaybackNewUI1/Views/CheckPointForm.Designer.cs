@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnSave = new System.Windows.Forms.Button();
             this.SelectCpColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.CpType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpectedValueColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,20 +44,12 @@
             this.SelectCpColumn,
             this.CpType,
             this.ExpectedValueColumn});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 61);
+            this.dataGridView1.Location = new System.Drawing.Point(16, 75);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(335, 189);
+            this.dataGridView1.Size = new System.Drawing.Size(447, 233);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(272, 32);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(75, 23);
-            this.btnSave.TabIndex = 1;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // SelectCpColumn
             // 
@@ -66,7 +58,7 @@
             this.SelectCpColumn.Name = "SelectCpColumn";
             this.SelectCpColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.SelectCpColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.SelectCpColumn.Width = 62;
+            this.SelectCpColumn.Width = 76;
             // 
             // CpType
             // 
@@ -81,14 +73,26 @@
             this.ExpectedValueColumn.HeaderText = "Expected Value";
             this.ExpectedValueColumn.Name = "ExpectedValueColumn";
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(363, 39);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(100, 28);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // CheckPointForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 262);
+            this.ClientSize = new System.Drawing.Size(479, 322);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "CheckPointForm";
