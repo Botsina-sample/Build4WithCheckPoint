@@ -50,16 +50,16 @@ namespace SpyandPlaybackTestTool.Ultils
             {
                 Process AttachProcess = WindowInteraction.GetProcess(ProcessForm.targetproc);
 
-                App = Application.Attach(AttachProcess.Id);
+                Application.WaitForMainWindow(AttachProcess, TimeSpan.FromSeconds(1));
 
-                App.GetMainWindow(TimeSpan.FromSeconds(5));
+                App = Application.Attach(AttachProcess.Id);
 
                 MainWindow = App.MainWindow;
             }
             catch
             {
                 //T1.Join();
-                throw new Exception("Cannot get MainWindow");
+                throw new Exception("This process cannot be attached");
             }
         }
 

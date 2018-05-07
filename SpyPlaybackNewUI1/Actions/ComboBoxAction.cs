@@ -34,7 +34,7 @@
 //                    catch (Exception)
 //                    {
 //                        Result = false;
-//                        //throw;
+//                        throw;
 //                    }
 //                    break;
 
@@ -47,7 +47,7 @@
 //                    catch (Exception)
 //                    {
 //                        Result = false;
-//                        //throw;
+//                        throw;
 //                    }
 //                    break;
 
@@ -100,7 +100,7 @@ namespace SpyandPlaybackTestTool.Actions
                     try
                     {
                         UiElement.AsComboBox().SelectedIndex = PlaybackObject.itemIndex;
-                        UiElement.AsComboBox().Collapse();
+                        //UiElement.AsComboBox().Collapse();
                         Result = true;
                     }
                     catch (Exception)

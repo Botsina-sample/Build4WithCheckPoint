@@ -864,7 +864,7 @@
             this.tpgPlaybackScript.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackScript.Name = "tpgPlaybackScript";
             this.tpgPlaybackScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackScript.Size = new System.Drawing.Size(659, 455);
+            this.tpgPlaybackScript.Size = new System.Drawing.Size(619, 453);
             this.tpgPlaybackScript.TabIndex = 1;
             this.tpgPlaybackScript.Text = "Playback Script";
             this.tpgPlaybackScript.UseVisualStyleBackColor = true;
@@ -909,7 +909,7 @@
             this.rtxtScript.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtxtScript.Location = new System.Drawing.Point(6, 64);
             this.rtxtScript.Name = "rtxtScript";
-            this.rtxtScript.Size = new System.Drawing.Size(651, 371);
+            this.rtxtScript.Size = new System.Drawing.Size(611, 369);
             this.rtxtScript.TabIndex = 0;
             this.rtxtScript.Text = "";
             // 

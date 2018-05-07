@@ -102,6 +102,7 @@ namespace SpyandPlaybackTestTool
         public Form1()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -236,6 +237,14 @@ namespace SpyandPlaybackTestTool
                 }
 
                 ElementList = GrabAUT.SearchbyFramework("WPF");
+                foreach (UiElement a in ElementList)
+                {
+                    if (a.ClassName.Equals("ComboBox"))
+                    {
+                        a.AsComboBox().Expand();
+                    }
+                }
+                ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 dataGridView1.Rows.Clear();
                 dataGridView1.AllowUserToAddRows = true;
@@ -356,6 +365,14 @@ namespace SpyandPlaybackTestTool
 
             readJson();
 
+            ElementList = GrabAUT.SearchbyFramework("WPF");
+            foreach (UiElement a in ElementList)
+            {
+                if (a.ClassName.Equals("ComboBox"))
+                {
+                    a.AsComboBox().Expand();
+                }
+            }
             ElementList = GrabAUT.SearchbyFramework("WPF");
 
             //WindowInteraction.FocusWindow(targetProc);
@@ -709,8 +726,16 @@ namespace SpyandPlaybackTestTool
 
                 int pbindex = 0;
 
-              //  PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
+                //  PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
 
+                ElementList = GrabAUT.SearchbyFramework("WPF");
+                foreach (UiElement a in ElementList)
+                {
+                    if (a.ClassName.Equals("ComboBox"))
+                    {
+                        a.AsComboBox().Expand();
+                    }
+                }
                 ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 foreach (DataGridViewRow row in dataGridView2.Rows)
