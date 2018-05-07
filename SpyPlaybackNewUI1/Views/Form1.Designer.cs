@@ -84,6 +84,14 @@
             this.btnMoveUp = new System.Windows.Forms.Button();
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.TestSteps = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Index1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AutomationId1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Actions = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.InputValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CheckPoint = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tpgPlaybackScript = new System.Windows.Forms.TabPage();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnPlaybackTestScript = new System.Windows.Forms.Button();
@@ -96,14 +104,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.TestSteps = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Index1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AutomationId1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Actions = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.InputValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CheckPoint = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnDeleteScripts = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -534,7 +535,7 @@
             // 
             this.splitContainer4.Panel2.Controls.Add(this.groupBox4);
             this.splitContainer4.Size = new System.Drawing.Size(856, 500);
-            this.splitContainer4.SplitterDistance = 179;
+            this.splitContainer4.SplitterDistance = 219;
             this.splitContainer4.TabIndex = 0;
             // 
             // groupBox6
@@ -543,7 +544,7 @@
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox6.Location = new System.Drawing.Point(0, 0);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(179, 500);
+            this.groupBox6.Size = new System.Drawing.Size(219, 500);
             this.groupBox6.TabIndex = 0;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Scenario";
@@ -564,7 +565,7 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.clbTestScriptList);
-            this.splitContainer6.Size = new System.Drawing.Size(173, 479);
+            this.splitContainer6.Size = new System.Drawing.Size(213, 479);
             this.splitContainer6.SplitterDistance = 42;
             this.splitContainer6.TabIndex = 0;
             // 
@@ -572,12 +573,13 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.btnPlaybackScenario);
             this.flowLayoutPanel1.Controls.Add(this.btnQuickSave);
+            this.flowLayoutPanel1.Controls.Add(this.btnDeleteScripts);
             this.flowLayoutPanel1.Controls.Add(this.btnMoveUpCLB);
             this.flowLayoutPanel1.Controls.Add(this.btnMoveDownCLB);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(173, 42);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(213, 42);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // btnPlaybackScenario
@@ -614,7 +616,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMoveUpCLB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveUpCLB.BackgroundImage")));
             this.btnMoveUpCLB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnMoveUpCLB.Location = new System.Drawing.Point(85, 1);
+            this.btnMoveUpCLB.Location = new System.Drawing.Point(127, 1);
             this.btnMoveUpCLB.Margin = new System.Windows.Forms.Padding(1);
             this.btnMoveUpCLB.Name = "btnMoveUpCLB";
             this.btnMoveUpCLB.Size = new System.Drawing.Size(40, 40);
@@ -628,7 +630,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnMoveDownCLB.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnMoveDownCLB.BackgroundImage")));
             this.btnMoveDownCLB.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnMoveDownCLB.Location = new System.Drawing.Point(127, 1);
+            this.btnMoveDownCLB.Location = new System.Drawing.Point(169, 1);
             this.btnMoveDownCLB.Margin = new System.Windows.Forms.Padding(1);
             this.btnMoveDownCLB.Name = "btnMoveDownCLB";
             this.btnMoveDownCLB.Size = new System.Drawing.Size(40, 40);
@@ -646,7 +648,7 @@
             this.clbTestScriptList.Location = new System.Drawing.Point(0, 0);
             this.clbTestScriptList.Margin = new System.Windows.Forms.Padding(0);
             this.clbTestScriptList.Name = "clbTestScriptList";
-            this.clbTestScriptList.Size = new System.Drawing.Size(173, 433);
+            this.clbTestScriptList.Size = new System.Drawing.Size(213, 433);
             this.clbTestScriptList.TabIndex = 27;
             this.clbTestScriptList.ThreeDCheckBoxes = true;
             this.clbTestScriptList.SelectedIndexChanged += new System.EventHandler(this.clbTestScriptList_SelectedIndexChanged_1);
@@ -658,7 +660,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(673, 500);
+            this.groupBox4.Size = new System.Drawing.Size(633, 500);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Playback";
@@ -671,7 +673,7 @@
             this.tctrlPlayback.Location = new System.Drawing.Point(3, 18);
             this.tctrlPlayback.Name = "tctrlPlayback";
             this.tctrlPlayback.SelectedIndex = 0;
-            this.tctrlPlayback.Size = new System.Drawing.Size(667, 479);
+            this.tctrlPlayback.Size = new System.Drawing.Size(627, 479);
             this.tctrlPlayback.TabIndex = 16;
             // 
             // tpgPlaybackTable
@@ -681,7 +683,7 @@
             this.tpgPlaybackTable.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackTable.Name = "tpgPlaybackTable";
             this.tpgPlaybackTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackTable.Size = new System.Drawing.Size(659, 453);
+            this.tpgPlaybackTable.Size = new System.Drawing.Size(619, 453);
             this.tpgPlaybackTable.TabIndex = 0;
             this.tpgPlaybackTable.Text = "Playback Table";
             this.tpgPlaybackTable.UseVisualStyleBackColor = true;
@@ -792,7 +794,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(6, 64);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(647, 382);
+            this.dataGridView2.Size = new System.Drawing.Size(607, 382);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
@@ -805,6 +807,56 @@
             this.dataGridView2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView2_MouseDown);
             this.dataGridView2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dataGridView2_MouseMove);
             // 
+            // TestSteps
+            // 
+            this.TestSteps.HeaderText = "Test Steps";
+            this.TestSteps.Name = "TestSteps";
+            // 
+            // Index1
+            // 
+            this.Index1.HeaderText = "Index";
+            this.Index1.Name = "Index1";
+            this.Index1.ReadOnly = true;
+            // 
+            // AutomationId1
+            // 
+            this.AutomationId1.HeaderText = "AutomationId";
+            this.AutomationId1.Name = "AutomationId1";
+            this.AutomationId1.ReadOnly = true;
+            // 
+            // Name1
+            // 
+            this.Name1.HeaderText = "Name";
+            this.Name1.Name = "Name1";
+            this.Name1.ReadOnly = true;
+            // 
+            // Type1
+            // 
+            this.Type1.HeaderText = "Type";
+            this.Type1.Name = "Type1";
+            this.Type1.ReadOnly = true;
+            // 
+            // Actions
+            // 
+            this.Actions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Actions.HeaderText = "Actions";
+            this.Actions.Name = "Actions";
+            // 
+            // InputValue
+            // 
+            this.InputValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.InputValue.HeaderText = "Input Value";
+            this.InputValue.Name = "InputValue";
+            // 
+            // CheckPoint
+            // 
+            this.CheckPoint.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.CheckPoint.HeaderText = "CheckPoint";
+            this.CheckPoint.MinimumWidth = 50;
+            this.CheckPoint.Name = "CheckPoint";
+            this.CheckPoint.Text = "";
+            this.CheckPoint.Width = 71;
+            // 
             // tpgPlaybackScript
             // 
             this.tpgPlaybackScript.Controls.Add(this.flowLayoutPanel3);
@@ -812,7 +864,7 @@
             this.tpgPlaybackScript.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackScript.Name = "tpgPlaybackScript";
             this.tpgPlaybackScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackScript.Size = new System.Drawing.Size(659, 455);
+            this.tpgPlaybackScript.Size = new System.Drawing.Size(619, 453);
             this.tpgPlaybackScript.TabIndex = 1;
             this.tpgPlaybackScript.Text = "Playback Script";
             this.tpgPlaybackScript.UseVisualStyleBackColor = true;
@@ -857,7 +909,7 @@
             this.rtxtScript.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtxtScript.Location = new System.Drawing.Point(6, 64);
             this.rtxtScript.Name = "rtxtScript";
-            this.rtxtScript.Size = new System.Drawing.Size(651, 373);
+            this.rtxtScript.Size = new System.Drawing.Size(611, 369);
             this.rtxtScript.TabIndex = 0;
             this.rtxtScript.Text = "";
             // 
@@ -916,55 +968,17 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // TestSteps
+            // btnDeleteScripts
             // 
-            this.TestSteps.HeaderText = "Test Steps";
-            this.TestSteps.Name = "TestSteps";
-            // 
-            // Index1
-            // 
-            this.Index1.HeaderText = "Index";
-            this.Index1.Name = "Index1";
-            this.Index1.ReadOnly = true;
-            // 
-            // AutomationId1
-            // 
-            this.AutomationId1.HeaderText = "AutomationId";
-            this.AutomationId1.Name = "AutomationId1";
-            this.AutomationId1.ReadOnly = true;
-            // 
-            // Name1
-            // 
-            this.Name1.HeaderText = "Name";
-            this.Name1.Name = "Name1";
-            this.Name1.ReadOnly = true;
-            // 
-            // Type1
-            // 
-            this.Type1.HeaderText = "Type";
-            this.Type1.Name = "Type1";
-            this.Type1.ReadOnly = true;
-            // 
-            // Actions
-            // 
-            this.Actions.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Actions.HeaderText = "Actions";
-            this.Actions.Name = "Actions";
-            // 
-            // InputValue
-            // 
-            this.InputValue.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.InputValue.HeaderText = "Input Value";
-            this.InputValue.Name = "InputValue";
-            // 
-            // CheckPoint
-            // 
-            this.CheckPoint.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.CheckPoint.HeaderText = "CheckPoint";
-            this.CheckPoint.MinimumWidth = 50;
-            this.CheckPoint.Name = "CheckPoint";
-            this.CheckPoint.Text = "";
-            this.CheckPoint.Width = 71;
+            this.btnDeleteScripts.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnDeleteScripts.BackgroundImage")));
+            this.btnDeleteScripts.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnDeleteScripts.Location = new System.Drawing.Point(85, 1);
+            this.btnDeleteScripts.Margin = new System.Windows.Forms.Padding(1);
+            this.btnDeleteScripts.Name = "btnDeleteScripts";
+            this.btnDeleteScripts.Size = new System.Drawing.Size(40, 40);
+            this.btnDeleteScripts.TabIndex = 30;
+            this.btnDeleteScripts.UseVisualStyleBackColor = true;
+            this.btnDeleteScripts.Click += new System.EventHandler(this.btnDeleteScripts_Click);
             // 
             // Form1
             // 
@@ -1110,6 +1124,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn Actions;
         private System.Windows.Forms.DataGridViewTextBoxColumn InputValue;
         private System.Windows.Forms.DataGridViewButtonColumn CheckPoint;
+        private System.Windows.Forms.Button btnDeleteScripts;
     }
 }
 

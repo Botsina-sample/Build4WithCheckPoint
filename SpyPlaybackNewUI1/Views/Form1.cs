@@ -102,6 +102,7 @@ namespace SpyandPlaybackTestTool
         public Form1()
         {
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -236,6 +237,14 @@ namespace SpyandPlaybackTestTool
                 }
 
                 ElementList = GrabAUT.SearchbyFramework("WPF");
+                foreach (UiElement a in ElementList)
+                {
+                    if (a.ClassName.Equals("ComboBox"))
+                    {
+                        a.AsComboBox().Expand();
+                    }
+                }
+                ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 dataGridView1.Rows.Clear();
                 dataGridView1.AllowUserToAddRows = true;
@@ -356,6 +365,14 @@ namespace SpyandPlaybackTestTool
 
             readJson();
 
+            ElementList = GrabAUT.SearchbyFramework("WPF");
+            foreach (UiElement a in ElementList)
+            {
+                if (a.ClassName.Equals("ComboBox"))
+                {
+                    a.AsComboBox().Expand();
+                }
+            }
             ElementList = GrabAUT.SearchbyFramework("WPF");
 
             //WindowInteraction.FocusWindow(targetProc);
@@ -709,8 +726,16 @@ namespace SpyandPlaybackTestTool
 
                 int pbindex = 0;
 
-              //  PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
+                //  PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
 
+                ElementList = GrabAUT.SearchbyFramework("WPF");
+                foreach (UiElement a in ElementList)
+                {
+                    if (a.ClassName.Equals("ComboBox"))
+                    {
+                        a.AsComboBox().Expand();
+                    }
+                }
                 ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 foreach (DataGridViewRow row in dataGridView2.Rows)
@@ -745,14 +770,6 @@ namespace SpyandPlaybackTestTool
                                 PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
                             }
 
-                            if (PlaybackObjectList[pbindex].type == "ComboBox")
-                            {
-                                PlaybackObjectList[pbindex].itemIndex = 0;
-                            }
-                            else
-                            {
-                                PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
-                            }
                         }
                     }
                     else if (PlaybackObjectList[pbindex].action == "SetText" ||
@@ -1162,19 +1179,24 @@ namespace SpyandPlaybackTestTool
                 if (dialogResult == DialogResult.Yes)
                 {
                     int i = 1;
-         
-                    foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                    dataGridView2.MultiSelect = true;
+                    foreach (DataGridViewCell cell in dataGridView2.SelectedCells)
                     {
-                        PlaybackObjectList.RemoveAt(row.Index);
-                        dataGridView2.Rows.Remove(row);
+                        if (cell.Selected == true)
+                        {
+                            //dataGridView2.Rows.Remove(row);
+                            dataGridView2.Rows.RemoveAt(cell.RowIndex);
+
+                        }
                     }
+                    dataGridView2.ClearSelection();
                     foreach (DataGridViewRow row in dataGridView2.Rows)
                     {
                         row.Cells[0].Value = i;
                         i++;
                     }
                 }
-                else if (dialogResult == DialogResult.No)
+                else
                     return;
             }
         }
@@ -2657,22 +2679,59 @@ namespace SpyandPlaybackTestTool
             CpForm.ShowDialog();
             PlaybackObjectList[rowIndex].CheckPoint = CpForm.textBoxCP;
         }
-        private int[] selectedRowsIndex;
+        int selectedRowIndex;
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
-            selectedRowsIndex = new int[dataGridView2.SelectedRows.Count];
-            for (int i = 0; i < dataGridView2.SelectedRows.Count; i++)
-            {
-                selectedRowsIndex[i] = dataGridView2.SelectedRows[i].Index;
-            }
+                if(dataGridView2.SelectedRows.Count>0)
+                selectedRowIndex = dataGridView2.SelectedRows[0].Index;
         }
 
         private void dataGridView2_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            if (selectedRowsIndex.Count() > 0)
+                    PlaybackObjectList.RemoveAt(selectedRowIndex);
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                dataGridView2.Rows[i].Cells[0].Value = i + 1;
+        }               
+
+        private void btnDeleteScripts_Click(object sender, EventArgs e)
+        {
+            if (clbTestScriptList.SelectedItems.Count <= 0)
             {
-                for (int i = 0; i < selectedRowsIndex.Count(); i++)
-                    PlaybackObjectList.RemoveAt(selectedRowsIndex[i]);
+                return;
+            }
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (dialogResult == DialogResult.Yes)
+            {
+                scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
+                clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
+            }
+        }
+
+        private void btnDeleteScripts_Click(object sender, EventArgs e)
+        {
+            if (clbTestScriptList.SelectedItems.Count <= 0)
+            {
+                return;
+            }
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (dialogResult == DialogResult.Yes)
+            {
+                scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
+                clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
+            }
+        }
+
+        private void btnDeleteScripts_Click(object sender, EventArgs e)
+        {
+            if (clbTestScriptList.SelectedItems.Count <= 0)
+            {
+                return;
+            }
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (dialogResult == DialogResult.Yes)
+            {
+                scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
+                clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
             }
         }
     }
