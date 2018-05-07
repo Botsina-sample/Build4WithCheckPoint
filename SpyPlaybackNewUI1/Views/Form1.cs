@@ -1162,19 +1162,24 @@ namespace SpyandPlaybackTestTool
                 if (dialogResult == DialogResult.Yes)
                 {
                     int i = 1;
-         
-                    foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                    dataGridView2.MultiSelect = true;
+                    foreach (DataGridViewCell cell in dataGridView2.SelectedCells)
                     {
-                        PlaybackObjectList.RemoveAt(row.Index);
-                        dataGridView2.Rows.Remove(row);
+                        if (cell.Selected == true)
+                        {
+                            //dataGridView2.Rows.Remove(row);
+                            dataGridView2.Rows.RemoveAt(cell.RowIndex);
+
+                        }
                     }
+                    dataGridView2.ClearSelection();
                     foreach (DataGridViewRow row in dataGridView2.Rows)
                     {
                         row.Cells[0].Value = i;
                         i++;
                     }
                 }
-                else if (dialogResult == DialogResult.No)
+                else
                     return;
             }
         }
@@ -2673,6 +2678,20 @@ namespace SpyandPlaybackTestTool
             {
                 for (int i = 0; i < selectedRowsIndex.Count(); i++)
                     PlaybackObjectList.RemoveAt(selectedRowsIndex[i]);
+            }
+        }
+
+        private void btnDeleteScripts_Click(object sender, EventArgs e)
+        {
+            if (clbTestScriptList.SelectedItems.Count <= 0)
+            {
+                return;
+            }
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            if (dialogResult == DialogResult.Yes)
+            {
+                scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
+                clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
             }
         }
     }
