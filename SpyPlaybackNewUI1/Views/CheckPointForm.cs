@@ -20,16 +20,13 @@ using System.Threading.Tasks;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using SpyandPlaybackTestTool.Views;
+using SpyandPlaybackTestTool.CheckPoints;
 namespace SpyandPlaybackTestTool.Views
 {
     public partial class CheckPointForm : Form
     {
         public string ControlType { get; set; }
-        public bool cpIsEmpty { get; set; }
-        public bool cpIsReadOnly { get; set; }
-        public bool cpIsEnabled { get; set; }
-        public bool cpIsEqual { get; set; }
-       public string expectedVal { get; set; }
+        public TextBoxCheckPoint textBoxCP = new TextBoxCheckPoint();
         public CheckPointForm()
         {
             InitializeComponent();
@@ -40,66 +37,77 @@ namespace SpyandPlaybackTestTool.Views
             (dataGridView1.Columns[0] as DataGridViewCheckBoxColumn).TrueValue = true;
             (dataGridView1.Columns[0] as DataGridViewCheckBoxColumn).FalseValue = false;
         }
-        public void textBoxCheckPoint()
-        {
-            
-            string[] a = { "IsEmpty", "IsReadOnly", "IsEqual", "IsEnabled" };
-
-            for (int i=0;i<4;i++)
-            {
-                DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
-                row.Cells[1].Value = a[i];
-     
-                dataGridView1.Rows.Add(row);
-            }
-            dataGridView1.Rows[0].Cells[2].ReadOnly = true;
-            dataGridView1.Rows[1].Cells[2].ReadOnly = true;
-            dataGridView1.Rows[3].Cells[2].ReadOnly = true;
-        }
-
         private void CheckPointForm_Load(object sender, EventArgs e)
         {
             switch (ControlType)
             {
                 case "TextBox":
+                    if (dataGridView1.Rows.Count > 1)
                     {
-                        if (dataGridView1.RowCount <= 1)
+                        dataGridView1.Rows.Clear();
+                    }
+                    dataGridView1.AllowUserToAddRows = true;
+                    for (int i = 0; i < 4; i++)
+                    {
+                          
+                            DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+                            row.Cells[1].Value = textBoxCP.cpList[i];
+                       
+                            dataGridView1.Rows.Add(row);
+                        DataGridViewCheckBoxCell chk = (DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0];
+                        switch (textBoxCP.cpList[i])
                         {
-                            cpIsEmpty = false;
-                            cpIsReadOnly = false;
-                            cpIsEqual = false;
-                            cpIsEnabled = false;
-                            expectedVal = "";
-                            textBoxCheckPoint();
-                            dataGridView1.AllowUserToAddRows = false;
-                        }
-                        else
-                        {
-                            for (int i = 0; i < 4; i++)
-                            {
-                                if (cpIsEmpty == true)
+                            case "IsEmpty":
+                                dataGridView1.Rows[i].Cells[2].ReadOnly = true;
+                                if (textBoxCP.cpIsEmpty == true)
                                 {
-                                    ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value = ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue;
+                                    chk.Value = chk.TrueValue;
                                 }
-                                if (cpIsReadOnly == true)
+                                else
+                                    chk.Value = chk.FalseValue;
+                                break;
+                            case "IsReadOnly":
+                                dataGridView1.Rows[i].Cells[2].ReadOnly = true;
+                                if (textBoxCP.cpIsReadOnly == true)
                                 {
-                                    ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value = ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue;
+                                    chk.Value = chk.TrueValue;
                                 }
-                                if (cpIsEqual == true)
+                                else
+                                    chk.Value = chk.FalseValue;
+                                break;
+                            case "IsEnabled":
+                                dataGridView1.Rows[i].Cells[2].ReadOnly = true;
+                                if (textBoxCP.cpIsEnabled == true)
                                 {
-                                    ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value = ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue;
-                                    if (expectedVal != null)
-                                        dataGridView1.Rows[i].Cells[2].Value = expectedVal;
+                                    chk.Value = chk.TrueValue;
                                 }
-                                if (cpIsEnabled == true)
+                                else
+                                    chk.Value = chk.FalseValue;
+                                break;
+                            case "IsEqual":
+                                dataGridView1.Rows[i].Cells[2].ReadOnly = false;
+                                if (textBoxCP.cpIsEqual == true)
                                 {
-                                    ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value = ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue;
+                                    chk.Value = chk.TrueValue;
+                                    if (textBoxCP.expectedVal != null)
+                                        dataGridView1.Rows[i].Cells[2].Value = textBoxCP.expectedVal;
                                 }
-                            }
+                                else
+                                {
+                                    chk.Value = chk.FalseValue;
+                                    dataGridView1.Rows[i].Cells[2].Value = "";
+                                }   
+                                break;
+                            default:
+                                break;
                         }
                     }
+                    dataGridView1.AllowUserToAddRows = false;
+
                     break;
                 default:
+                    if (dataGridView1.Rows.Count > 1)
+                        dataGridView1.Rows.Clear();
                     break;
             }
         }
@@ -110,30 +118,55 @@ namespace SpyandPlaybackTestTool.Views
             {
                 if (((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value == ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue)
                 {
-                    System.Windows.Forms.MessageBox.Show(dataGridView1.Rows[i].Cells[1].Value.ToString());
-                    if (i == 0)
+                    switch(dataGridView1.Rows[i].Cells[1].Value)
                     {
-                        cpIsEmpty = true;
+                        case "IsEmpty":
+                            textBoxCP.cpIsEmpty = true;
+                            break;
+                        case "IsReadOnly":
+                            textBoxCP.cpIsReadOnly = true;
+                            break;
+                        case "IsEnabled":
+                            textBoxCP.cpIsEnabled = true;
+                            break;
+                        case "IsEqual":
+                            textBoxCP.cpIsEqual = true;
+                            if (dataGridView1.Rows[i].Cells[2].Value != null)
+                                textBoxCP.expectedVal = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                            break;
+                        default:
+                            break;
                     }
-                    if (i == 1)
+                }
+                else
+                {
+                    switch (dataGridView1.Rows[i].Cells[1].Value)
                     {
-                        cpIsReadOnly = true;
+                        case "IsEmpty":
+                            textBoxCP.cpIsEmpty = false;
+                            break;
+                        case "IsReadOnly":
+                            textBoxCP.cpIsReadOnly = false;
+                            break;
+                        case "IsEnabled":
+                            textBoxCP.cpIsEnabled = false;
+                            break;
+                        case "IsEqual":
+                            textBoxCP.cpIsEqual = false;
+                            textBoxCP.expectedVal = "";
+                            break;
+                        default:
+                            break;
                     }
-                    if (i == 2)
-                    {
-                        cpIsEqual = true;
-                        if(dataGridView1.Rows[i].Cells[2].Value!=null)
-                        expectedVal = dataGridView1.Rows[i].Cells[2].Value.ToString();
-                    }
-                    if (i == 3)
-                    {
-                        cpIsEnabled = true;
-                    }
+          
                 }
 
             }
-            this.Close();
-          
+            this.Close(); 
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+    
         }
     }
 }

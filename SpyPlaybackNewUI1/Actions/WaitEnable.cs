@@ -5,10 +5,6 @@ namespace SpyandPlaybackTestTool.Actions
 {
     internal class WaitEnable : AbsAction
     {
-        //public override void ExecuteCheckPoint()
-        //{
-        //    throw new NotImplementedException();
-        //}
         public override void DoExecute()
         {
             try

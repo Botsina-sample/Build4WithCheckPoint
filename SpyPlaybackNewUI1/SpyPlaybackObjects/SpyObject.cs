@@ -1,6 +1,6 @@
 ﻿namespace SpyandPlaybackTestTool.SpyPlaybackObjects
 {
-    internal class SpyObject
+    public class SpyObject
     {
         public int index { get; set; }
         public string type { get; set; }

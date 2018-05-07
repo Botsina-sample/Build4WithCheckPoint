@@ -8,19 +8,24 @@ namespace SpyandPlaybackTestTool.Actions
     {
         public PlaybackObject PlaybackObject { get; set; }
 
-
+        /// <summary>
+        /// Properties of AUT UI Components
+        /// </summary>
         public SpyObject SpyObject { get; set; }
+
+        /// <summary>
+        /// WPF UI Automation Elements
+        /// </summary>
         public UiElement UiElement;
+
+        /// <summary>
+        /// Return true or false if playback is success or fail
+        /// </summary>
         public bool Result;
-        public bool []CpResult;
-        public bool IsExist;
-        public bool IsNotExist;
-        //public bool cpIsEmpty { get; set; }
-        //public bool cpIsReadOnly { get; set; }
-        //public bool cpIsEnabled { get; set; }
-        //public bool cpIsEqual { get; set; }
-        //public string expectedVal { get; set; }
+
+        /// <summary>
+        /// Execute action for UI Components
+        /// </summary>
         public abstract void DoExecute();
-        //public abstract void ExecuteCheckPoint();
     }
 }
