@@ -230,7 +230,7 @@
             this.ConsolePanelPush.Location = new System.Drawing.Point(3, 18);
             this.ConsolePanelPush.Name = "ConsolePanelPush";
             this.ConsolePanelPush.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.ConsolePanelPush.Size = new System.Drawing.Size(341, 172);
+            this.ConsolePanelPush.Size = new System.Drawing.Size(413, 172);
             this.ConsolePanelPush.TabIndex = 0;
             this.ConsolePanelPush.Text = "";
             this.ConsolePanelPush.TextChanged += new System.EventHandler(this.ConsolePanelPush_TextChanged);
@@ -242,7 +242,7 @@
             this.ResultPanelPush.Location = new System.Drawing.Point(3, 18);
             this.ResultPanelPush.Name = "ResultPanelPush";
             this.ResultPanelPush.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.ResultPanelPush.Size = new System.Drawing.Size(984, 172);
+            this.ResultPanelPush.Size = new System.Drawing.Size(912, 172);
             this.ResultPanelPush.TabIndex = 0;
             this.ResultPanelPush.Text = "";
             this.ResultPanelPush.TextChanged += new System.EventHandler(this.ResultPanelPush_TextChanged_1);
@@ -262,7 +262,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(346, 526);
+            this.dataGridView1.Size = new System.Drawing.Size(419, 526);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
@@ -317,7 +317,7 @@
             this.clbTestScriptList.Location = new System.Drawing.Point(0, 33);
             this.clbTestScriptList.Margin = new System.Windows.Forms.Padding(0);
             this.clbTestScriptList.Name = "clbTestScriptList";
-            this.clbTestScriptList.Size = new System.Drawing.Size(167, 494);
+            this.clbTestScriptList.Size = new System.Drawing.Size(154, 494);
             this.clbTestScriptList.TabIndex = 27;
             this.clbTestScriptList.ThreeDCheckBoxes = true;
             this.clbTestScriptList.SelectedIndexChanged += new System.EventHandler(this.clbTestScriptList_SelectedIndexChanged_1);
@@ -340,7 +340,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(3, 36);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(792, 462);
+            this.dataGridView2.Size = new System.Drawing.Size(732, 462);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
@@ -486,7 +486,7 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer3.Size = new System.Drawing.Size(1341, 559);
-            this.splitContainer3.SplitterDistance = 346;
+            this.splitContainer3.SplitterDistance = 419;
             this.splitContainer3.TabIndex = 0;
             // 
             // toolStrip1
@@ -504,7 +504,7 @@
             this.toolStripComboBox1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(346, 33);
+            this.toolStrip1.Size = new System.Drawing.Size(419, 33);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -594,7 +594,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(991, 559);
+            this.tabControl1.Size = new System.Drawing.Size(918, 559);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -603,7 +603,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(983, 533);
+            this.tabPage1.Size = new System.Drawing.Size(910, 533);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Playback Table";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -622,8 +622,8 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.tctrlPlayback);
-            this.splitContainer4.Size = new System.Drawing.Size(977, 527);
-            this.splitContainer4.SplitterDistance = 167;
+            this.splitContainer4.Size = new System.Drawing.Size(904, 527);
+            this.splitContainer4.SplitterDistance = 154;
             this.splitContainer4.TabIndex = 0;
             // 
             // toolStrip2
@@ -637,7 +637,7 @@
             this.btnMoveDownScript});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(167, 33);
+            this.toolStrip2.Size = new System.Drawing.Size(154, 33);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -704,7 +704,7 @@
             this.tctrlPlayback.Location = new System.Drawing.Point(0, 0);
             this.tctrlPlayback.Name = "tctrlPlayback";
             this.tctrlPlayback.SelectedIndex = 0;
-            this.tctrlPlayback.Size = new System.Drawing.Size(806, 527);
+            this.tctrlPlayback.Size = new System.Drawing.Size(746, 527);
             this.tctrlPlayback.TabIndex = 0;
             // 
             // tpgPlaybackTable
@@ -714,7 +714,7 @@
             this.tpgPlaybackTable.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackTable.Name = "tpgPlaybackTable";
             this.tpgPlaybackTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackTable.Size = new System.Drawing.Size(798, 501);
+            this.tpgPlaybackTable.Size = new System.Drawing.Size(738, 501);
             this.tpgPlaybackTable.TabIndex = 0;
             this.tpgPlaybackTable.Text = "Test Steps ";
             this.tpgPlaybackTable.UseVisualStyleBackColor = true;
@@ -730,7 +730,7 @@
             this.btnMoveRowDown});
             this.toolStrip3.Location = new System.Drawing.Point(3, 3);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(792, 33);
+            this.toolStrip3.Size = new System.Drawing.Size(732, 33);
             this.toolStrip3.Stretch = true;
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip3";
@@ -860,7 +860,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
             this.splitContainer2.Size = new System.Drawing.Size(1341, 193);
-            this.splitContainer2.SplitterDistance = 347;
+            this.splitContainer2.SplitterDistance = 419;
             this.splitContainer2.TabIndex = 0;
             // 
             // groupBox1
@@ -869,7 +869,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(347, 193);
+            this.groupBox1.Size = new System.Drawing.Size(419, 193);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Console";
@@ -880,7 +880,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(990, 193);
+            this.groupBox2.Size = new System.Drawing.Size(918, 193);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Result";
