@@ -317,7 +317,7 @@
             this.clbTestScriptList.Location = new System.Drawing.Point(0, 33);
             this.clbTestScriptList.Margin = new System.Windows.Forms.Padding(0);
             this.clbTestScriptList.Name = "clbTestScriptList";
-            this.clbTestScriptList.Size = new System.Drawing.Size(154, 494);
+            this.clbTestScriptList.Size = new System.Drawing.Size(163, 494);
             this.clbTestScriptList.TabIndex = 27;
             this.clbTestScriptList.ThreeDCheckBoxes = true;
             this.clbTestScriptList.SelectedIndexChanged += new System.EventHandler(this.clbTestScriptList_SelectedIndexChanged_1);
@@ -340,7 +340,7 @@
             this.dataGridView2.Location = new System.Drawing.Point(3, 36);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(732, 462);
+            this.dataGridView2.Size = new System.Drawing.Size(723, 462);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
@@ -411,7 +411,7 @@
             this.rtxtScript.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.rtxtScript.Location = new System.Drawing.Point(3, 36);
             this.rtxtScript.Name = "rtxtScript";
-            this.rtxtScript.Size = new System.Drawing.Size(792, 462);
+            this.rtxtScript.Size = new System.Drawing.Size(723, 462);
             this.rtxtScript.TabIndex = 0;
             this.rtxtScript.Text = "";
             this.rtxtScript.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.rtxtScript_KeyPress);
@@ -517,6 +517,7 @@
             this.btnAttachProcess.Name = "btnAttachProcess";
             this.btnAttachProcess.Size = new System.Drawing.Size(30, 30);
             this.btnAttachProcess.Text = "toolStripButton1";
+            this.btnAttachProcess.ToolTipText = "Attach AUT";
             this.btnAttachProcess.Click += new System.EventHandler(this.btnAttachProcess_Click);
             // 
             // btnSpy
@@ -528,6 +529,7 @@
             this.btnSpy.Name = "btnSpy";
             this.btnSpy.Size = new System.Drawing.Size(30, 30);
             this.btnSpy.Text = "toolStripButton2";
+            this.btnSpy.ToolTipText = "Begin spying AUT";
             this.btnSpy.Click += new System.EventHandler(this.btnSpy_Click);
             // 
             // btnAdd
@@ -539,6 +541,7 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(30, 30);
             this.btnAdd.Text = "toolStripButton3";
+            this.btnAdd.ToolTipText = "Add AUT\'s UI to playback table";
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // toolStripSeparator1
@@ -595,6 +598,7 @@
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(918, 559);
+            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -623,7 +627,7 @@
             // 
             this.splitContainer4.Panel2.Controls.Add(this.tctrlPlayback);
             this.splitContainer4.Size = new System.Drawing.Size(904, 527);
-            this.splitContainer4.SplitterDistance = 154;
+            this.splitContainer4.SplitterDistance = 163;
             this.splitContainer4.TabIndex = 0;
             // 
             // toolStrip2
@@ -637,7 +641,7 @@
             this.btnMoveDownScript});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(154, 33);
+            this.toolStrip2.Size = new System.Drawing.Size(163, 33);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -650,6 +654,7 @@
             this.btnPlayScenario.Name = "btnPlayScenario";
             this.btnPlayScenario.Size = new System.Drawing.Size(30, 30);
             this.btnPlayScenario.Text = "toolStripButton4";
+            this.btnPlayScenario.ToolTipText = "Begin playback scenario";
             this.btnPlayScenario.Click += new System.EventHandler(this.btnPlayScenario_Click);
             // 
             // btnSave
@@ -661,6 +666,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(30, 30);
             this.btnSave.Text = "toolStripButton5";
+            this.btnSave.ToolTipText = "Save edited script";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnRemoveScript
@@ -672,6 +678,7 @@
             this.btnRemoveScript.Name = "btnRemoveScript";
             this.btnRemoveScript.Size = new System.Drawing.Size(30, 30);
             this.btnRemoveScript.Text = "toolStripButton6";
+            this.btnRemoveScript.ToolTipText = "Remove scripts";
             this.btnRemoveScript.Click += new System.EventHandler(this.btnRemoveScript_Click);
             // 
             // btnMoveUpScript
@@ -683,6 +690,7 @@
             this.btnMoveUpScript.Name = "btnMoveUpScript";
             this.btnMoveUpScript.Size = new System.Drawing.Size(30, 30);
             this.btnMoveUpScript.Text = "toolStripButton7";
+            this.btnMoveUpScript.ToolTipText = "Move up script";
             this.btnMoveUpScript.Click += new System.EventHandler(this.btnMoveUpScript_Click);
             // 
             // btnMoveDownScript
@@ -694,6 +702,8 @@
             this.btnMoveDownScript.Name = "btnMoveDownScript";
             this.btnMoveDownScript.Size = new System.Drawing.Size(30, 30);
             this.btnMoveDownScript.Text = "toolStripButton8";
+            this.btnMoveDownScript.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.btnMoveDownScript.ToolTipText = "Move down script";
             this.btnMoveDownScript.Click += new System.EventHandler(this.btnMoveDownScript_Click);
             // 
             // tctrlPlayback
@@ -704,7 +714,7 @@
             this.tctrlPlayback.Location = new System.Drawing.Point(0, 0);
             this.tctrlPlayback.Name = "tctrlPlayback";
             this.tctrlPlayback.SelectedIndex = 0;
-            this.tctrlPlayback.Size = new System.Drawing.Size(746, 527);
+            this.tctrlPlayback.Size = new System.Drawing.Size(737, 527);
             this.tctrlPlayback.TabIndex = 0;
             // 
             // tpgPlaybackTable
@@ -714,7 +724,7 @@
             this.tpgPlaybackTable.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackTable.Name = "tpgPlaybackTable";
             this.tpgPlaybackTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackTable.Size = new System.Drawing.Size(738, 501);
+            this.tpgPlaybackTable.Size = new System.Drawing.Size(729, 501);
             this.tpgPlaybackTable.TabIndex = 0;
             this.tpgPlaybackTable.Text = "Test Steps ";
             this.tpgPlaybackTable.UseVisualStyleBackColor = true;
@@ -730,7 +740,7 @@
             this.btnMoveRowDown});
             this.toolStrip3.Location = new System.Drawing.Point(3, 3);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(732, 33);
+            this.toolStrip3.Size = new System.Drawing.Size(723, 33);
             this.toolStrip3.Stretch = true;
             this.toolStrip3.TabIndex = 0;
             this.toolStrip3.Text = "toolStrip3";
@@ -744,6 +754,7 @@
             this.btnPlayTestStep.Name = "btnPlayTestStep";
             this.btnPlayTestStep.Size = new System.Drawing.Size(30, 30);
             this.btnPlayTestStep.Text = "toolStripButton9";
+            this.btnPlayTestStep.ToolTipText = "Begin playback test steps";
             this.btnPlayTestStep.Click += new System.EventHandler(this.btnPlayBackTestStep_Click);
             // 
             // btnCreateScript
@@ -755,6 +766,7 @@
             this.btnCreateScript.Name = "btnCreateScript";
             this.btnCreateScript.Size = new System.Drawing.Size(30, 30);
             this.btnCreateScript.Text = "toolStripButton10";
+            this.btnCreateScript.ToolTipText = "Create test script";
             this.btnCreateScript.Click += new System.EventHandler(this.btnCreateScript_Click);
             // 
             // btnSendKeyWait
@@ -766,6 +778,7 @@
             this.btnSendKeyWait.Name = "btnSendKeyWait";
             this.btnSendKeyWait.Size = new System.Drawing.Size(30, 30);
             this.btnSendKeyWait.Text = "toolStripButton11";
+            this.btnSendKeyWait.ToolTipText = "Add sendkeys or time wait";
             this.btnSendKeyWait.Click += new System.EventHandler(this.btnSendKeyWait_Click);
             // 
             // btnRemoveRows
@@ -777,6 +790,7 @@
             this.btnRemoveRows.Name = "btnRemoveRows";
             this.btnRemoveRows.Size = new System.Drawing.Size(30, 30);
             this.btnRemoveRows.Text = "toolStripButton12";
+            this.btnRemoveRows.ToolTipText = "Delete test steps";
             this.btnRemoveRows.Click += new System.EventHandler(this.btnRemoveRows_Click);
             // 
             // btnMoveRowUp
@@ -788,6 +802,7 @@
             this.btnMoveRowUp.Name = "btnMoveRowUp";
             this.btnMoveRowUp.Size = new System.Drawing.Size(30, 30);
             this.btnMoveRowUp.Text = "toolStripButton13";
+            this.btnMoveRowUp.ToolTipText = "Move down test step";
             this.btnMoveRowUp.Click += new System.EventHandler(this.btnMoveRowUp_Click);
             // 
             // btnMoveRowDown
@@ -799,6 +814,7 @@
             this.btnMoveRowDown.Name = "btnMoveRowDown";
             this.btnMoveRowDown.Size = new System.Drawing.Size(30, 30);
             this.btnMoveRowDown.Text = "toolStripButton9";
+            this.btnMoveRowDown.ToolTipText = "Move down test step";
             this.btnMoveRowDown.Click += new System.EventHandler(this.btnMoveRowDown_Click);
             // 
             // tpgPlaybackScript
@@ -808,7 +824,7 @@
             this.tpgPlaybackScript.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackScript.Name = "tpgPlaybackScript";
             this.tpgPlaybackScript.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackScript.Size = new System.Drawing.Size(798, 501);
+            this.tpgPlaybackScript.Size = new System.Drawing.Size(729, 501);
             this.tpgPlaybackScript.TabIndex = 1;
             this.tpgPlaybackScript.Text = "Test Script ";
             this.tpgPlaybackScript.UseVisualStyleBackColor = true;
@@ -820,7 +836,7 @@
             this.btnCreateSteps});
             this.toolStrip4.Location = new System.Drawing.Point(3, 3);
             this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(792, 33);
+            this.toolStrip4.Size = new System.Drawing.Size(723, 33);
             this.toolStrip4.TabIndex = 0;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -833,6 +849,7 @@
             this.btnPlayTestScript.Name = "btnPlayTestScript";
             this.btnPlayTestScript.Size = new System.Drawing.Size(30, 30);
             this.btnPlayTestScript.Text = "toolStripButton14";
+            this.btnPlayTestScript.ToolTipText = "Begin playback test script";
             this.btnPlayTestScript.Click += new System.EventHandler(this.btnPlayTestScript_Click);
             // 
             // btnCreateSteps
@@ -844,6 +861,7 @@
             this.btnCreateSteps.Name = "btnCreateSteps";
             this.btnCreateSteps.Size = new System.Drawing.Size(30, 30);
             this.btnCreateSteps.Text = "toolStripButton15";
+            this.btnCreateSteps.ToolTipText = "Create test steps";
             this.btnCreateSteps.Click += new System.EventHandler(this.btnCreateSteps_Click);
             // 
             // splitContainer2
