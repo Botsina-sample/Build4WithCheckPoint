@@ -114,59 +114,77 @@ namespace SpyandPlaybackTestTool.Views
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 4; i++)
+            if (dataGridView1.RowCount != 4)
             {
-                if (((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value == ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue)
-                {
-                    switch(dataGridView1.Rows[i].Cells[1].Value)
-                    {
-                        case "IsEmpty":
-                            textBoxCP.cpIsEmpty = true;
-                            break;
-                        case "IsReadOnly":
-                            textBoxCP.cpIsReadOnly = true;
-                            break;
-                        case "IsEnabled":
-                            textBoxCP.cpIsEnabled = true;
-                            break;
-                        case "IsEqual":
-                            textBoxCP.cpIsEqual = true;
-                            if (dataGridView1.Rows[i].Cells[2].Value != null)
-                                textBoxCP.expectedVal = dataGridView1.Rows[i].Cells[2].Value.ToString();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (dataGridView1.Rows[i].Cells[1].Value)
-                    {
-                        case "IsEmpty":
-                            textBoxCP.cpIsEmpty = false;
-                            break;
-                        case "IsReadOnly":
-                            textBoxCP.cpIsReadOnly = false;
-                            break;
-                        case "IsEnabled":
-                            textBoxCP.cpIsEnabled = false;
-                            break;
-                        case "IsEqual":
-                            textBoxCP.cpIsEqual = false;
-                            textBoxCP.expectedVal = "";
-                            break;
-                        default:
-                            break;
-                    }
-          
-                }
-
+                System.Windows.Forms.MessageBox.Show("The control must be TextBox!");
+                this.Hide();
+                return;
             }
+            try
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).Value == ((DataGridViewCheckBoxCell)dataGridView1.Rows[i].Cells[0]).TrueValue)
+                    {
+                        switch (dataGridView1.Rows[i].Cells[1].Value.ToString())
+                        {
+                            case "IsEmpty":
+                                textBoxCP.cpIsEmpty = true;
+                                break;
+                            case "IsReadOnly":
+                                textBoxCP.cpIsReadOnly = true;
+                                break;
+                            case "IsEnabled":
+                                textBoxCP.cpIsEnabled = true;
+                                break;
+                            case "IsEqual":
+                                textBoxCP.cpIsEqual = true;
+                                if (dataGridView1.Rows[i].Cells[2].Value != null)
+                                    textBoxCP.expectedVal = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch (dataGridView1.Rows[i].Cells[1].Value.ToString())
+                        {
+                            case "IsEmpty":
+                                textBoxCP.cpIsEmpty = false;
+                                break;
+                            case "IsReadOnly":
+                                textBoxCP.cpIsReadOnly = false;
+                                break;
+                            case "IsEnabled":
+                                textBoxCP.cpIsEnabled = false;
+                                break;
+                            case "IsEqual":
+                                textBoxCP.cpIsEqual = false;
+                                textBoxCP.expectedVal = "";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //throw;
+            }
+            
             this.Close(); 
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
     
+        }
+
+        private void CheckPointForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //btnSave.PerformClick();
         }
     }
 }

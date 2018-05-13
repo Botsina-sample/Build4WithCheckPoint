@@ -18,16 +18,17 @@ namespace SpyandPlaybackTestTool.CheckPoints
         public bool cpIsEqualResult { get; set; }
         public string expectedVal { get; set; }
         public string[] cpList = { "IsEmpty", "IsReadOnly", "IsEnabled", "IsEqual" };
+
         public override void DoExecuteCheckPoint()
         {
             if (cpIsEmpty == true)
             {
                 try
                 {
-                    object a = UiElement.AsTextBox().Text;
-                    object b = "";
+                    string a = UiElement.AsTextBox().Text.Trim();
+                    string b = "";
 
-                    if (a.Equals(b))
+                    if (string.IsNullOrEmpty(a))
                         cpIsEmpty = true;
                     else
                         cpIsEmpty = false;

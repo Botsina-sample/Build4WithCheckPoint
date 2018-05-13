@@ -10,7 +10,7 @@ namespace SpyandPlaybackTestTool.CheckPoints
 {
     public abstract class AbsCheckPoint
     {
-        public PlaybackObject PlaybackObject { get; set; }
+
         public UiElement UiElement;
         public abstract void DoExecuteCheckPoint();
 

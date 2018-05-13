@@ -62,6 +62,7 @@
 //}
 #endregion
 
+using Gu.Wpf.UiAutomation;
 using System;
 using System.Windows.Automation;
 
@@ -99,8 +100,14 @@ namespace SpyandPlaybackTestTool.Actions
                 case "Select":
                     try
                     {
-                        UiElement.AsComboBox().SelectedIndex = PlaybackObject.itemIndex;
-                        //UiElement.AsComboBox().Collapse();
+                        //AutomationElement a = UiElement.AutomationElement;
+                        //ExpandCollapsePattern expandCollapsePattern = a.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
+                        //expandCollapsePattern.Expand();
+                        //var cbxEditItems = UiElement.FindAll(TreeScope.Subtree, new System.Windows.Automation.PropertyCondition(AutomationElement.ClassNameProperty, "ComboBoxItem"));
+                        //cbxEditItems[PlaybackObject.itemIndex].AutomationElement.SelectionItemPattern().Select();
+                        //expandCollapsePattern.Collapse();
+                        UiElement.AsComboBox().Select(PlaybackObject.itemIndex);
+                        UiElement.AsComboBox().Collapse();
                         Result = true;
                     }
                     catch (Exception)

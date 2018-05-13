@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using SpyandPlaybackTestTool.CheckPoints;
+using System.Dynamic;
 namespace SpyandPlaybackTestTool
 {
     public partial class Form1 : Form
@@ -28,7 +29,8 @@ namespace SpyandPlaybackTestTool
         private IReadOnlyList<UiElement> ElementList;
 
         private SpyObject[] SpyObjectList;
-        private List<PlaybackObject> PlaybackObjectList=new List<PlaybackObject>();
+        private List<PlaybackObject> PlaybackObjectList = new List<PlaybackObject>();
+        private List<PlaybackObject> PlaybackObjectScript = new List<PlaybackObject>();
 
         //private ScriptFile[] scriptFiles;
         private List<ScriptFile> scriptFiles = new List<ScriptFile>();
@@ -114,7 +116,7 @@ namespace SpyandPlaybackTestTool
             ResultPanelPush.ReadOnly = true;
             ConsolePanelPush.ReadOnly = true;
 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            toolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.RowHeadersVisible = false;
@@ -123,28 +125,27 @@ namespace SpyandPlaybackTestTool
             (dataGridView1.Columns[0] as DataGridViewCheckBoxColumn).TrueValue = true;
             (dataGridView1.Columns[0] as DataGridViewCheckBoxColumn).FalseValue = false;
 
-
+            //dataGridView2.AllowUserToResizeRows = false;
             foreach (DataGridViewColumn col in dataGridView2.Columns)
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.RowHeadersVisible = false;
-
+            //dataGridView2.SelectionMode = DataGridViewSelectionMode.CellSelect;
+            //dataGridView2.Columns[1].Visible = false;
+         
 
             redcircleTip.Visible = true;
             greencircleTip.Visible = false;
 
-            textBox1.Enabled = false;
-            comboBox1.Enabled = false;
+            toolStripComboBox1.Enabled = false;
+            toolStripTextBox1.Enabled = false;
 
+            //this.MaximumSize = new Size(XX, YY);
             this.MinimumSize = new Size(1280, 720);
 
+            
         }
 
-        private void btnAttach_Click(object sender, EventArgs e)
-        {
-            ProcessForm PFM = ProcessForm.GetInstance();
-            PFM.Show();
-        }
 
         private void Form1_Activated(object sender, EventArgs e)
         {
@@ -157,7 +158,7 @@ namespace SpyandPlaybackTestTool
             else if (ProcessForm.isAttached.Equals(true))
             {
                 AUTPROC = WindowInteraction.GetProcess(ProcessForm.targetproc);
-                WindowInteraction.FocusWindowNormal(thisProc);
+                WindowInteraction.FocusWindow(thisProc);
                 toolStripStatusLabel1.Text = ProcessForm.targetproc;
                 redcircleTip.Visible = false;
                 greencircleTip.Visible = true;
@@ -197,11 +198,6 @@ namespace SpyandPlaybackTestTool
             }
         }
 
-        // Spy Button
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Spy("normal");
-        }
 
         /// <summary>
         /// SPY FUNCTION
@@ -245,8 +241,10 @@ namespace SpyandPlaybackTestTool
 
                 SpyObjectList = new SpyObject[ElementList.Count];
                 int SpyObjectIndex = 0;
-                textBox1.Enabled = false;
-                comboBox1.Enabled = false;
+
+                toolStripComboBox1.Enabled = false;
+                toolStripTextBox1.Enabled = false;
+
                 dataGridView1.Enabled = true;
                 dataGridView2.Enabled = true;
 
@@ -283,18 +281,18 @@ namespace SpyandPlaybackTestTool
                     ConsolePanelPush.AppendText(DateTime.Now + " - " + "DONE RESPY" + Environment.NewLine);
                 }
 
-                textBox1.Enabled = true;
-                comboBox1.Enabled = true;
-                //WindowInteraction.FocusWindowNormal(thisProc);
+                toolStripComboBox1.Enabled = true;
+                toolStripTextBox1.Enabled = true;
+                //WindowInteraction.FocusWindow(thisProc);
                 dataGridView1.AllowUserToAddRows = false;
-                textBox1.Text = "";
-                comboBox1.SelectedIndex = 0;
+                toolStripTextBox1.Text = "";
+                toolStripComboBox1.SelectedIndex = 0;
 
                 // Capture to File
                 //CaptureToImage.DoCapture(ProcessName);
                 if (mode == "normal")
                 {
-                    WindowInteraction.FocusWindowNormal(thisProc);
+                    WindowInteraction.FocusWindow(thisProc);
                 }
                 if (mode == "respy")
                 {
@@ -308,28 +306,28 @@ namespace SpyandPlaybackTestTool
                     log.Error(DateTime.Now + " - AUT NOT FOUND");
                     ConsolePanelPush.AppendText(DateTime.Now + " - AUT NOT FOUND");
                     ConsolePanelPush.AppendText(Environment.NewLine);
-                    WindowInteraction.FocusWindowNormal(thisProc);
+                    WindowInteraction.FocusWindow(thisProc);
                 }
                 else if (ex.HResult == excode.NOT_WPF_PROGRAM)
                 {
                     log.Error("CANNOT SPY THIS PROGRAM");
                     ConsolePanelPush.AppendText(DateTime.Now + " - CANNOT SPY THIS PROGRAM");
                     ConsolePanelPush.AppendText(Environment.NewLine);
-                    WindowInteraction.FocusWindowNormal(thisProc);
+                    WindowInteraction.FocusWindow(thisProc);
                 }
                 else if (ex.HResult == excode.OBJECT_NULL)
                 {
                     log.Error("AUT NOT FOUND");
                     ConsolePanelPush.AppendText(DateTime.Now + " - AUT NOT FOUND" + Environment.NewLine);
                     // ConsolePanelPush.AppendText();
-                    WindowInteraction.FocusWindowNormal(thisProc);
+                    WindowInteraction.FocusWindow(thisProc);
                 }
                 else
                 {
                     log.Error("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
                     ConsolePanelPush.AppendText("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
                     ConsolePanelPush.AppendText(Environment.NewLine);
-                    WindowInteraction.FocusWindowNormal(thisProc);
+                    WindowInteraction.FocusWindow(thisProc);
                 }
             }
         }
@@ -337,51 +335,6 @@ namespace SpyandPlaybackTestTool
         //Json Playback button
         public void btnPlaybackTestScript_Click(object sender, EventArgs e)
         {
-            if (ProcessForm.targetproc == null)
-            {
-                System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Playback Test Script function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            if (ValidateJSON(rtxtScript.Text) == false)
-            {
-                System.Windows.Forms.MessageBox.Show("Test Script format is invalid Json!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            playbackprogress = 0;
-            playbackstatus = true;
-            stop_playback = false;
-
-            pf.Show();
-
-            Th_CLEARVALUE = new Thread(() => ClearTextBox.ClearValue(ProcessForm.targetproc));
-            Th_CLEARVALUE.Start();
-            Th_CLEARVALUE.Join();
-
-            readJson();
-
-            ElementList = GrabAUT.SearchbyFramework("WPF");
-            foreach (UiElement a in ElementList)
-            {
-                if (a.ClassName.Equals("ComboBox"))
-                {
-                    a.AsComboBox().Expand();
-                }
-            }
-            ElementList = GrabAUT.SearchbyFramework("WPF");
-
-            //WindowInteraction.FocusWindow(targetProc);
-            ResultPanelPush.Clear();
-            ConsolePanelPush.AppendText(DateTime.Now + " - " + "BEGIN PLAYBACK");
-            log.Info("BEGIN PLAYBACK");
-            ConsolePanelPush.AppendText(Environment.NewLine);
-
-            Th_PBTSCRIPT = new Thread(() => PlaybackTestScript());
-            Th_PBTSCRIPT.Start();
-
-            ConsolePanelPush.AppendText(DateTime.Now + " - " + "DONE PLAYBACK");
-            log.Info("DONE PLAYBACK");
-            ConsolePanelPush.AppendText(Environment.NewLine);
-            //WindowInteraction.FocusWindowNormal(thisProc);
         }
 
         /// <summary>
@@ -394,7 +347,7 @@ namespace SpyandPlaybackTestTool
             {
                 if (ScenarioStatus.Equals(false))
                 {
-                    percentage = 100 / PlaybackObjectList.Count();
+                    percentage = 100 / PlaybackObjectScript.Count();
                 }
 
                 if (ScenarioStatus.Equals(true))
@@ -402,11 +355,11 @@ namespace SpyandPlaybackTestTool
                     log.Info("Multiple playbackscript is on");
                 }
 
-                for (int i = 0; i < PlaybackObjectList.Count(); i++)
+                for (int i = 0; i < PlaybackObjectScript.Count(); i++)
                 {
                     if (stop_playback.Equals(true))
                     {
-                        WindowInteraction.FocusWindowNormal(thisProc);
+                        WindowInteraction.FocusWindow(thisProc);
                         return;
                     }
 
@@ -415,24 +368,24 @@ namespace SpyandPlaybackTestTool
                         ElementList = GrabAUT.SearchbyFramework("WPF");
 
                     // Check if Json type is valid
-                    if (PlaybackObjectList[i].type == "SendKey" || PlaybackObjectList[i].type == "Button" ||
-                       PlaybackObjectList[i].type == "TextBox" || PlaybackObjectList[i].type == "WaitEnable" ||
-                       PlaybackObjectList[i].type == "ComboBox" || PlaybackObjectList[i].type == "ComboBoxEdit" ||
-                       PlaybackObjectList[i].type == "DataGrid" || PlaybackObjectList[i].type == "RadioButton" || PlaybackObjectList[i].type == "AutoCompleteCombobox" ||
-                       PlaybackObjectList[i].type == "SendKeyorWaitEnable" || PlaybackObjectList[i].type == "CheckBox" || PlaybackObjectList[i].type == "TabItem" ||
-                       PlaybackObjectList[i].type == "PasswordBox" || PlaybackObjectList[i].type == "RichTextBox")
+                    if (PlaybackObjectScript[i].type == "SendKey" || PlaybackObjectScript[i].type == "Button" ||
+                       PlaybackObjectScript[i].type == "TextBox" || PlaybackObjectScript[i].type == "WaitEnable" ||
+                       PlaybackObjectScript[i].type == "ComboBox" || PlaybackObjectScript[i].type == "ComboBoxEdit" ||
+                       PlaybackObjectScript[i].type == "DataGrid" || PlaybackObjectScript[i].type == "RadioButton" || PlaybackObjectScript[i].type == "AutoCompleteCombobox" ||
+                       PlaybackObjectScript[i].type == "SendKeyorWaitEnable" || PlaybackObjectScript[i].type == "CheckBox" || PlaybackObjectScript[i].type == "TabItem" ||
+                       PlaybackObjectScript[i].type == "PasswordBox" || PlaybackObjectScript[i].type == "RichTextBox")
                     {
-                        if (PlaybackObjectList[i].action == "Click" || PlaybackObjectList[i].action == "DoubleClick" ||
-                           PlaybackObjectList[i].action == "Select" || PlaybackObjectList[i].action == "SetText" ||
-                           PlaybackObjectList[i].action == "WaitEnable" || PlaybackObjectList[i].action == "Unselect" ||
-                           PlaybackObjectList[i].action == "SendKey")
+                        if (PlaybackObjectScript[i].action == "Click" || PlaybackObjectScript[i].action == "DoubleClick" ||
+                           PlaybackObjectScript[i].action == "Select" || PlaybackObjectScript[i].action == "SetText" ||
+                           PlaybackObjectScript[i].action == "WaitEnable" || PlaybackObjectScript[i].action == "Unselect" ||
+                           PlaybackObjectScript[i].action == "SendKey")
                         {
-                            switch (PlaybackObjectList[i].type)
+                            switch (PlaybackObjectScript[i].type)
                             {
                                 case "Button":
                                     AbsAction buttonaction = new ButtonAction();
-                                    buttonaction.PlaybackObject = PlaybackObjectList[i];
-                                    buttonaction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    buttonaction.PlaybackObject = PlaybackObjectScript[i];
+                                    buttonaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     buttonaction.DoExecute();
                                     if (buttonaction.Result == true)
                                         PlaybackLogger(buttonaction.PlaybackObject.index, buttonaction.UiElement.ClassName, true);
@@ -442,19 +395,47 @@ namespace SpyandPlaybackTestTool
 
                                 case "TextBox":
                                     AbsAction textboxaction = new TextBoxAction();
-                                    textboxaction.PlaybackObject = PlaybackObjectList[i];
-                                    textboxaction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    textboxaction.PlaybackObject = PlaybackObjectScript[i];
+                                    textboxaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     textboxaction.DoExecute();
                                     if (textboxaction.Result == true)
                                         PlaybackLogger(textboxaction.PlaybackObject.index, textboxaction.UiElement.ClassName, true);
                                     else
                                         PlaybackLogger(textboxaction.PlaybackObject.index, textboxaction.UiElement.ClassName, false);
+                                    PlaybackObjectScript[i].CheckPoint.UiElement = textboxaction.UiElement;
+                                    (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).DoExecuteCheckPoint();
+                                    if ((PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEmpty == true)
+                                    {
+                                        log.Info("Result of CheckPoint IsEmpty: " + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEmptyResult.ToString().Trim());
+                                        ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsEmpty: "
+                                            + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEmptyResult.ToString().Trim() + Environment.NewLine);
+                                    }
+                                    if ((PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEnabled == true)
+                                    {
+                                        log.Info("Result of CheckPoint IsEnabled: " + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEnabledResult.ToString().Trim());
+                                        ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsEnabled: "
+                                            + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEnabledResult.ToString().Trim() + Environment.NewLine);
+                                        //ResultPanelPush.AppendText((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabledResult.ToString());
+                                    }
+                                    if ((PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEqual == true)
+                                    {
+                                        log.Info("Result of CheckPoint IsEqual: " + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEqualResult.ToString().Trim());
+                                        ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsEqual: "
+                                            + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEqualResult.ToString().Trim() + Environment.NewLine);
+                                    }
+                                    if ((PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnly == true)
+                                    {
+                                        log.Info("Result of CheckPoint IsReadOnly: " + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnlyResult.ToString().Trim());
+                                        ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsReadOnly: "
+                                            + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnlyResult.ToString().Trim() + Environment.NewLine);
+                                    }
                                     break;
+                    
 
                                 case "RichTextBox":
                                     AbsAction RichTextBoxAction = new RichTextBoxAction();
-                                    RichTextBoxAction.PlaybackObject = PlaybackObjectList[i];
-                                    RichTextBoxAction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    RichTextBoxAction.PlaybackObject = PlaybackObjectScript[i];
+                                    RichTextBoxAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     RichTextBoxAction.DoExecute();
                                     if (RichTextBoxAction.Result == true)
                                         PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.UiElement.ClassName, true);
@@ -464,8 +445,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "PasswordBox":
                                     AbsAction PasswordBoxAction = new PasswordBoxAction();
-                                    PasswordBoxAction.PlaybackObject = PlaybackObjectList[i];
-                                    PasswordBoxAction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    PasswordBoxAction.PlaybackObject = PlaybackObjectScript[i];
+                                    PasswordBoxAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     PasswordBoxAction.DoExecute();
                                     if (PasswordBoxAction.Result == true)
                                         PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.UiElement.ClassName, true);
@@ -475,8 +456,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "ComboBox":
                                     AbsAction comboboxaction = new ComboBoxAction();
-                                    comboboxaction.PlaybackObject = PlaybackObjectList[i];
-                                    comboboxaction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    comboboxaction.PlaybackObject = PlaybackObjectScript[i];
+                                    comboboxaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     comboboxaction.DoExecute();
                                     if (comboboxaction.Result == true)
                                         PlaybackLogger(comboboxaction.PlaybackObject.index, comboboxaction.UiElement.ClassName, true);
@@ -486,8 +467,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "AutoCompleteCombobox":
                                     AbsAction ATcomboboxaction = new ComboBoxEditAction();
-                                    ATcomboboxaction.PlaybackObject = PlaybackObjectList[i];
-                                    ATcomboboxaction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    ATcomboboxaction.PlaybackObject = PlaybackObjectScript[i];
+                                    ATcomboboxaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     ATcomboboxaction.DoExecute();
                                     if (ATcomboboxaction.Result == true)
                                         PlaybackLogger(ATcomboboxaction.PlaybackObject.index, ATcomboboxaction.UiElement.ClassName, true);
@@ -497,8 +478,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "ComboBoxEdit":
                                     AbsAction comboboxeditaction = new ComboBoxEditAction();
-                                    comboboxeditaction.PlaybackObject = PlaybackObjectList[i];
-                                    comboboxeditaction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    comboboxeditaction.PlaybackObject = PlaybackObjectScript[i];
+                                    comboboxeditaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     comboboxeditaction.DoExecute();
                                     if (comboboxeditaction.Result == true)
                                         PlaybackLogger(comboboxeditaction.PlaybackObject.index, comboboxeditaction.UiElement.ClassName, true);
@@ -509,8 +490,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "DataGrid":
                                     AbsAction datagridaction = new DataGridAction();
-                                    datagridaction.PlaybackObject = PlaybackObjectList[i];
-                                    datagridaction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    datagridaction.PlaybackObject = PlaybackObjectScript[i];
+                                    datagridaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     datagridaction.DoExecute();
                                     if (datagridaction.Result == true)
                                         PlaybackLogger(datagridaction.PlaybackObject.index, datagridaction.UiElement.ClassName, true);
@@ -520,8 +501,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "RadioButton":
                                     AbsAction RadioButtonAction = new RadioButtonAction();
-                                    RadioButtonAction.PlaybackObject = PlaybackObjectList[i];
-                                    RadioButtonAction.UiElement = ElementList[PlaybackObjectList[i].index];
+                                    RadioButtonAction.PlaybackObject = PlaybackObjectScript[i];
+                                    RadioButtonAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     RadioButtonAction.DoExecute();
                                     if (RadioButtonAction.Result == true)
                                         PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.UiElement.ClassName, true);
@@ -531,8 +512,8 @@ namespace SpyandPlaybackTestTool
 
                                 case "CheckBox":
                                     AbsAction CheckBoxAction = new CheckBoxAction();
-                                    CheckBoxAction.PlaybackObject = PlaybackObjectList[i];
-                                    CheckBoxAction.UiElement = ElementList[CheckBoxAction.PlaybackObject.index];
+                                    CheckBoxAction.PlaybackObject = PlaybackObjectScript[i];
+                                    CheckBoxAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     CheckBoxAction.DoExecute();
                                     if (CheckBoxAction.Result == true)
                                         PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.UiElement.ClassName, true);
@@ -542,7 +523,7 @@ namespace SpyandPlaybackTestTool
 
                                 case "TabItem":
                                     AbsAction TabItemAction = new TabItemAction();
-                                    TabItemAction.PlaybackObject = PlaybackObjectList[i];
+                                    TabItemAction.PlaybackObject = PlaybackObjectScript[i];
                                     TabItemAction.UiElement = ElementList[TabItemAction.PlaybackObject.index];
 
                                     TabItemAction.DoExecute();
@@ -553,20 +534,20 @@ namespace SpyandPlaybackTestTool
                                     break;
 
                                 case "SendKeyorWaitEnable":
-                                    if (PlaybackObjectList[i].action == "SendKey")
+                                    if (PlaybackObjectScript[i].action == "SendKey")
                                     {
                                         AbsAction SendKeyAction = new SpyandPlaybackTestTool.Actions.SendKey();
-                                        SendKeyAction.PlaybackObject = PlaybackObjectList[i];
+                                        SendKeyAction.PlaybackObject = PlaybackObjectScript[i];
                                         SendKeyAction.DoExecute();
 
-                                        log.Info("Key " + PlaybackObjectList[i].text + " HAS BEEN SENT");
-                                        ResultPanelPush.AppendText(DateTime.Now + " - " + "Key " + PlaybackObjectList[i].text + " HAS BEEN SENT");
+                                        log.Info("Key " + PlaybackObjectScript[i].text + " HAS BEEN SENT");
+                                        ResultPanelPush.AppendText(DateTime.Now + " - " + "Key " + PlaybackObjectScript[i].text + " HAS BEEN SENT");
                                         ResultPanelPush.AppendText(Environment.NewLine);
                                     }
-                                    else if (PlaybackObjectList[i].action == "WaitEnable")
+                                    else if (PlaybackObjectScript[i].action == "WaitEnable")
                                     {
                                         AbsAction WaitEnable = new WaitEnable();
-                                        WaitEnable.PlaybackObject = PlaybackObjectList[i];
+                                        WaitEnable.PlaybackObject = PlaybackObjectScript[i];
                                         WaitEnable.DoExecute();
 
                                         log.Info("WATIED FOR " + int.Parse(WaitEnable.PlaybackObject.text) / 1000 + "s");
@@ -581,15 +562,15 @@ namespace SpyandPlaybackTestTool
                         }
                         else
                         {
-                            log.Fatal("FAILED at " + "JSON INDEX " + PlaybackObjectList[i].index + " - " + "HAS AN INVALID ACTION: " + PlaybackObjectList[i].action);
-                            ResultPanelPush.AppendText(DateTime.Now + " - " + "FAILED at " + "JSON INDEX " + PlaybackObjectList[i].index + " - " + "HAS AN INVALID ACTION: " + PlaybackObjectList[i].action);
+                            log.Fatal("FAILED at " + "JSON INDEX " + PlaybackObjectScript[i].index + " - " + "HAS AN INVALID ACTION: " + PlaybackObjectScript[i].action);
+                            ResultPanelPush.AppendText(DateTime.Now + " - " + "FAILED at " + "JSON INDEX " + PlaybackObjectScript[i].index + " - " + "HAS AN INVALID ACTION: " + PlaybackObjectScript[i].action);
                             ResultPanelPush.AppendText(Environment.NewLine);
                         }
                     }
                     else
                     {
-                        log.Fatal("FAILED at " + "JSON INDEX " + PlaybackObjectList[i].index + " - " + "HAS AN INVALID TYPE: " + PlaybackObjectList[i].type);
-                        ResultPanelPush.AppendText(DateTime.Now + " - " + "FAILED at " + "JSON INDEX " + PlaybackObjectList[i].index + " - " + "HAS AN INVALID TYPE: " + PlaybackObjectList[i].type);
+                        log.Fatal("FAILED at " + "JSON INDEX " + PlaybackObjectScript[i].index + " - " + "HAS AN INVALID TYPE: " + PlaybackObjectScript[i].type);
+                        ResultPanelPush.AppendText(DateTime.Now + " - " + "FAILED at " + "JSON INDEX " + PlaybackObjectScript[i].index + " - " + "HAS AN INVALID TYPE: " + PlaybackObjectScript[i].type);
                         ResultPanelPush.AppendText(Environment.NewLine);
                     }
                     if (GrabAUT.MainWindow.ModalWindows.Count > 0)
@@ -615,10 +596,10 @@ namespace SpyandPlaybackTestTool
                 }
                 else if (ScenarioStatus.Equals(false) && playbackstatus.Equals(true))
                 {
-                    pf.Hide();
+                    this.pf.Dispose();
                     playbackstatus = false;
                     playbackprogress = 100;
-                    WindowInteraction.FocusWindowNormal(thisProc);
+                    WindowInteraction.FocusWindow(thisProc);
                 }
             }
             catch (Exception ex)
@@ -671,33 +652,14 @@ namespace SpyandPlaybackTestTool
                     ConsolePanelPush.AppendText(DateTime.Now + " - " + ex.HResult + " --- " + ex.Message);
                     ConsolePanelPush.AppendText(Environment.NewLine);
                 }
-                WindowInteraction.FocusWindowNormal(thisProc);
+                WindowInteraction.FocusWindow(thisProc);
             }
         }
 
         // Playback button on test steps table // Add log
-        private void btnPlaybackTestSteps_Click(object sender, EventArgs e)
+        public void btnPlaybackTestSteps_Click(object sender, EventArgs e)
         {
-            if (ProcessForm.targetproc == null)
-            {
-                System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Playback Test Steps function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            if (dataGridView2.Rows.Count <= 0)
-            {
-                System.Windows.Forms.MessageBox.Show("There is no data!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            pf.Show();
-
-            playbackprogress = 0;
-            playbackstatus = true;
-            stop_playback = false;
-
-            Th_PBTSTEP = new Thread(() => PlaybackTestSteps());
-            Th_PBTSTEP.IsBackground = true;
-            Th_PBTSTEP.Start();
+            
         }
 
         /// <summary>
@@ -706,7 +668,7 @@ namespace SpyandPlaybackTestTool
         public void PlaybackTestSteps()
         {
             ExceptionCode excode = new ExceptionCode();
-
+            
             ResultPanelPush.Clear();
             ConsolePanelPush.AppendText(DateTime.Now + " - BEGIN PLAYBACK" + Environment.NewLine);
 
@@ -763,6 +725,7 @@ namespace SpyandPlaybackTestTool
                             {
                                 PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
                             }
+
                         }
                     }
                     else if (PlaybackObjectList[pbindex].action == "SetText" ||
@@ -786,7 +749,7 @@ namespace SpyandPlaybackTestTool
                     if (stop_playback.Equals(true))
                     {
                         pf.Hide();
-                        WindowInteraction.FocusWindowNormal(thisProc);
+                        WindowInteraction.FocusWindow(thisProc);
 
                         return;
                     }
@@ -840,6 +803,31 @@ namespace SpyandPlaybackTestTool
                             //Execute Checkpoint
                             PlaybackObjectList[i].CheckPoint.UiElement = TextBoxAction.UiElement;
                             (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).DoExecuteCheckPoint();
+                            if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEmpty == true)
+                            {
+                                log.Info("Result of CheckPoint IsEmpty: " + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEmptyResult.ToString().Trim());
+                                ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsEmpty: "
+                                    + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEmptyResult.ToString().Trim() + Environment.NewLine);
+                            }
+                            if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabled == true)
+                            {
+                                log.Info("Result of CheckPoint IsEnabled: " + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabledResult.ToString().Trim());
+                                ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsEnabled: "
+                                    + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabledResult.ToString().Trim() + Environment.NewLine);
+                                //ResultPanelPush.AppendText((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabledResult.ToString());
+                            }
+                            if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEqual == true)
+                            {
+                                log.Info("Result of CheckPoint IsEqual: " + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEqualResult.ToString().Trim());
+                                ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsEqual: "
+                                    + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEqualResult.ToString().Trim() + Environment.NewLine);
+                            }
+                            if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnly == true)
+                            {
+                                log.Info("Result of CheckPoint IsReadOnly: " + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnlyResult.ToString().Trim());
+                                ResultPanelPush.AppendText(DateTime.Now + " - " + "Result of CheckPoint IsReadOnly: "
+                                    + (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnlyResult.ToString().Trim() + Environment.NewLine);
+                            }
                             //Testing Result: System.Windows.Forms.MessageBox.Show((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEqualResult.ToString());
                             break;
                         case "RichTextBox":
@@ -977,8 +965,11 @@ namespace SpyandPlaybackTestTool
                 ConsolePanelPush.AppendText(DateTime.Now + " - DONE PLAYBACK");
                 ConsolePanelPush.AppendText(Environment.NewLine);
 
-                pf.Hide();
-                WindowInteraction.FocusWindowNormal(thisProc);
+                //pf.Hide();
+
+                this.pf.Dispose();
+
+                WindowInteraction.FocusWindow(thisProc);
                 Th_PBTSTEP.Join();
             }
             catch (Exception ex)
@@ -1024,13 +1015,10 @@ namespace SpyandPlaybackTestTool
                     ConsolePanelPush.AppendText(Environment.NewLine);
                 }
             }
-            WindowInteraction.FocusWindowNormal(thisProc);
+            WindowInteraction.FocusWindow(thisProc);
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            AddTestSteps();
-        }
+        
 
         /// <summary>
         /// Add test steps to the Playback table
@@ -1164,46 +1152,1023 @@ namespace SpyandPlaybackTestTool
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if (dataGridView2.Rows.Count == 0)
-                System.Windows.Forms.MessageBox.Show("There is no data!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            else
-            {
-                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to remove this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    int i = 1;
-                    dataGridView2.MultiSelect = true;
-                    foreach (DataGridViewCell cell in dataGridView2.SelectedCells)
-                    {
-                        if (cell.Selected == true)
-                        {
-                            //dataGridView2.Rows.Remove(row);
-                            dataGridView2.Rows.RemoveAt(cell.RowIndex);
-
-                        }
-                    }
-                    dataGridView2.ClearSelection();
-                    foreach (DataGridViewRow row in dataGridView2.Rows)
-                    {
-                        row.Cells[0].Value = i;
-                        i++;
-                    }
-                }
-                else
-                    return;
-            }
         }
 
         private void textBox1_TextChanged_1(object sender, EventArgs e)
         {
-            string text = textBox1.Text.ToLower();
+     
+        }
+
+        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void InspectorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ProcessForm.isAttached.Equals(false))
+            {
+                System.Windows.Forms.MessageBox.Show("NO AUT TO INSPECT", "Warning!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                HighlightForm HLightForm = HighlightForm.GetInstance();
+                HLightForm.ProcessName = ProcessForm.targetproc;
+                HLightForm.Show();
+            }
+        }
+
+        private void btnCreateTestSteps_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        /// <summary>
+        /// Create a Playback table from JSON test script.
+        /// </summary>
+        private void CreateTestSteps()
+        {
+            readJson();
+            if (PlaybackObjectScript.Count > 0)
+            {
+                dataGridView2.AllowUserToAddRows = true;
+                //PlaybackObjectList.Clear();//Clear the playback object list to get the new one from script
+                PlaybackObjectList = PlaybackObjectScript;
+                int count = PlaybackObjectList.Count();
+
+                for (int i = 0; i < count; i++)
+                {
+                    DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[0].Clone();
+                    if (i == 0)
+                        dataGridView2.Rows.Clear();
+                    row.Cells[0].Value = i + 1;
+                    row.Cells[1].Value = PlaybackObjectList[i].index;
+                    row.Cells[2].Value = PlaybackObjectList[i].automationId;
+                    row.Cells[3].Value = PlaybackObjectList[i].name;
+                    row.Cells[4].Value = PlaybackObjectList[i].type;
+                    ((DataGridViewComboBoxCell)row.Cells[5]).Items.Clear();
+                    switch (row.Cells[4].Value.ToString())
+                    {
+                        case "TabItem":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
+                            if (PlaybackObjectList[i].action == "Click")
+                                row.Cells[5].Value = PlaybackObjectList[i].action;
+                            break;
+
+                        case "Button":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
+                            if (PlaybackObjectList[i].action == "Click")
+                                row.Cells[5].Value = PlaybackObjectList[i].action;
+                            break;
+
+                        case "RadioButton":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
+                            if (PlaybackObjectList[i].action == "Click")
+                                row.Cells[5].Value = PlaybackObjectList[i].action;
+                            break;
+
+                        case "TextBox":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
+                            if (PlaybackObjectList[i].action == "SetText")
+                                row.Cells[5].Value = PlaybackObjectList[i].action;
+
+                            break;
+
+                        case "RichTextBox":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
+                            if (PlaybackObjectList[i].action == "SetText")
+                                row.Cells[5].Value = PlaybackObjectList[i].action;
+                            break;
+
+                        case "PasswordBox":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
+                            if (PlaybackObjectList[i].action == "SetText")
+                                row.Cells[5].Value = PlaybackObjectList[i].action;
+                            break;
+
+                        case "ComboBox":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
+                            switch (PlaybackObjectList[i].action)
+                            {
+                                case "SetText":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
+                                    break;
+
+                                case "Select":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+
+                        case "CheckBox":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Unselect");
+                            switch (PlaybackObjectList[i].action)
+                            {
+                                case "Select":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
+                                    break;
+
+                                case "Unselect":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+
+                        case "ComboBoxEdit":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
+                            switch (PlaybackObjectList[i].action)
+                            {
+                                case "SetText":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
+                                    break;
+
+                                case "Select":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+
+                        case "AutoCompleteCombobox":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
+                            switch (PlaybackObjectList[i].action)
+                            {
+                                case "SetText":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
+                                    break;
+
+                                case "Select":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+
+                        case "SendKeyorWaitEnable":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SendKey");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("WaitEnable");
+                            switch (PlaybackObjectList[i].action)
+                            {
+                                case "SendKey":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
+                                    break;
+
+                                case "WaitEnable":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+
+                        case "DataGrid":
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Unselect");
+                            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("DoubleClick");
+                            switch (PlaybackObjectList[i].action)
+                            {
+                                case "Select":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
+                                    break;
+
+                                case "Unselect":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
+                                    break;
+
+                                case "DoubleClick":
+                                    row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[2];
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                            break;
+
+                        default:
+                            break;
+                    }
+                    if (string.IsNullOrWhiteSpace(PlaybackObjectList[i].text) == false && PlaybackObjectList[i].itemIndex == -1)
+                        row.Cells[6].Value = PlaybackObjectList[i].text;
+                    else if (string.IsNullOrWhiteSpace(PlaybackObjectList[i].text) == true && PlaybackObjectList[i].itemIndex >= 0)
+                        row.Cells[6].Value = Convert.ToInt32(PlaybackObjectList[i].itemIndex);
+                    row.Cells[7].Value = "Set";
+                    dataGridView2.Rows.Add(row);
+                   
+                    row.Cells[0].ReadOnly = true;
+                }
+            }
+            dataGridView2.AllowUserToAddRows = false;
+        }
+
+        //string JsonPath;
+        private void btnCreateTestScript_Click(object sender, EventArgs e)
+        {
+            
+
+            //pbindex++;
+            
+        }
+
+        private void btnMoveUp_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnMoveDown_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                var editingControl = this.dataGridView2.EditingControl as DataGridViewComboBoxEditingControl;
+                if (editingControl != null)
+                {
+                    editingControl.DroppedDown = true;
+                }
+
+                if (dataGridView2.SelectedCells.Count > 0)
+                {
+                    int selectedrowindex = dataGridView2.SelectedCells[0].RowIndex;
+
+                    DataGridViewRow selectedRow = dataGridView2.Rows[selectedrowindex];
+
+                    dataGridView2.BeginEdit(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.SaveFileDialog ExportDialog = new System.Windows.Forms.SaveFileDialog();
+            ExportDialog.Title = "Save Test Script File";
+            ExportDialog.Filter = "JSON files (*.json)|*.json";
+            ExportDialog.RestoreDirectory = true;
+
+            if (ExportDialog.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter writer = new StreamWriter(File.Create(ExportDialog.FileName));
+                writer.WriteLine(rtxtScript.Text);
+                writer.Dispose();
+            }
+        }
+
+        private void importToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            ExceptionCode excode = new ExceptionCode();
+
+            System.Windows.Forms.OpenFileDialog ImportDialog = new System.Windows.Forms.OpenFileDialog();
+            ImportDialog.Title = "Open Test Script File";
+            ImportDialog.Filter = "JSON files (*.json)|*.json";
+            ImportDialog.Multiselect = true;
+            ImportDialog.RestoreDirectory = true;
+
+            //ImportDialog.InitialDirectory = @"C:\";
+            try
+            {
+                if (ImportDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //clbTestScriptList.Items.Clear();
+                    //lbxScriptList.SelectionMode = SelectionMode.MultiExtended;
+                    //scriptFiles = new ScriptFile[ImportDialog.FileNames.Length];
+                    int length = ImportDialog.FileNames.Length;
+
+                    //System.Windows.Forms.MessageBox.Show(ImportDialog.SafeFileNames[0].ToString());
+                    string content;
+                    int j = 0;
+                    int k = scriptFiles.Count;
+                    //System.Windows.Forms.MessageBox.Show(length.ToString());
+                    //System.Windows.Forms.MessageBox.Show(k.ToString());
+                    while (j < length)
+                    {
+                        scriptFiles.Add(new ScriptFile() { Name = ImportDialog.SafeFileNames[j], Path = ImportDialog.FileNames[j] });
+                        content = File.ReadAllText(scriptFiles[k].Path);
+                        if (ValidateJSON(content) == false)
+                        {
+                            log.Error("SCRIPT FORMAT IS INVALID");
+                            System.Windows.Forms.MessageBox.Show(scriptFiles[k].Name + " : Test Script's format is invalid Json", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            clbTestScriptList.Items.Add(scriptFiles[k].Name);
+                            clbTestScriptList.SetItemChecked(j, true);
+                        }
+                        k++;
+                        j++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);
+                System.Windows.Forms.MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static bool ValidateJSON(string s)
+        {
+            try
+            {
+                JToken.Parse(s);
+                return true;
+            }
+            catch (JsonReaderException ex)
+            {
+                Trace.WriteLine(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// The JSON test script validator
+        /// </summary>
+        public void readJson()
+        {
+            if(PlaybackObjectScript.Count>0)
+                PlaybackObjectScript.Clear();//Clear the old playback object script list to add the new one.
+            string readText = rtxtScript.Text;
+            dynamic controls = JsonConvert.DeserializeObject(readText);
+            //try
+            //{
+
+                foreach (var control in controls)
+                {
+                    PlaybackObject pbo = new PlaybackObject();
+                    pbo.index = control.Controller.index;
+                    pbo.automationId = control.Controller.automationId;
+                    pbo.name = control.Controller.name;
+                    pbo.type = control.Controller.type;
+                    pbo.action = control.Controller.action;
+                    pbo.text = control.Controller.text;
+                    pbo.itemIndex = control.Controller.itemIndex;
+                    switch(pbo.type)
+                    {
+                        case "TextBox":
+                            pbo.CheckPoint = new TextBoxCheckPoint();
+                            if (control.Controller.cpIsEmpty == true)
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEmpty=true;
+                            else
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEmpty = false;
+                            if (control.Controller.cpIsReadOnly == true)
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsReadOnly = control.Controller.cpIsReadOnly;
+                            else
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsReadOnly = false;
+                            if (control.Controller.cpIsEnabled == true)
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEnabled = control.Controller.cpIsEnabled;
+                            else
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEnabled = false;
+                            if (control.Controller.cpIsEqual == true)
+                            {
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEqual = control.Controller.cpIsEqual;
+                                if (control.Controller.expectedVal != null)
+                                    (pbo.CheckPoint as TextBoxCheckPoint).expectedVal = control.Controller.expectedVal;
+                            }
+                            else
+                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEqual = false;
+                        break;
+                        default:
+                            break;
+                    }
+                    PlaybackObjectScript.Add(pbo);
+                }
+            //}
+            //catch (Exception ex)
+            //{
+            //    ConsolePanelPush.AppendText("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
+            //    ConsolePanelPush.AppendText(Environment.NewLine);
+            //    WindowInteraction.FocusWindow(thisProc);
+            //    System.Windows.Forms.MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+        }
+
+        /// <summary>
+        /// Check a specific keyword and change its color.
+        /// </summary>
+        /// <param name="word">String</param>
+        /// <param name="color"></param>
+        /// <param name="StartIndex"></param>
+        public void CheckKeyWord(string word, Color color, int StartIndex)
+        {
+            if (this.ResultPanelPush.Text.Contains(word))
+            {
+                int index = -1;
+                int selectStart = this.ResultPanelPush.SelectionStart;
+                while ((index = this.ResultPanelPush.Text.IndexOf(word, (index + 1))) != -1)
+                {
+                    this.ResultPanelPush.Select((index + StartIndex), word.Length);
+                    this.ResultPanelPush.SelectionColor = color;
+                    this.ResultPanelPush.Select(selectStart, 0);
+                    this.ResultPanelPush.SelectionColor = Color.Black;
+                }
+            }
+
+            if (this.ConsolePanelPush.Text.Contains(word))
+            {
+                int index = -1;
+                int selectStart = this.ConsolePanelPush.SelectionStart;
+                while ((index = this.ConsolePanelPush.Text.IndexOf(word, (index + 1))) != -1)
+                {
+                    this.ConsolePanelPush.Select((index + StartIndex), word.Length);
+                    this.ConsolePanelPush.SelectionColor = color;
+                    this.ConsolePanelPush.Select(selectStart, 0);
+                    this.ConsolePanelPush.SelectionColor = Color.Black;
+                }
+            }
+
+            if (this.rtxtScript.Text.Contains(word))
+            {
+                int index = -1;
+                int selectStart = this.rtxtScript.SelectionStart;
+                while ((index = this.rtxtScript.Text.IndexOf(word, (index + 1))) != -1)
+                {
+                    this.rtxtScript.Select((index + StartIndex), word.Length);
+                    this.rtxtScript.SelectionColor = color;
+                    this.rtxtScript.Select(selectStart, 0);
+                    this.rtxtScript.SelectionColor = Color.Black;
+                }
+            }
+        }
+
+        private void btnMoveUpCLB_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnMoveDownCLB_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Button Save jsonscript
+        private void btnQuickSave_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void btnPlaybackScenario_Click(object sender, EventArgs e)
+        {
+        }
+
+        public void runScenario()
+        {
+            try
+            {
+                List<int> indexList = new List<int>();
+
+                foreach (var item in clbTestScriptList.CheckedItems)
+                {
+                    indexList.Add(clbTestScriptList.Items.IndexOf(item));
+                }
+
+                ResultPanelPush.Clear();
+                ConsolePanelPush.AppendText(DateTime.Now + " - " + "BEGIN SCENARIO PLAYBACK" + Environment.NewLine);
+                log.Info("BEGIN SCENARIO PLAYBACK");
+
+                for (int i = 0; i < indexList.Count; i++)
+                {
+                    clbTestScriptList.SelectedIndex = indexList[i];
+
+                    SumAllSteps += PlaybackObjectList.Count();
+                }
+
+                //System.Windows.Forms.MessageBox.Show(indexList.Count.ToString());
+
+                double div = 100 / (double)SumAllSteps;
+                double temp = Math.Floor(div);
+                double frac = div - temp;
+
+                if (frac > 0.6)
+                {
+                    s_percentage = (int)Math.Ceiling(div);
+                }
+                else
+                {
+                    s_percentage = (int)Math.Floor(div);
+                }
+
+                for (int i = 0; i < indexList.Count; i++)
+                {
+                    clbTestScriptList.SelectedIndex = indexList[i];
+
+                    readJson();
+
+                    ElementList = GrabAUT.SearchbyFramework("WPF");
+                    foreach (UiElement a in ElementList)
+                    {
+                        if (a.ClassName.Equals("ComboBox"))
+                        {
+                            a.AsComboBox().Expand();
+                        }
+                    }
+                    ElementList = GrabAUT.SearchbyFramework("WPF");
+
+                    Th_CLEARVALUE = new Thread(() => ClearTextBox.ClearValue(ProcessForm.targetproc));
+                    Th_CLEARVALUE.Start();
+                    Th_CLEARVALUE.Join();
+
+                    if (stop_playback.Equals(false))
+                    {
+                        ResultPanelPush.AppendText(DateTime.Now + " - " + "PLAYBACK ON: " + clbTestScriptList.SelectedItem + Environment.NewLine);
+
+                        PlaybackTestScript();
+
+                        ResultPanelPush.AppendText(Environment.NewLine);
+                    }
+                    else
+                    {
+                        WindowInteraction.FocusWindow(thisProc);
+                        ConsolePanelPush.AppendText(DateTime.Now + " - " + "CANCEL SCENARIO PLAYBACK" + Environment.NewLine);
+                        return;
+                    }
+                }
+
+                ConsolePanelPush.AppendText(DateTime.Now + " - " + "DONE SCENARIO PLAYBACK" + Environment.NewLine);
+                log.Info("DONE SCENARIO PLAYBACK");
+
+                if (playbackprogress > 100)
+                {
+                    playbackprogress = 100;
+                }
+
+                ScenarioStatus = false;
+
+                WindowInteraction.FocusWindow(thisProc);
+
+                pf.Hide();
+            }
+            catch
+            {
+                var a = new Exception("NO AUT TO PLAYBACK");
+                ConsolePanelPush.AppendText(DateTime.Now + " - " + a + Environment.NewLine);
+            }
+        }
+
+        private void ResultPanelPush_TextChanged_1(object sender, EventArgs e)
+        {
+            this.CheckKeyWord("PASSED", Color.Green, 0);
+            this.CheckKeyWord("FAILED", Color.Red, 0);
+            this.CheckKeyWord("item id", Color.OrangeRed, 0);
+            this.CheckKeyWord("ClassType", Color.Blue, 0);
+            this.CheckKeyWord("PLAYBACK ON", Color.Purple, 0);
+        }
+
+        private void ConsolePanelPush_TextChanged(object sender, EventArgs e)
+        {
+            this.CheckKeyWord("SCENARIO", Color.Green, 0);
+            this.CheckKeyWord("DONE PLAYBACK", Color.Green, 0);
+            this.CheckKeyWord("AUT NOT FOUND", Color.Red, 0);
+            this.CheckKeyWord("INPUT VALUE WAS OUT OF RANGE", Color.Red, 0);
+            this.CheckKeyWord("AUT QUIT DURING PLAYBACK OPERATION", Color.Red, 0);
+            this.CheckKeyWord("CANNOT SPY THIS PROGRAM", Color.Red, 0);
+        }
+
+        private void clbTestScriptList_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            clbTestScriptList.CheckOnClick = true;
+            if (clbTestScriptList.SelectedItem == null)
+            {
+                return;
+            }
+
+            int i = 0;
+            //clbTestScriptList.Refresh();
+            foreach (var scriptFile in scriptFiles)
+            {
+                if (scriptFile.Name == clbTestScriptList.SelectedItem.ToString())
+                {
+                    rtxtScript.Text = File.ReadAllText(scriptFiles[i].Path);
+                    CreateTestSteps();
+                    //readJson();
+                    break;
+                }
+                i++;
+            }
+        }
+
+        private void btnSendKeyorWaitEnable_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutWindow AboutW = new AboutWindow();
+            AboutW.Show();
+        }
+
+        private void dataGridView2_CellClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (dataGridView2.SelectedCells.Count > 0)
+                {
+                    //int selectedrowindex = dataGridView2.SelectedCells[0].RowIndex;
+
+                    //DataGridViewRow selectedRow = dataGridView2.Rows[selectedrowindex];
+
+                    var row = dataGridView2.Rows[e.RowIndex];
+                    if (null != row)
+                    {
+                        var cell = row.Cells[e.ColumnIndex];
+                        if (null != cell)
+                        {
+                            object value = cell.Value;
+
+                            if (null != value)
+                            {
+                                dataGridView2.BeginEdit(true);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void PlaybackLogger(int index, string classname, bool result)
+        {
+            if (result == true)
+            {
+                log.Info("PASSED at item id: " + index + " --- " + "ClassType: " + classname);
+                ResultPanelPush.AppendText(DateTime.Now + " - " + "PASSED at item id: " + index + " --- " + "ClassType: " + classname + Environment.NewLine);
+            }
+            else
+            {
+                log.Info("FAILED at item id: " + index + " --- " + "ClassType: " + classname);
+                ResultPanelPush.AppendText(DateTime.Now + " - " + "FAILED at item id: " + index + " --- " + "ClassType: " + classname + Environment.NewLine);
+            }
+        }
+
+        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.SuppressKeyPress = true;
+                AddTestSteps();
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyData)
+            {
+                case Keys.F1:
+                    btnAttachProcess.PerformClick();
+                    break;
+
+                case Keys.F2:
+                    //btnPlaybackTestSteps.PerformClick();
+                    break;
+
+                case Keys.F3:
+                    //btnPlaybackTestScript.PerformClick();
+                    break;
+
+                case Keys.F4:
+                    //btnPlaybackScenario.PerformClick();
+                    break;
+
+                case Keys.Escape:
+                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        // The user wants to exit the application. Close everything down.
+                        System.Windows.Forms.Application.Exit();
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        return;
+                    }
+                    break;
+
+                case Keys.Control | Keys.Shift | Keys.S:
+                    //btnQuickSave.PerformClick();
+                    break;
+
+                case Keys.Control | Keys.S:
+                    exportToolStripMenuItem.PerformClick();
+                    break;
+
+                case Keys.Alt | Keys.F4:
+                    e.SuppressKeyPress = true;
+                    DialogResult dialogResults = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+
+                    if (dialogResults == DialogResult.Yes)
+                    {
+                        // The user wants to exit the application. Close everything down.
+                        System.Windows.Forms.Application.Exit();
+                    }
+                    else if (dialogResults == DialogResult.No)
+                    {
+                        return;
+                    }
+                    break;
+
+                case Keys.Control | Keys.O:
+                    importToolStripMenuItem.PerformClick();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void dataGridView2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (dataGridView2.Rows.Count <= 0)
+                {
+                    return;
+                }
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    e.SuppressKeyPress = false;
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    e.SuppressKeyPress = true;
+                }
+            }
+        }
+
+        private void clbTestScriptList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (clbTestScriptList.SelectedItems.Count <= 0)
+                {
+                    return;
+                }
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    //foreach (var item in clbTestScriptList.SelectedItems)
+                    //    clbTestScriptList.Items.Remove(item);
+                    //scriptFiles.Clear();
+                }
+            }
+        }
+
+     
+
+   
+
+
+
+        #region DragandDrop
+        private Rectangle dragBoxFromMouseDown;
+        private int rowIndexFromMouseDown;
+        private int rowIndexOfItemUnderMouseToDrop;
+
+        private void dataGridView2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+            {
+                // If the mouse moves outside the rectangle, start the drag.
+                if (dragBoxFromMouseDown != Rectangle.Empty &&
+                !dragBoxFromMouseDown.Contains(e.X, e.Y))
+                {
+                    // Proceed with the drag and drop, passing in the list item.
+                    DragDropEffects dropEffect = dataGridView2.DoDragDrop(
+                          dataGridView2.Rows[rowIndexFromMouseDown],
+                          DragDropEffects.Move);
+                }
+            }
+        }
+
+        private void dataGridView2_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Get the index of the item the mouse is below.
+            rowIndexFromMouseDown = dataGridView2.HitTest(e.X, e.Y).RowIndex;
+            if (rowIndexFromMouseDown != -1)
+            {
+                // Remember the point where the mouse down occurred.
+                // The DragSize indicates the size that the mouse can move
+                // before a drag event should be started.
+                Size dragSize = SystemInformation.DragSize;
+                // Create a rectangle using the DragSize, with the mouse position being
+                // at the center of the rectangle.
+                dragBoxFromMouseDown = new Rectangle(
+                          new Point(
+                            e.X - (dragSize.Width / 2),
+                            e.Y - (dragSize.Height / 2)),
+                      dragSize);
+            }
+            else
+                // Reset the rectangle if the mouse is not over an item in the ListBox.
+                dragBoxFromMouseDown = Rectangle.Empty;
+        }
+
+        private void dataGridView2_DragOver(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Move;
+        }
+
+        private void dataGridView2_DragDrop(object sender, DragEventArgs e)
+        {
+            // The mouse locations are relative to the screen, so they must be
+            // converted to client coordinates.
+            Point clientPoint = dataGridView2.PointToClient(new Point(e.X, e.Y));
+
+            // Get the row index of the item the mouse is below.
+            rowIndexOfItemUnderMouseToDrop = dataGridView2.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+            if (rowIndexOfItemUnderMouseToDrop == -1)
+            {
+                return;
+            }
+            // If the drag operation was a move then remove and insert the row.
+            if (e.Effect == DragDropEffects.Move)
+            {
+                DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
+                dataGridView2.Rows.RemoveAt(rowIndexFromMouseDown);
+                dataGridView2.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
+                dataGridView2.ClearSelection();
+                dataGridView2.Rows[rowIndexOfItemUnderMouseToDrop].Selected = true;
+            }
+        }
+#endregion
+
+        private void dataGridView2_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (e.ColumnIndex == 6)
+            {
+                int rowIndex = e.RowIndex;
+                int colIndex = e.ColumnIndex;
+                //System.Windows.Forms.MessageBox.Show(dataGridView2.Rows[rowIndex].Cells[5].FormattedValue.ToString());
+
+                //System.Windows.Forms.MessageBox.Show("abc");
+                if (e.FormattedValue.ToString().Equals(String.Empty))
+                {
+                    //return;
+                }
+                //System.Windows.Forms.MessageBox.Show(dataGridView2.Rows[rowIndex].Cells[6].Value.ToString());
+                else
+                {
+                    if (dataGridView2.Rows[rowIndex].Cells[5].FormattedValue.ToString().Trim() == "")
+                    {
+                        //return;
+                    }
+                    else if (dataGridView2.Rows[rowIndex].Cells[5].FormattedValue.ToString().Trim() == "Select" || dataGridView2.Rows[rowIndex].Cells[5].Value.ToString().Trim() == "Unselect")
+                    {
+                        int checkNum = 0;
+                        try
+                        {
+                            checkNum = Convert.ToInt32(e.FormattedValue.ToString());
+                            if (checkNum >= 0)
+                            {
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("Value must be a number greater than or equal to 0 for Select action!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                e.Cancel = true;
+                                return;
+                            }
+                        }
+                        catch
+                        {
+                            System.Windows.Forms.MessageBox.Show("Value must be a number greater than or equal to 0 for Select action!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                    else if (dataGridView2.Rows[rowIndex].Cells[5].FormattedValue.ToString().Trim() == "Click")
+                    {
+                        if (e.FormattedValue.ToString().Equals(String.Empty))
+                        {
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Value must be empty for Click action!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// View log menu strip
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void viewLogsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var log = path + @"\Botsina\Logs\Botsina.log";
+
+            Process.Start(log);
+        }
+
+        /// <summary>
+        /// Close all thread before terminate the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Environment.Exit(Environment.ExitCode);
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 7)
+            {
+                int rowIndex = dataGridView2.SelectedRows[0].Index;
+                string type = dataGridView2.Rows[rowIndex].Cells[4].Value.ToString();
+
+                if (type == "TextBox")
+                {
+                    CpForm.ControlType = type;
+
+                    switch (type)
+
+                    {
+                        case "TextBox":
+
+                            CpForm.textBoxCP = (PlaybackObjectList[rowIndex].CheckPoint as TextBoxCheckPoint);
+                            break;
+                        default:
+                            break;
+
+                    }
+                    CpForm.ShowDialog();
+                    PlaybackObjectList[rowIndex].CheckPoint = CpForm.textBoxCP;
+                }
+                else
+                {
+                    System.Windows.Forms.MessageBox.Show("Type of control must be TextBox!");
+                }
+            }
+        }
+        int selectedRowIndex;
+        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
+        {
+                if(dataGridView2.SelectedRows.Count>0)
+                selectedRowIndex = dataGridView2.SelectedRows[0].Index;
+        }
+
+        private void dataGridView2_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+                    PlaybackObjectList.RemoveAt(selectedRowIndex);
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                dataGridView2.Rows[i].Cells[0].Value = i + 1;
+        }               
+
+        private void btnDeleteScripts_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            AddTestSteps();
+        }
+
+        private void rtxtScript_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 9)
+            {
+                e.Handled = false;
+            }
+        }
+
+        private void toolStripTextBox1_TextChanged(object sender, EventArgs e)
+        {
+            string text = toolStripTextBox1.Text.ToLower();
             dataGridView1.Rows.Clear();
             dataGridView1.AllowUserToAddRows = true;
             for (int i = 0; i < SpyObjectList.Count(); i++)
             {
                 string search = SpyObjectList[i].automationId.ToLower();
                 string search1 = SpyObjectList[i].name.ToLower();
-                if ((search.Contains(text) == true || search1.Contains(text) == true) && (comboBox1.SelectedItem.ToString() == "All" || (comboBox1.SelectedItem.ToString() == "Interactive Controls" && (SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid" || SpyObjectList[i].type == "TextBox" || SpyObjectList[i].type == "Button" || SpyObjectList[i].type == "RadioButton"))) && SpyObjectList[i].automationId.Contains("PART") != true)
+                if ((search.Contains(text) == true || search1.Contains(text) == true) && (toolStripComboBox1.SelectedItem.ToString() == "All" || (toolStripComboBox1.SelectedItem.ToString() == "Interactive Controls" && (SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid" || SpyObjectList[i].type == "TextBox" || SpyObjectList[i].type == "Button" || SpyObjectList[i].type == "RadioButton"))) && SpyObjectList[i].automationId.Contains("PART") != true)
                 {
                     int rowId = dataGridView1.Rows.Add();
                     DataGridViewRow row = dataGridView1.Rows[rowId];
@@ -1212,7 +2177,7 @@ namespace SpyandPlaybackTestTool
                     row.Cells[3].Value = SpyObjectList[i].name;
                     row.Cells[4].Value = SpyObjectList[i].type;
                 }
-                else if ((search.Contains(text) == true || search1.Contains(text) == true) && (SpyObjectList[i].type == comboBox1.SelectedItem.ToString()) && SpyObjectList[i].automationId.Contains("PART") != true)
+                else if ((search.Contains(text) == true || search1.Contains(text) == true) && (SpyObjectList[i].type == toolStripComboBox1.SelectedItem.ToString()) && SpyObjectList[i].automationId.Contains("PART") != true)
                 {
                     int rowId = dataGridView1.Rows.Add();
                     DataGridViewRow row = dataGridView1.Rows[rowId];
@@ -1225,12 +2190,12 @@ namespace SpyandPlaybackTestTool
             dataGridView1.AllowUserToAddRows = false;
         }
 
-        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            textBox1.Text = "";
+            toolStripTextBox1.Text = "";
             dataGridView1.Rows.Clear();
             dataGridView1.AllowUserToAddRows = true;
-            switch (comboBox1.SelectedItem.ToString())
+            switch (toolStripComboBox1.SelectedItem.ToString())
             {
                 case "Button":
 
@@ -1406,220 +2371,69 @@ namespace SpyandPlaybackTestTool
                     break;
             }
             dataGridView1.AllowUserToAddRows = false;
+
         }
 
-        private void InspectorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnAttachProcess_Click(object sender, EventArgs e)
         {
-            if (ProcessForm.isAttached.Equals(false))
-            {
-                System.Windows.Forms.MessageBox.Show("NO AUT TO INSPECT", "Warning!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                HighlightForm HLightForm = HighlightForm.GetInstance();
-                HLightForm.ProcessName = ProcessForm.targetproc;
-                HLightForm.Show();
-            }
+            ProcessForm PFM = ProcessForm.GetInstance();
+            PFM.Show();
         }
 
-        private void btnCreateTestSteps_Click(object sender, EventArgs e)
+        private void btnSpy_Click(object sender, EventArgs e)
         {
-            if (ValidateJSON(rtxtScript.Text) == false)
+            Spy("normal");
+        }
+
+        private void btnAdder_Click(object sender, EventArgs e)
+        {
+            AddTestSteps();
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+
+
+        private void btnPlayBackTestStep_Click(object sender, EventArgs e)
+        {
+            if (ProcessForm.targetproc == null)
             {
-                System.Windows.Forms.MessageBox.Show("Test Script format is invalid Json!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Playback Test Steps function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            CreateTestSteps();
-        }
-
-        /// <summary>
-        /// Create a Playback table from JSON test script.
-        /// </summary>
-        private void CreateTestSteps()
-        {
-            readJson();
-            dataGridView2.AllowUserToAddRows = true;
-            int count = PlaybackObjectList.Count();
-
-            for (int i = 0; i < count; i++)
+            if (dataGridView2.Rows.Count <= 0)
             {
-                DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[0].Clone();
-                if (i == 0)
-                    dataGridView2.Rows.Clear();
-                row.Cells[0].Value = i + 1;
-                row.Cells[1].Value = PlaybackObjectList[i].index;
-                row.Cells[2].Value = PlaybackObjectList[i].automationId;
-                row.Cells[3].Value = PlaybackObjectList[i].name;
-                row.Cells[4].Value = PlaybackObjectList[i].type;
-                ((DataGridViewComboBoxCell)row.Cells[5]).Items.Clear();
-                switch (row.Cells[4].Value.ToString())
-                {
-                    case "TabItem":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
-                        if (PlaybackObjectList[i].action == "Click")
-                            row.Cells[5].Value = PlaybackObjectList[i].action;
-                        break;
-
-                    case "Button":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
-                        if (PlaybackObjectList[i].action == "Click")
-                            row.Cells[5].Value = PlaybackObjectList[i].action;
-                        break;
-
-                    case "RadioButton":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
-                        if (PlaybackObjectList[i].action == "Click")
-                            row.Cells[5].Value = PlaybackObjectList[i].action;
-                        break;
-
-                    case "TextBox":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
-                        if (PlaybackObjectList[i].action == "SetText")
-                            row.Cells[5].Value = PlaybackObjectList[i].action;
-
-                        break;
-
-                    case "RichTextBox":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
-                        if (PlaybackObjectList[i].action == "SetText")
-                            row.Cells[5].Value = PlaybackObjectList[i].action;
-                        break;
-
-                    case "PasswordBox":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
-                        if (PlaybackObjectList[i].action == "SetText")
-                            row.Cells[5].Value = PlaybackObjectList[i].action;
-                        break;
-
-                    case "ComboBox":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
-                        switch (PlaybackObjectList[i].action)
-                        {
-                            case "SetText":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
-                                break;
-
-                            case "Select":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case "CheckBox":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Unselect");
-                        switch (PlaybackObjectList[i].action)
-                        {
-                            case "Select":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
-                                break;
-
-                            case "Unselect":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case "ComboBoxEdit":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
-                        switch (PlaybackObjectList[i].action)
-                        {
-                            case "SetText":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
-                                break;
-
-                            case "Select":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case "AutoCompleteCombobox":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SetText");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
-                        switch (PlaybackObjectList[i].action)
-                        {
-                            case "SetText":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
-                                break;
-
-                            case "Select":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case "SendKeyorWaitEnable":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SendKey");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("WaitEnable");
-                        switch (PlaybackObjectList[i].action)
-                        {
-                            case "SendKey":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
-                                break;
-
-                            case "WaitEnable":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-
-                    case "DataGrid":
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Unselect");
-                        ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("DoubleClick");
-                        switch (PlaybackObjectList[i].action)
-                        {
-                            case "Select":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[0];
-                                break;
-
-                            case "Unselect":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[1];
-                                break;
-
-                            case "DoubleClick":
-                                row.Cells[5].Value = ((DataGridViewComboBoxCell)row.Cells[5]).Items[2];
-                                break;
-
-                            default:
-                                break;
-                        }
-                        break;
-
-                    default:
-                        break;
-                }
-                if (PlaybackObjectList[i].text != "" && PlaybackObjectList[i].itemIndex == -1)
-                    row.Cells[6].Value = PlaybackObjectList[i].text.Trim();
-                else if (PlaybackObjectList[i].text == "" && PlaybackObjectList[i].itemIndex >= 0)
-                    row.Cells[6].Value = Convert.ToInt32(PlaybackObjectList[i].itemIndex);
-
-                dataGridView2.Rows.Add(row);
-                row.Cells[0].ReadOnly = true;
+                System.Windows.Forms.MessageBox.Show("There is no data!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
-            dataGridView2.AllowUserToAddRows = false;
+
+
+            if (pf.Equals(null) || pf.IsDisposed)
+            {
+                pf = new ProgressForm();
+                pf.Show();
+            }
+
+            pf.Show();
+
+            playbackprogress = 0;
+            playbackstatus = true;
+            stop_playback = false;
+
+            Th_PBTSTEP = new Thread(() => PlaybackTestSteps());
+            Th_PBTSTEP.IsBackground = true;
+            Th_PBTSTEP.Start();
         }
 
-        //string JsonPath;
-        private void btnCreateTestScript_Click(object sender, EventArgs e)
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            AddTestSteps();
+        }
+
+        private void btnCreateScript_Click(object sender, EventArgs e)
         {
             if (dataGridView2.Rows.Count == 0)
             {
@@ -1627,73 +2441,117 @@ namespace SpyandPlaybackTestTool
                 return;
             }
 
-           // PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
-            int pbindex = 0;
-            foreach (DataGridViewRow row in dataGridView2.Rows)
+            for (int i = 0; i < PlaybackObjectList.Count; i++)
             {
-                //System.Windows.Forms.MessageBox.Show(row.Cells[1].Value.ToString());
-                PlaybackObjectList[pbindex] = new PlaybackObject();
-                PlaybackObjectList[pbindex].index = Convert.ToInt32(row.Cells[1].Value);
-                PlaybackObjectList[pbindex].automationId = Convert.ToString(row.Cells[2].Value);
-                PlaybackObjectList[pbindex].name = Convert.ToString(row.Cells[3].Value);
-                PlaybackObjectList[pbindex].type = Convert.ToString(row.Cells[4].Value);
-                PlaybackObjectList[pbindex].action = Convert.ToString(row.Cells[5].Value);
-                int n;
-                bool isNumeric = int.TryParse(Convert.ToString(row.Cells[6].Value), out n);
-                if (PlaybackObjectList[pbindex].type.Trim() == "DataGrid"
-                    || PlaybackObjectList[pbindex].type.Trim() == "ComboBox"
-                    || PlaybackObjectList[pbindex].type.Trim() == "ComboBoxEdit"
-                    || PlaybackObjectList[pbindex].type.Trim() == "AutoCompleteCombobox")
+                dynamic TestScriptObject = new ExpandoObject();
+                TestScriptObject.index = PlaybackObjectList[i].index;
+                TestScriptObject.automationId = PlaybackObjectList[i].automationId;
+                TestScriptObject.name = PlaybackObjectList[i].name;
+                TestScriptObject.type = PlaybackObjectList[i].type;
+                TestScriptObject.action = PlaybackObjectList[i].action;
+                TestScriptObject.text = PlaybackObjectList[i].text;
+                TestScriptObject.itemIndex = PlaybackObjectList[i].itemIndex;
+                switch (PlaybackObjectList[i].type)
                 {
-                    if (isNumeric)
-                    {
-                        PlaybackObjectList[pbindex].text = "";
-                        PlaybackObjectList[pbindex].itemIndex = Convert.ToInt32(row.Cells[6].Value);
-                    }
-                    else
-                    {
-                        PlaybackObjectList[pbindex].text = Convert.ToString(row.Cells[6].Value).Trim();
-                        PlaybackObjectList[pbindex].itemIndex = -1;
-                    }
+                    case "TextBox":
+                        if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEmpty == true)
+                            TestScriptObject.cpIsEmpty = (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEmpty;
+                        if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnly == true)
+                            TestScriptObject.cpIsReadOnly = (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnly;
+                        if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabled == true)
+                            TestScriptObject.cpIsEnabled = (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEnabled;
+                        if ((PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEqual == true)
+                        {
+                            TestScriptObject.cpIsEqual = (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).cpIsEqual;
+                            TestScriptObject.expectedVal = (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).expectedVal;
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    PlaybackObjectList[pbindex].text = Convert.ToString(row.Cells[6].Value).Trim();
-                    PlaybackObjectList[pbindex].itemIndex = -1;
-                }
-
-                if (PlaybackObjectList[pbindex].type == "SendKeyorWaitEnable" && PlaybackObjectList[pbindex].action == "WaitEnable")
-                {
-                    if (string.IsNullOrEmpty(PlaybackObjectList[pbindex].text.Trim()))
-                    {
-                        System.Windows.Forms.MessageBox.Show("Dont Leave any blank");
-                    }
-                    else
-                        PlaybackObjectList[pbindex].text = Convert.ToString(row.Cells[6].Value).Trim();
-                    PlaybackObjectList[pbindex].itemIndex = -1;
-                }
-
-                string json = JsonConvert.SerializeObject(PlaybackObjectList[pbindex], Formatting.Indented);
-                if (dataGridView2.Rows.Count == 1)
+                string json = JsonConvert.SerializeObject(TestScriptObject, Formatting.Indented);
+                if (PlaybackObjectList.Count == 1)
                 {
                     //System.IO.File.WriteAllText(JsonPath, "[{\"Controller\":" + json + "}]");
                     rtxtScript.Text = "[{\"Controller\":" + json + "}]";
                     break;
                 }
-                if (pbindex == 0)
+                if (i == 0)
                     //System.IO.File.WriteAllText(JsonPath, "[{\"Controller\":" + json);
                     rtxtScript.Text = "[{\"Controller\":" + json;
-                else if (pbindex == dataGridView2.Rows.Count - 1)
+                else if (i == PlaybackObjectList.Count - 1)
                     //System.IO.File.AppendAllText(JsonPath, "},{\"Controller\":" + json + "}]");
                     rtxtScript.Text += "},{\"Controller\":" + json + "}]";
                 else
                     //System.IO.File.AppendAllText(JsonPath, "},{\"Controller\":" + json);
                     rtxtScript.Text += "},{\"Controller\":" + json;
-                pbindex++;
+
             }
         }
 
-        private void btnMoveUp_Click(object sender, EventArgs e)
+        private void btnSendKeyWait_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows.Count <= 0)
+            {
+                return;
+            }
+
+            DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[0].Clone();
+
+            row.Cells[0].Value = dataGridView2.Rows.Count + 1;
+            row.Cells[1].Value = -1;
+            row.Cells[2].Value = "";
+            row.Cells[3].Value = "";
+            row.Cells[4].Value = "SendKeyorWaitEnable";
+            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Clear();
+            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SendKey");
+            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("WaitEnable");
+            row.Cells[6].Value = "";
+
+            row.Cells[0].ReadOnly = true;
+            row.Cells[1].ReadOnly = true;
+            row.Cells[2].ReadOnly = true;
+            row.Cells[3].ReadOnly = true;
+            row.Cells[4].ReadOnly = true;
+
+            dataGridView2.Rows.Add(row);
+        }
+
+        private void btnRemoveRows_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.Rows.Count == 0)
+                System.Windows.Forms.MessageBox.Show("There is no data!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+            {
+                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to remove this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    int i = 1;
+                    dataGridView2.MultiSelect = true;
+                    foreach (DataGridViewCell cell in dataGridView2.SelectedCells)
+                    {
+                        if (cell.Selected == true)
+                        {
+                            //dataGridView2.Rows.Remove(row);
+                            PlaybackObjectList.RemoveAt(cell.RowIndex);
+                            dataGridView2.Rows.RemoveAt(cell.RowIndex);
+
+                        }
+                    }
+                    dataGridView2.ClearSelection();
+                    foreach (DataGridViewRow row in dataGridView2.Rows)
+                    {
+                        row.Cells[0].Value = i;
+                        i++;
+                    }
+                }
+                else
+                    return;
+            }
+
+        }
+
+        private void btnMoveRowUp_Click(object sender, EventArgs e)
         {
             if (dataGridView2.Rows.Count <= 0)
             {
@@ -1704,17 +2562,17 @@ namespace SpyandPlaybackTestTool
                 DataGridView grid = dataGridView2;
                 try
                 {
-                    
+
                     int totalRows = grid.Rows.Count;
-                    if(totalRows>1)
+                    if (totalRows > 1)
                     {
                         PlaybackObject temp = new PlaybackObject();
-                        if(grid.SelectedRows[0].Index>0)
+                        if (grid.SelectedRows[0].Index > 0)
                         {
-                            temp=PlaybackObjectList[grid.SelectedRows[0].Index];
+                            temp = PlaybackObjectList[grid.SelectedRows[0].Index];
                             PlaybackObjectList[grid.SelectedRows[0].Index] = PlaybackObjectList[grid.SelectedRows[0].Index - 1];
                             PlaybackObjectList[grid.SelectedRows[0].Index - 1] = temp;
-                        }    
+                        }
                     }
                     int idx = grid.SelectedCells[0].OwningRow.Index;
                     if (idx == 0)
@@ -1736,9 +2594,10 @@ namespace SpyandPlaybackTestTool
                     throw;
                 }
             }
+
         }
 
-        private void btnMoveDown_Click(object sender, EventArgs e)
+        private void btnMoveRowDown_Click(object sender, EventArgs e)
         {
             if (dataGridView2.Rows.Count <= 0)
             {
@@ -1750,15 +2609,15 @@ namespace SpyandPlaybackTestTool
                 try
                 {
                     int totalRows = grid.Rows.Count;
-                             if(totalRows>1)
+                    if (totalRows > 1)
                     {
                         PlaybackObject temp = new PlaybackObject();
-                        if(grid.SelectedRows[0].Index<totalRows-1)
+                        if (grid.SelectedRows[0].Index < totalRows - 1)
                         {
-                            temp=PlaybackObjectList[grid.SelectedRows[0].Index];
+                            temp = PlaybackObjectList[grid.SelectedRows[0].Index];
                             PlaybackObjectList[grid.SelectedRows[0].Index] = PlaybackObjectList[grid.SelectedRows[0].Index + 1];
                             PlaybackObjectList[grid.SelectedRows[0].Index + 1] = temp;
-                        }    
+                        }
                     }
                     int idx = grid.SelectedCells[0].OwningRow.Index;
                     if (idx == totalRows - 1)
@@ -1780,229 +2639,114 @@ namespace SpyandPlaybackTestTool
                     throw;
                 }
             }
+
         }
 
-        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void btnPlayTestScript_Click(object sender, EventArgs e)
         {
-            try
+            if (ProcessForm.targetproc == null)
             {
-                var editingControl = this.dataGridView2.EditingControl as DataGridViewComboBoxEditingControl;
-                if (editingControl != null)
-                {
-                    editingControl.DroppedDown = true;
-                }
-
-                if (dataGridView2.SelectedCells.Count > 0)
-                {
-                    int selectedrowindex = dataGridView2.SelectedCells[0].RowIndex;
-
-                    DataGridViewRow selectedRow = dataGridView2.Rows[selectedrowindex];
-
-                    dataGridView2.BeginEdit(true);
-                }
+                System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Playback Test Script function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            catch (Exception ex)
+            if (ValidateJSON(rtxtScript.Text) == false)
             {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
+                System.Windows.Forms.MessageBox.Show("Test Script format is invalid Json!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-        }
 
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            System.Windows.Forms.SaveFileDialog ExportDialog = new System.Windows.Forms.SaveFileDialog();
-            ExportDialog.Title = "Save Test Script File";
-            ExportDialog.Filter = "JSON files (*.json)|*.json";
-            ExportDialog.RestoreDirectory = true;
 
-            if (ExportDialog.ShowDialog() == DialogResult.OK)
+            if (pf.Equals(null) || pf.IsDisposed)
             {
-                StreamWriter writer = new StreamWriter(File.Create(ExportDialog.FileName));
-                writer.WriteLine(rtxtScript.Text);
-                writer.Dispose();
+                pf = new ProgressForm();
+                pf.Show();
             }
-        }
 
-        private void importToolStripMenuItem_Click_1(object sender, EventArgs e)
-        {
-            ExceptionCode excode = new ExceptionCode();
+            pf.Show();
 
-            System.Windows.Forms.OpenFileDialog ImportDialog = new System.Windows.Forms.OpenFileDialog();
-            ImportDialog.Title = "Open Test Script File";
-            ImportDialog.Filter = "JSON files (*.json)|*.json";
-            ImportDialog.Multiselect = true;
-            ImportDialog.RestoreDirectory = true;
+            playbackprogress = 0;
+            playbackstatus = true;
+            stop_playback = false;
 
-            //ImportDialog.InitialDirectory = @"C:\";
-            try
+
+
+            Th_CLEARVALUE = new Thread(() => ClearTextBox.ClearValue(ProcessForm.targetproc));
+            Th_CLEARVALUE.Start();
+            Th_CLEARVALUE.Join();
+
+            readJson();
+
+            ElementList = GrabAUT.SearchbyFramework("WPF");
+            foreach (UiElement a in ElementList)
             {
-                if (ImportDialog.ShowDialog() == DialogResult.OK)
+                if (a.ClassName.Equals("ComboBox"))
                 {
-                    //clbTestScriptList.Items.Clear();
-                    //lbxScriptList.SelectionMode = SelectionMode.MultiExtended;
-                    //scriptFiles = new ScriptFile[ImportDialog.FileNames.Length];
-                    int length = ImportDialog.FileNames.Length;
-
-                    //System.Windows.Forms.MessageBox.Show(ImportDialog.SafeFileNames[0].ToString());
-                    string content;
-                    int j = 0;
-                    int k = scriptFiles.Count;
-                    //System.Windows.Forms.MessageBox.Show(length.ToString());
-                    //System.Windows.Forms.MessageBox.Show(k.ToString());
-                    while (j < length)
-                    {
-                        scriptFiles.Add(new ScriptFile() { Name = ImportDialog.SafeFileNames[j], Path = ImportDialog.FileNames[j] });
-                        content = File.ReadAllText(scriptFiles[k].Path);
-                        if (ValidateJSON(content) == false)
-                        {
-                            log.Error("SCRIPT FORMAT IS INVALID");
-                            System.Windows.Forms.MessageBox.Show(scriptFiles[k].Name + " : Test Script's format is invalid Json", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        else
-                        {
-                            clbTestScriptList.Items.Add(scriptFiles[k].Name);
-                            clbTestScriptList.SetItemChecked(j, true);
-                        }
-                        k++;
-                        j++;
-                    }
+                    a.AsComboBox().Expand();
                 }
             }
-            catch (Exception ex)
-            {
-                log.Error(ex.Message);
-                System.Windows.Forms.MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ElementList = GrabAUT.SearchbyFramework("WPF");
+
+            //WindowInteraction.FocusWindow(targetProc);
+            ResultPanelPush.Clear();
+            ConsolePanelPush.AppendText(DateTime.Now + " - " + "BEGIN PLAYBACK");
+            log.Info("BEGIN PLAYBACK");
+            ConsolePanelPush.AppendText(Environment.NewLine);
+
+            Th_PBTSCRIPT = new Thread(() => PlaybackTestScript());
+            Th_PBTSCRIPT.Start();
+
+            ConsolePanelPush.AppendText(DateTime.Now + " - " + "DONE PLAYBACK");
+            log.Info("DONE PLAYBACK");
+            ConsolePanelPush.AppendText(Environment.NewLine);
+            //WindowInteraction.FocusWindow(thisProc);
+
         }
 
-        public static bool ValidateJSON(string s)
+        private void btnCreateSteps_Click(object sender, EventArgs e)
         {
-            try
+            if (ValidateJSON(rtxtScript.Text) == false)
             {
-                JToken.Parse(s);
-                return true;
+                System.Windows.Forms.MessageBox.Show("Test Script format is invalid Json!", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
-            catch (JsonReaderException ex)
-            {
-                Trace.WriteLine(ex);
-                return false;
-            }
+            CreateTestSteps();
         }
 
-        /// <summary>
-        /// The JSON test script validator
-        /// </summary>
-        public void readJson()
+        private void btnPlayScenario_Click(object sender, EventArgs e)
         {
-            string readText = rtxtScript.Text;
-            dynamic controls = JsonConvert.DeserializeObject(readText);
-            try
+            if (ProcessForm.isAttached == false)
             {
-                int pbindex = 0;
-                //PlaybackObjectList = new PlaybackObject[controls.Count];
-                foreach (var control in controls)
-                {
-                    PlaybackObjectList[pbindex] = new PlaybackObject();
-                    PlaybackObjectList[pbindex].index = control.Controller.index;
-                    PlaybackObjectList[pbindex].automationId = control.Controller.automationId;
-                    PlaybackObjectList[pbindex].name = control.Controller.name;
-                    PlaybackObjectList[pbindex].type = control.Controller.type;
-                    PlaybackObjectList[pbindex].action = control.Controller.action;
-                    PlaybackObjectList[pbindex].text = control.Controller.text;
-                    PlaybackObjectList[pbindex].itemIndex = control.Controller.itemIndex;
-                    pbindex++;
-                }
+                System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Scenario Playback function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
-            catch (Exception ex)
+            if (clbTestScriptList.CheckedItems.Count <= 0)
             {
-                ConsolePanelPush.AppendText("ERROR CODE: " + ex.HResult + "  -----  " + "detail: " + ex.Message);
-                ConsolePanelPush.AppendText(Environment.NewLine);
-                WindowInteraction.FocusWindowNormal(thisProc);
-                System.Windows.Forms.MessageBox.Show(ex.Message, "Error Encountered", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.Forms.MessageBox.Show("There is no checked Test Script file!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+
+            if (pf.Equals(null) || pf.IsDisposed)
+            {
+                pf = new ProgressForm();
+                pf.Show();
+            }
+
+            pf.Show();
+
+            ScenarioStatus = true;
+
+            playbackprogress = 0;
+            SumAllSteps = 0;
+
+            stop_playback = false;
+
+            Th_PBScenario = new Thread(() => runScenario());
+            Th_PBScenario.IsBackground = true;
+            Th_PBScenario.Start();
+
         }
 
-        /// <summary>
-        /// Check a specific keyword and change its color.
-        /// </summary>
-        /// <param name="word">String</param>
-        /// <param name="color"></param>
-        /// <param name="StartIndex"></param>
-        public void CheckKeyWord(string word, Color color, int StartIndex)
-        {
-            if (this.ResultPanelPush.Text.Contains(word))
-            {
-                int index = -1;
-                int selectStart = this.ResultPanelPush.SelectionStart;
-                while ((index = this.ResultPanelPush.Text.IndexOf(word, (index + 1))) != -1)
-                {
-                    this.ResultPanelPush.Select((index + StartIndex), word.Length);
-                    this.ResultPanelPush.SelectionColor = color;
-                    this.ResultPanelPush.Select(selectStart, 0);
-                    this.ResultPanelPush.SelectionColor = Color.Black;
-                }
-            }
-
-            if (this.ConsolePanelPush.Text.Contains(word))
-            {
-                int index = -1;
-                int selectStart = this.ConsolePanelPush.SelectionStart;
-                while ((index = this.ConsolePanelPush.Text.IndexOf(word, (index + 1))) != -1)
-                {
-                    this.ConsolePanelPush.Select((index + StartIndex), word.Length);
-                    this.ConsolePanelPush.SelectionColor = color;
-                    this.ConsolePanelPush.Select(selectStart, 0);
-                    this.ConsolePanelPush.SelectionColor = Color.Black;
-                }
-            }
-
-            if (this.rtxtScript.Text.Contains(word))
-            {
-                int index = -1;
-                int selectStart = this.rtxtScript.SelectionStart;
-                while ((index = this.rtxtScript.Text.IndexOf(word, (index + 1))) != -1)
-                {
-                    this.rtxtScript.Select((index + StartIndex), word.Length);
-                    this.rtxtScript.SelectionColor = color;
-                    this.rtxtScript.Select(selectStart, 0);
-                    this.rtxtScript.SelectionColor = Color.Black;
-                }
-            }
-        }
-
-        private void btnMoveUpCLB_Click(object sender, EventArgs e)
-        {
-            // Checking selected item
-            if (clbTestScriptList.SelectedItem == null || clbTestScriptList.SelectedIndex <= 0)
-                return; // No selected item - nothing to do
-            // add a duplicate item up in the listbox
-            int oldIndex = clbTestScriptList.SelectedIndex + 1;
-            clbTestScriptList.Items.Insert(clbTestScriptList.SelectedIndex - 1, clbTestScriptList.SelectedItem);
-            // make it the current item
-            clbTestScriptList.SelectedIndex = (clbTestScriptList.SelectedIndex - 2);
-            if (clbTestScriptList.GetItemCheckState(oldIndex) == CheckState.Checked)
-                clbTestScriptList.SetItemChecked(clbTestScriptList.SelectedIndex, true);
-            // delete the old occurrence of this item
-            clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex + 2);
-        }
-
-        private void btnMoveDownCLB_Click(object sender, EventArgs e)
-        {
-            // Checking selected item
-            if (clbTestScriptList.SelectedItem == null || clbTestScriptList.SelectedIndex >= clbTestScriptList.Items.Count - 1)
-                return; // No selected item - nothing to do
-            int IndexToRemove = clbTestScriptList.SelectedIndex;
-            // add a duplicate item down in the listbox
-            clbTestScriptList.Items.Insert(clbTestScriptList.SelectedIndex + 2, clbTestScriptList.SelectedItem);
-            // make it the current item
-            clbTestScriptList.SelectedIndex = (clbTestScriptList.SelectedIndex + 2);
-            if (clbTestScriptList.GetItemCheckState(IndexToRemove) == CheckState.Checked)
-                clbTestScriptList.SetItemChecked(clbTestScriptList.SelectedIndex, true);
-            // delete the old occurrence of this item
-            clbTestScriptList.Items.RemoveAt(IndexToRemove);
-        }
-
-        // Button Save jsonscript
-        private void btnQuickSave_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             if (clbTestScriptList.Items.Count == 0)
             {
@@ -2028,7 +2772,7 @@ namespace SpyandPlaybackTestTool
                 {
                     if (scriptFile.Name == clbTestScriptList.SelectedItem.ToString())
                     {
-                       // PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
+                        // PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
                         int pbindex = 0;
                         foreach (DataGridViewRow row in dataGridView2.Rows)
                         {
@@ -2108,590 +2852,10 @@ namespace SpyandPlaybackTestTool
                     i++;
                 }
             }
+
         }
 
-        private void btnPlaybackScenario_Click(object sender, EventArgs e)
-        {
-            if (ProcessForm.isAttached == false)
-            {
-                System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Scenario Playback function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            if (clbTestScriptList.CheckedItems.Count <= 0)
-            {
-                System.Windows.Forms.MessageBox.Show("There is no checked Test Script file!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
-
-            pf.Show();
-
-            ScenarioStatus = true;
-
-            playbackprogress = 0;
-            SumAllSteps = 0;
-
-            stop_playback = false;
-
-            Th_PBScenario = new Thread(() => runScenario());
-            Th_PBScenario.IsBackground = true;
-            Th_PBScenario.Start();
-        }
-
-        public void runScenario()
-        {
-            try
-            {
-                List<int> indexList = new List<int>();
-
-                foreach (var item in clbTestScriptList.CheckedItems)
-                {
-                    indexList.Add(clbTestScriptList.Items.IndexOf(item));
-                }
-
-                ResultPanelPush.Clear();
-                ConsolePanelPush.AppendText(DateTime.Now + " - " + "BEGIN SCENARIO PLAYBACK" + Environment.NewLine);
-                log.Info("BEGIN SCENARIO PLAYBACK");
-
-                for (int i = 0; i < indexList.Count; i++)
-                {
-                    clbTestScriptList.SelectedIndex = indexList[i];
-
-                    SumAllSteps += PlaybackObjectList.Count();
-                }
-
-                //System.Windows.Forms.MessageBox.Show(indexList.Count.ToString());
-
-                double div = 100 / (double)SumAllSteps;
-                double temp = Math.Floor(div);
-                double frac = div - temp;
-
-                if (frac > 0.6)
-                {
-                    s_percentage = (int)Math.Ceiling(div);
-                }
-                else
-                {
-                    s_percentage = (int)Math.Floor(div);
-                }
-
-                for (int i = 0; i < indexList.Count; i++)
-                {
-                    clbTestScriptList.SelectedIndex = indexList[i];
-
-                    readJson();
-
-                    ElementList = GrabAUT.SearchbyFramework("WPF");
-
-                    Th_CLEARVALUE = new Thread(() => ClearTextBox.ClearValue(ProcessForm.targetproc));
-                    Th_CLEARVALUE.Start();
-                    Th_CLEARVALUE.Join();
-
-                    if (stop_playback.Equals(false))
-                    {
-                        ResultPanelPush.AppendText(DateTime.Now + " - " + "PLAYBACK ON: " + clbTestScriptList.SelectedItem + Environment.NewLine);
-
-                        PlaybackTestScript();
-
-                        ResultPanelPush.AppendText(Environment.NewLine);
-                    }
-                    else
-                    {
-                        WindowInteraction.FocusWindowNormal(thisProc);
-                        ConsolePanelPush.AppendText(DateTime.Now + " - " + "CANCEL SCENARIO PLAYBACK" + Environment.NewLine);
-                        return;
-                    }
-                }
-
-                ConsolePanelPush.AppendText(DateTime.Now + " - " + "DONE SCENARIO PLAYBACK" + Environment.NewLine);
-                log.Info("DONE SCENARIO PLAYBACK");
-
-                if (playbackprogress > 100)
-                {
-                    playbackprogress = 100;
-                }
-
-                ScenarioStatus = false;
-
-                WindowInteraction.FocusWindowNormal(thisProc);
-
-                pf.Hide();
-            }
-            catch
-            {
-                var a = new Exception("NO AUT TO PLAYBACK");
-                ConsolePanelPush.AppendText(DateTime.Now + " - " + a + Environment.NewLine);
-            }
-        }
-
-        private void ResultPanelPush_TextChanged_1(object sender, EventArgs e)
-        {
-            this.CheckKeyWord("PASSED", Color.Green, 0);
-            this.CheckKeyWord("FAILED", Color.Red, 0);
-            this.CheckKeyWord("item id", Color.OrangeRed, 0);
-            this.CheckKeyWord("ClassType", Color.Blue, 0);
-            this.CheckKeyWord("PLAYBACK ON", Color.Purple, 0);
-        }
-
-        private void ConsolePanelPush_TextChanged(object sender, EventArgs e)
-        {
-            this.CheckKeyWord("SCENARIO", Color.Green, 0);
-            this.CheckKeyWord("DONE PLAYBACK", Color.Green, 0);
-            this.CheckKeyWord("AUT NOT FOUND", Color.Red, 0);
-            this.CheckKeyWord("INPUT VALUE WAS OUT OF RANGE", Color.Red, 0);
-            this.CheckKeyWord("AUT QUIT DURING PLAYBACK OPERATION", Color.Red, 0);
-            this.CheckKeyWord("CANNOT SPY THIS PROGRAM", Color.Red, 0);
-        }
-
-        private void clbTestScriptList_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            clbTestScriptList.CheckOnClick = true;
-            if (clbTestScriptList.SelectedItem == null)
-            {
-                return;
-            }
-
-            int i = 0;
-            //clbTestScriptList.Refresh();
-            foreach (var scriptFile in scriptFiles)
-            {
-                if (scriptFile.Name == clbTestScriptList.SelectedItem.ToString())
-                {
-                    rtxtScript.Text = File.ReadAllText(scriptFiles[i].Path);
-                    CreateTestSteps();
-                    //readJson();
-                    break;
-                }
-                i++;
-            }
-        }
-
-        private void btnSendKeyorWaitEnable_Click(object sender, EventArgs e)
-        {
-            if (dataGridView2.Rows.Count <= 0)
-            {
-                return;
-            }
-
-            DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[0].Clone();
-
-            row.Cells[0].Value = dataGridView2.Rows.Count + 1;
-            row.Cells[1].Value = -1;
-            row.Cells[2].Value = "";
-            row.Cells[3].Value = "";
-            row.Cells[4].Value = "SendKeyorWaitEnable";
-            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Clear();
-            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SendKey");
-            ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("WaitEnable");
-            row.Cells[6].Value = "";
-
-            row.Cells[0].ReadOnly = true;
-            row.Cells[1].ReadOnly = true;
-            row.Cells[2].ReadOnly = true;
-            row.Cells[3].ReadOnly = true;
-            row.Cells[4].ReadOnly = true;
-
-            dataGridView2.Rows.Add(row);
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AboutWindow AboutW = new AboutWindow();
-            AboutW.Show();
-        }
-
-        private void dataGridView2_CellClick_1(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                if (dataGridView2.SelectedCells.Count > 0)
-                {
-                    //int selectedrowindex = dataGridView2.SelectedCells[0].RowIndex;
-
-                    //DataGridViewRow selectedRow = dataGridView2.Rows[selectedrowindex];
-
-                    var row = dataGridView2.Rows[e.RowIndex];
-                    if (null != row)
-                    {
-                        var cell = row.Cells[e.ColumnIndex];
-                        if (null != cell)
-                        {
-                            object value = cell.Value;
-
-                            if (null != value)
-                            {
-                                dataGridView2.BeginEdit(true);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.Forms.MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void PlaybackLogger(int index, string classname, bool result)
-        {
-            if (result == true)
-            {
-                log.Info("PASSED at item id: " + index + " --- " + "ClassType: " + classname);
-                ResultPanelPush.AppendText(DateTime.Now + " - " + "PASSED at item id: " + index + " --- " + "ClassType: " + classname + Environment.NewLine);
-            }
-            else
-            {
-                log.Info("FAILED at item id: " + index + " --- " + "ClassType: " + classname);
-                ResultPanelPush.AppendText(DateTime.Now + " - " + "FAILED at item id: " + index + " --- " + "ClassType: " + classname + Environment.NewLine);
-            }
-        }
-
-        private void dataGridView1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                e.SuppressKeyPress = true;
-                AddTestSteps();
-            }
-        }
-
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyData)
-            {
-                case Keys.F1:
-                    button1.PerformClick();
-                    break;
-
-                case Keys.F2:
-                    btnPlaybackTestSteps.PerformClick();
-                    break;
-
-                case Keys.F3:
-                    btnPlaybackTestScript.PerformClick();
-                    break;
-
-                case Keys.F4:
-                    btnPlaybackScenario.PerformClick();
-                    break;
-
-                case Keys.Escape:
-                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        // The user wants to exit the application. Close everything down.
-                        System.Windows.Forms.Application.Exit();
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        return;
-                    }
-                    break;
-
-                case Keys.Control | Keys.Shift | Keys.S:
-                    btnQuickSave.PerformClick();
-                    break;
-
-                case Keys.Control | Keys.S:
-                    exportToolStripMenuItem.PerformClick();
-                    break;
-
-                case Keys.Alt | Keys.F4:
-                    e.SuppressKeyPress = true;
-                    DialogResult dialogResults = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-
-                    if (dialogResults == DialogResult.Yes)
-                    {
-                        // The user wants to exit the application. Close everything down.
-                        System.Windows.Forms.Application.Exit();
-                    }
-                    else if (dialogResults == DialogResult.No)
-                    {
-                        return;
-                    }
-                    break;
-
-                case Keys.Control | Keys.O:
-                    importToolStripMenuItem.PerformClick();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void dataGridView2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (dataGridView2.Rows.Count <= 0)
-                {
-                    return;
-                }
-                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    e.SuppressKeyPress = false;
-                }
-                else if (dialogResult == DialogResult.No)
-                {
-                    e.SuppressKeyPress = true;
-                }
-            }
-        }
-
-        private void clbTestScriptList_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (clbTestScriptList.SelectedItems.Count <= 0)
-                {
-                    return;
-                }
-                DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    //foreach (var item in clbTestScriptList.SelectedItems)
-                    //    clbTestScriptList.Items.Remove(item);
-                    //scriptFiles.Clear();
-                }
-            }
-        }
-
-        #region tooltip
-
-        private void btnPlaybackTestSteps_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnPlaybackTestSteps, "Playback Test Steps");
-        }
-
-        private void btnCreateTestScript_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnCreateTestScript, "Create Test Script");
-        }
-
-        private void btnSendKeyorWaitEnable_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnSendKeyorWaitEnable, "Sendkey & WaitEnable");
-        }
-
-        private void btnRemove_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnRemove, "Remove Test Step");
-        }
-
-        private void btnMoveUp_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnMoveUp, "Move Up Test Step");
-        }
-
-        private void btnMoveDown_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnMoveDown, "Move Down Test Step");
-        }
-
-        private void btnAttach_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnAttach, "Attach an AUT");
-        }
-
-        private void button1_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(button1, "Spy");
-        }
-
-        private void btnAdd_MouseEnter(object sender, EventArgs e)
-        {
-            toolTip1.SetToolTip(btnAdd, "Add UI objects to Playback");
-        }
-
-        #endregion tooltip
-
-        private Rectangle dragBoxFromMouseDown;
-        private int rowIndexFromMouseDown;
-        private int rowIndexOfItemUnderMouseToDrop;
-
-        private void dataGridView2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
-            {
-                // If the mouse moves outside the rectangle, start the drag.
-                if (dragBoxFromMouseDown != Rectangle.Empty &&
-                !dragBoxFromMouseDown.Contains(e.X, e.Y))
-                {
-                    // Proceed with the drag and drop, passing in the list item.
-                    DragDropEffects dropEffect = dataGridView2.DoDragDrop(
-                          dataGridView2.Rows[rowIndexFromMouseDown],
-                          DragDropEffects.Move);
-                }
-            }
-        }
-
-        private void dataGridView2_MouseDown(object sender, MouseEventArgs e)
-        {
-            // Get the index of the item the mouse is below.
-            rowIndexFromMouseDown = dataGridView2.HitTest(e.X, e.Y).RowIndex;
-            if (rowIndexFromMouseDown != -1)
-            {
-                // Remember the point where the mouse down occurred.
-                // The DragSize indicates the size that the mouse can move
-                // before a drag event should be started.
-                Size dragSize = SystemInformation.DragSize;
-                // Create a rectangle using the DragSize, with the mouse position being
-                // at the center of the rectangle.
-                dragBoxFromMouseDown = new Rectangle(
-                          new Point(
-                            e.X - (dragSize.Width / 2),
-                            e.Y - (dragSize.Height / 2)),
-                      dragSize);
-            }
-            else
-                // Reset the rectangle if the mouse is not over an item in the ListBox.
-                dragBoxFromMouseDown = Rectangle.Empty;
-        }
-
-        private void dataGridView2_DragOver(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Move;
-        }
-
-        private void dataGridView2_DragDrop(object sender, DragEventArgs e)
-        {
-            // The mouse locations are relative to the screen, so they must be
-            // converted to client coordinates.
-            Point clientPoint = dataGridView2.PointToClient(new Point(e.X, e.Y));
-
-            // Get the row index of the item the mouse is below.
-            rowIndexOfItemUnderMouseToDrop = dataGridView2.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
-            if (rowIndexOfItemUnderMouseToDrop == -1)
-            {
-                return;
-            }
-            // If the drag operation was a move then remove and insert the row.
-            if (e.Effect == DragDropEffects.Move)
-            {
-                DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
-                dataGridView2.Rows.RemoveAt(rowIndexFromMouseDown);
-                dataGridView2.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
-                dataGridView2.ClearSelection();
-                dataGridView2.Rows[rowIndexOfItemUnderMouseToDrop].Selected = true;
-            }
-        }
-
-        /// <summary>
-        /// Validate action select and settext
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridView2_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            if (e.ColumnIndex == 6)
-            {
-                int rowIndex = e.RowIndex;
-                int colIndex = e.ColumnIndex;
-
-                //System.Windows.Forms.MessageBox.Show("abc");
-                if (e.FormattedValue.ToString().Equals(String.Empty))
-                {
-                    //return;
-                }
-                //System.Windows.Forms.MessageBox.Show(dataGridView2.Rows[rowIndex].Cells[6].Value.ToString());
-                else
-                {
-                    if (dataGridView2.Rows[rowIndex].Cells[5].Value.ToString().Trim() == "Select"
-                        || dataGridView2.Rows[rowIndex].Cells[5].Value.ToString().Trim() == "Unselect")
-                    {
-                        int checkNum = 0;
-                        try
-                        {
-                            checkNum = Convert.ToInt32(e.FormattedValue.ToString());
-                        }
-                        catch
-                        {
-                            System.Windows.Forms.MessageBox.Show("Value must be a number for Select action!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            e.Cancel = true;
-                            return;
-                        }
-                    }
-                    if (dataGridView2.Rows[rowIndex].Cells[5].Value.ToString().Trim() == "Click")
-                    {
-                        if (e.FormattedValue.ToString().Equals(String.Empty))
-                        {
-                        }
-                        else
-                        {
-                            System.Windows.Forms.MessageBox.Show("Value must be empty for Click action!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            e.Cancel = true;
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// View log menu strip
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void viewLogsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var log = path + @"\Botsina\Logs\Botsina.log";
-
-            Process.Start(log);
-        }
-
-        /// <summary>
-        /// Close all thread before terminate the application
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Environment.Exit(Environment.ExitCode);
-        }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            int rowIndex = dataGridView2.SelectedRows[0].Index;
-            string type = dataGridView2.Rows[rowIndex].Cells[4].Value.ToString();
-            CpForm.ControlType = type;
-  
-            switch (type)
-
-            {
-                case "TextBox":
-
-                    CpForm.textBoxCP = (PlaybackObjectList[rowIndex].CheckPoint as TextBoxCheckPoint);
-                    break;
-                default:
-                    break;
-
-            }
-            CpForm.ShowDialog();
-            PlaybackObjectList[rowIndex].CheckPoint = CpForm.textBoxCP;
-        }
-        private int[] selectedRowsIndex;
-        private void dataGridView2_SelectionChanged(object sender, EventArgs e)
-        {
-            selectedRowsIndex = new int[dataGridView2.SelectedRows.Count];
-            for (int i = 0; i < dataGridView2.SelectedRows.Count; i++)
-            {
-                selectedRowsIndex[i] = dataGridView2.SelectedRows[i].Index;
-            }
-        }
-
-        private void dataGridView2_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
-        {
-            if (selectedRowsIndex.Count() > 0)
-            {
-                for (int i = 0; i < selectedRowsIndex.Count(); i++)
-                    PlaybackObjectList.RemoveAt(selectedRowsIndex[i]);
-            }
-        }
-
-        private void btnDeleteScripts_Click(object sender, EventArgs e)
+        private void btnRemoveScript_Click(object sender, EventArgs e)
         {
             if (clbTestScriptList.SelectedItems.Count <= 0)
             {
@@ -2703,6 +2867,38 @@ namespace SpyandPlaybackTestTool
                 scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
                 clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex);
             }
+        }
+
+        private void btnMoveUpScript_Click(object sender, EventArgs e)
+        {
+            // Checking selected item
+            if (clbTestScriptList.SelectedItem == null || clbTestScriptList.SelectedIndex <= 0)
+                return; // No selected item - nothing to do
+            // add a duplicate item up in the listbox
+            int oldIndex = clbTestScriptList.SelectedIndex + 1;
+            clbTestScriptList.Items.Insert(clbTestScriptList.SelectedIndex - 1, clbTestScriptList.SelectedItem);
+            // make it the current item
+            clbTestScriptList.SelectedIndex = (clbTestScriptList.SelectedIndex - 2);
+            if (clbTestScriptList.GetItemCheckState(oldIndex) == CheckState.Checked)
+                clbTestScriptList.SetItemChecked(clbTestScriptList.SelectedIndex, true);
+            // delete the old occurrence of this item
+            clbTestScriptList.Items.RemoveAt(clbTestScriptList.SelectedIndex + 2);
+        }
+
+        private void btnMoveDownScript_Click(object sender, EventArgs e)
+        {
+            // Checking selected item
+            if (clbTestScriptList.SelectedItem == null || clbTestScriptList.SelectedIndex >= clbTestScriptList.Items.Count - 1)
+                return; // No selected item - nothing to do
+            int IndexToRemove = clbTestScriptList.SelectedIndex;
+            // add a duplicate item down in the listbox
+            clbTestScriptList.Items.Insert(clbTestScriptList.SelectedIndex + 2, clbTestScriptList.SelectedItem);
+            // make it the current item
+            clbTestScriptList.SelectedIndex = (clbTestScriptList.SelectedIndex + 2);
+            if (clbTestScriptList.GetItemCheckState(IndexToRemove) == CheckState.Checked)
+                clbTestScriptList.SetItemChecked(clbTestScriptList.SelectedIndex, true);
+            // delete the old occurrence of this item
+            clbTestScriptList.Items.RemoveAt(IndexToRemove);
         }
     }
 }
