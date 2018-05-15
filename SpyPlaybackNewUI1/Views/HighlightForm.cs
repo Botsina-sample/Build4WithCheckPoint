@@ -71,7 +71,7 @@ namespace SpyandPlaybackTestTool
                 //WindowInteraction.FocusWindow(targetProcess);
                 App = Gu.Wpf.UiAutomation.Application.Attach(targetProcess.Id);
                 MainWindow = App.MainWindow;
-                ElementList = MainWindow.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.FrameworkIdProperty, "WPF"));
+                ElementList = GrabAUT.SearchbyFramework("WPF");
                 dataGridView1.Rows.Clear();
                 dataGridView1.AllowUserToAddRows = true;
 
@@ -304,11 +304,26 @@ namespace SpyandPlaybackTestTool
                     }
                     break;
 
+                case "CheckBox":
+                    for (int i = 0; i < SpyObjectList.Count(); i++)
+                    {
+                        if (SpyObjectList[i].type == "CheckBox")
+                        {
+                            int rowId = dataGridView1.Rows.Add();
+                            DataGridViewRow row = dataGridView1.Rows[rowId];
+                            row.Cells[0].Value = SpyObjectList[i].index;
+                            row.Cells[1].Value = SpyObjectList[i].automationId;
+                            row.Cells[2].Value = SpyObjectList[i].name;
+                            row.Cells[3].Value = SpyObjectList[i].type;
+                        }
+                    }
+                    break;
+
                 case "Interactive Controls":
 
                     for (int i = 0; i < SpyObjectList.Count(); i++)
                     {
-                        if ((SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid" || SpyObjectList[i].type == "TextBox" || SpyObjectList[i].type == "Button" || SpyObjectList[i].type == "RadioButton" || SpyObjectList[i].type == "AutoCompleteCombobox") && SpyObjectList[i].automationId.Contains("PART") != true)
+                        if ((SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "CheckBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid" || SpyObjectList[i].type == "TextBox" || SpyObjectList[i].type == "Button" || SpyObjectList[i].type == "RadioButton" || SpyObjectList[i].type == "AutoCompleteCombobox") && SpyObjectList[i].automationId.Contains("PART") != true)
                         {
                             int rowId = dataGridView1.Rows.Add();
                             DataGridViewRow row = dataGridView1.Rows[rowId];

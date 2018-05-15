@@ -1,9 +1,16 @@
-﻿using System;
+﻿using log4net;
+using System;
+using System.Reflection;
+
+
+
 
 namespace SpyandPlaybackTestTool.Actions
 {
     internal class RadioButtonAction : AbsAction
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public override void DoExecute()
         {
             switch (PlaybackObject.action)
@@ -11,17 +18,15 @@ namespace SpyandPlaybackTestTool.Actions
                 case "Click":
                     try
                     {
-                        //if (UiElement.AsRadioButton().IsChecked == false)
-                        //{
-                        //}
+                        UiElement.AsRadioButton().Focus();
 
                         UiElement.AsRadioButton().Click();
                         Result = true;
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         Result = false;
-                        //throw;
+                        log.Debug(ex.Message);
                     }
                     break;
 

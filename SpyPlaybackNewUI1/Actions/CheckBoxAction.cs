@@ -14,6 +14,8 @@ namespace SpyandPlaybackTestTool.Actions
                     {
                         if (UiElement.AsCheckBox().IsChecked == false)
                         {
+                            UiElement.AsCheckBox().ClearFocus();
+                            UiElement.AsCheckBox().Focus();
                             UiElement.AsCheckBox().Click();
                             Result = true;
                         }

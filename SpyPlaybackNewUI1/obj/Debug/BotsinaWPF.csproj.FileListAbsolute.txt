@@ -31,7 +31,6 @@ C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Gu.Wpf.UiAutomation.xml
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\log4net.xml
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\bin\Debug\Newtonsoft.Json.xml
-C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojAssemblyReference.cache
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.AboutWindow.resources
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.CheckPointForm.resources
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Form1.resources
@@ -44,3 +43,4 @@ C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csproj.CopyComplete
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
 C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
+C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojAssemblyReference.cache

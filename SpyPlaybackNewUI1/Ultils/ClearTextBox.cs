@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using System.Windows.Automation;
 
 namespace SpyandPlaybackTestTool.Ultils
 {
@@ -55,12 +56,12 @@ namespace SpyandPlaybackTestTool.Ultils
 
                 foreach (UiElement UIE in ElementListWPF)
                 {
-                    if (UIE.ControlType.ProgrammaticName == "ControlType.Edit")
+                    if (UIE.ControlType.ProgrammaticName == "ControlType.Edit" && UIE.AsTextBox().IsEnabled)
                     {
                         if (!UIE.AsTextBox().IsReadOnly)
                         {
-                            UIE.AsTextBox().Enter("");
-                            //(UIE.AutomationElement.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern).SetValue("");
+                            //UIE.AsTextBox().Enter("");
+                            (UIE.AutomationElement.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern).SetValue("");
                             log.Info(id + " CLEARED");
                         }
                     }

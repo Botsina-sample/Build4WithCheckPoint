@@ -26,7 +26,7 @@ namespace SpyandPlaybackTestTool.CheckPoints
                 try
                 {
                     string a = UiElement.AsTextBox().Text.Trim();
-                    string b = "";
+                    //string b = "";
 
                     if (string.IsNullOrEmpty(a))
                         cpIsEmpty = true;

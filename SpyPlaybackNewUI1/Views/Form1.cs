@@ -142,8 +142,6 @@ namespace SpyandPlaybackTestTool
 
             //this.MaximumSize = new Size(XX, YY);
             this.MinimumSize = new Size(1280, 720);
-
-            
         }
 
 
@@ -158,7 +156,7 @@ namespace SpyandPlaybackTestTool
             else if (ProcessForm.isAttached.Equals(true))
             {
                 AUTPROC = WindowInteraction.GetProcess(ProcessForm.targetproc);
-                WindowInteraction.FocusWindow(thisProc);
+               
                 toolStripStatusLabel1.Text = ProcessForm.targetproc;
                 redcircleTip.Visible = false;
                 greencircleTip.Visible = true;
@@ -330,11 +328,6 @@ namespace SpyandPlaybackTestTool
                     WindowInteraction.FocusWindow(thisProc);
                 }
             }
-        }
-
-        //Json Playback button
-        public void btnPlaybackTestScript_Click(object sender, EventArgs e)
-        {
         }
 
         /// <summary>
@@ -596,11 +589,13 @@ namespace SpyandPlaybackTestTool
                 }
                 else if (ScenarioStatus.Equals(false) && playbackstatus.Equals(true))
                 {
-                    this.pf.Dispose();
+                    
                     playbackstatus = false;
                     playbackprogress = 100;
                     WindowInteraction.FocusWindow(thisProc);
                 }
+
+                this.pf.Dispose();
             }
             catch (Exception ex)
             {
@@ -656,11 +651,6 @@ namespace SpyandPlaybackTestTool
             }
         }
 
-        // Playback button on test steps table // Add log
-        public void btnPlaybackTestSteps_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         /// <summary>
         /// PLAYBACK TEST STEPS
@@ -922,6 +912,7 @@ namespace SpyandPlaybackTestTool
                         case "CheckBox":
                             AbsAction CheckBoxAction = new CheckBoxAction();
                             CheckBoxAction.PlaybackObject = PlaybackObjectList[i];
+                            
                             CheckBoxAction.UiElement = ElementList[CheckBoxAction.PlaybackObject.index];
                             CheckBoxAction.DoExecute();
                             if (CheckBoxAction.Result == true)
@@ -965,12 +956,12 @@ namespace SpyandPlaybackTestTool
                 ConsolePanelPush.AppendText(DateTime.Now + " - DONE PLAYBACK");
                 ConsolePanelPush.AppendText(Environment.NewLine);
 
-                //pf.Hide();
-
+                WindowInteraction.FocusWindow(thisProc);
+                
                 this.pf.Dispose();
 
-                WindowInteraction.FocusWindow(thisProc);
-                Th_PBTSTEP.Join();
+                //Th_PBTSTEP.Join();
+
             }
             catch (Exception ex)
             {
@@ -1150,19 +1141,6 @@ namespace SpyandPlaybackTestTool
             dataGridView2.AllowUserToAddRows = false;
         }
 
-        private void btnRemove_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-     
-        }
-
-        private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-
-        }
 
         private void InspectorToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1178,10 +1156,6 @@ namespace SpyandPlaybackTestTool
             }
         }
 
-        private void btnCreateTestSteps_Click(object sender, EventArgs e)
-        {
-
-        }
 
         /// <summary>
         /// Create a Playback table from JSON test script.
@@ -1375,22 +1349,6 @@ namespace SpyandPlaybackTestTool
             dataGridView2.AllowUserToAddRows = false;
         }
 
-        //string JsonPath;
-        private void btnCreateTestScript_Click(object sender, EventArgs e)
-        {
-            
-
-            //pbindex++;
-            
-        }
-
-        private void btnMoveUp_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnMoveDown_Click(object sender, EventArgs e)
-        {
-        }
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1608,24 +1566,6 @@ namespace SpyandPlaybackTestTool
             }
         }
 
-        private void btnMoveUpCLB_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnMoveDownCLB_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        // Button Save jsonscript
-        private void btnQuickSave_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void btnPlaybackScenario_Click(object sender, EventArgs e)
-        {
-        }
 
         public void runScenario()
         {
@@ -1761,11 +1701,6 @@ namespace SpyandPlaybackTestTool
                 }
                 i++;
             }
-        }
-
-        private void btnSendKeyorWaitEnable_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2138,12 +2073,6 @@ namespace SpyandPlaybackTestTool
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 dataGridView2.Rows[i].Cells[0].Value = i + 1;
         }               
-
-        private void btnDeleteScripts_Click(object sender, EventArgs e)
-        {
-
-        }
-
        
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -2390,12 +2319,6 @@ namespace SpyandPlaybackTestTool
             AddTestSteps();
         }
 
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-
 
         private void btnPlayBackTestStep_Click(object sender, EventArgs e)
         {
@@ -2422,6 +2345,8 @@ namespace SpyandPlaybackTestTool
             playbackprogress = 0;
             playbackstatus = true;
             stop_playback = false;
+
+      
 
             Th_PBTSTEP = new Thread(() => PlaybackTestSteps());
             Th_PBTSTEP.IsBackground = true;

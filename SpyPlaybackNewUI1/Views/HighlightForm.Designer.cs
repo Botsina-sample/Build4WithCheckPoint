@@ -94,10 +94,11 @@
             "All",
             "Interactive Controls",
             "TextBox",
-            "Button",
-            "RadioButton",
+            "CheckBox",
             "ComboBox",
             "ComboBoxEdit",
+            "Button",
+            "RadioButton",
             "DataGrid"});
             this.comboBox1.Location = new System.Drawing.Point(46, 12);
             this.comboBox1.Name = "comboBox1";
