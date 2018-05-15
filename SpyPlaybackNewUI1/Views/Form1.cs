@@ -35,8 +35,16 @@ namespace SpyandPlaybackTestTool
         //private ScriptFile[] scriptFiles;
         private List<ScriptFile> scriptFiles = new List<ScriptFile>();
 
+
+        /// <summary>
+        /// This application process
+        /// </summary>
         private Process thisProc = Process.GetCurrentProcess();
 
+
+        /// <summary>
+        /// Application under test process
+        /// </summary>
         public static Process AUTPROC;
 
         /// <summary>
@@ -283,7 +291,6 @@ namespace SpyandPlaybackTestTool
 
                 toolStripComboBox1.Enabled = true;
                 toolStripTextBox1.Enabled = true;
-                //WindowInteraction.FocusWindow(thisProc);
                 dataGridView1.AllowUserToAddRows = false;
                 toolStripTextBox1.Text = "";
                 toolStripComboBox1.SelectedIndex = 0;
