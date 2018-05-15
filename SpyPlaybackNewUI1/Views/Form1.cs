@@ -181,6 +181,8 @@ namespace SpyandPlaybackTestTool
                     timer1.Stop();
 
                     System.Windows.Forms.MessageBox.Show("The AUT: " + ProcessForm.targetproc + " has been terminated.", "Warning!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    dataGridView1.Rows.Clear();
                 }
             }
             catch
