@@ -124,7 +124,7 @@ namespace SpyandPlaybackTestTool
                 Process targetProcess = WindowInteraction.GetProcess(ProcessName);
                 GrabAUT.GetMainWindow();
                 ElementList = GrabAUT.SearchbyFramework("WPF");
-
+                WindowInteraction.FocusWindowNormal(AUTPROC);
                 SpyObjectList = new SpyObject[ElementList.Count];
                 int SpyObjectIndex = 0;
                 for (int i = 0; i < ElementList.Count; i++)
