@@ -18,6 +18,8 @@ using System.Threading;
 using System.Windows.Forms;
 using SpyandPlaybackTestTool.CheckPoints;
 using System.Dynamic;
+using System.Windows.Automation;
+
 namespace SpyandPlaybackTestTool
 {
     public partial class Form1 : Form
@@ -290,12 +292,16 @@ namespace SpyandPlaybackTestTool
                             row.Cells[5].Value = "View Items";
                             break;
                         case "ComboBoxEdit":
-                            var cbxeItemList = ElementList[i].AsComboBox().Items;
-
-                            foreach (ComboBoxItem item in cbxeItemList)
+                            ExpandCollapsePattern expandCollapsePattern = ElementList[i].AutomationElement.GetCurrentPattern(ExpandCollapsePattern.Pattern) as ExpandCollapsePattern;
+                            expandCollapsePattern.Expand();
+                            AutomationElement a = ElementList[i].AutomationElement;
+                            var cbxeItemList = a.FindAll(TreeScope.Subtree, new System.Windows.Automation.PropertyCondition(AutomationElement.ClassNameProperty, "ComboBoxEditItem"));
+                            expandCollapsePattern.Collapse();
+                            foreach (AutomationElement cbxeitem in cbxeItemList)
                             {
 
-                                SpyObjectList[i].itemList.Add(item.Text);
+
+                                SpyObjectList[i].itemList.Add(cbxeitem.Current.Name);
 
                             }
                             row.Cells[5].Value = "View Items";
