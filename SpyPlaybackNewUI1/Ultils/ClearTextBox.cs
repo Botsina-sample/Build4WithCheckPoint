@@ -45,13 +45,6 @@ namespace SpyandPlaybackTestTool.Ultils
 
                 ElementListWPF = GrabAUT.SearchbyFramework("WPF");
 
-                //ElementListWin32 = DoSpy.SearchbyFramework("Win32");
-
-                //if (ElementListWin32[0].AsMessageBox().)
-                //{
-                //    ElementListWin32[0].AsMessageBox().Close();
-                //}
-
                 int id = 0;
 
                 foreach (UiElement UIE in ElementListWPF)
@@ -73,6 +66,7 @@ namespace SpyandPlaybackTestTool.Ultils
                             log.Info(id + " UNCHECKED");
                         }
                     }
+       
 
                     id++;
                 }
