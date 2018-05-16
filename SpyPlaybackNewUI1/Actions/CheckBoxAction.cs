@@ -17,7 +17,6 @@ namespace SpyandPlaybackTestTool.Actions
                             UiElement.AsCheckBox().ClearFocus();
                             UiElement.AsCheckBox().Focus();
                             UiElement.AsCheckBox().Click();
-                
                             Result = true;
                         }
                         else

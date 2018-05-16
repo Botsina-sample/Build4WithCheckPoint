@@ -104,6 +104,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ViewItemsCol = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -180,7 +181,7 @@
             this.InspectorToolStripMenuItem,
             this.viewLogsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // InspectorToolStripMenuItem
@@ -249,13 +250,15 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Select,
             this.Index,
             this.AutomationId,
             this.Names,
-            this.Type});
+            this.Type,
+            this.ViewItemsCol});
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
             this.dataGridView1.Location = new System.Drawing.Point(0, 33);
@@ -264,6 +267,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(419, 526);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView1_KeyDown);
             // 
@@ -272,7 +276,6 @@
             this.Select.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Select.HeaderText = "Select";
             this.Select.Name = "Select";
-            this.Select.ReadOnly = true;
             this.Select.Width = 43;
             // 
             // Index
@@ -280,7 +283,6 @@
             this.Index.FillWeight = 59.71831F;
             this.Index.HeaderText = "Index";
             this.Index.Name = "Index";
-            this.Index.ReadOnly = true;
             this.Index.Width = 53;
             // 
             // AutomationId
@@ -289,14 +291,12 @@
             this.AutomationId.FillWeight = 110.0698F;
             this.AutomationId.HeaderText = "AutomationId";
             this.AutomationId.Name = "AutomationId";
-            this.AutomationId.ReadOnly = true;
             // 
             // Names
             // 
             this.Names.FillWeight = 138.0625F;
             this.Names.HeaderText = "Name";
             this.Names.Name = "Names";
-            this.Names.ReadOnly = true;
             this.Names.Width = 122;
             // 
             // Type
@@ -305,7 +305,6 @@
             this.Type.FillWeight = 92.14939F;
             this.Type.HeaderText = "Type";
             this.Type.Name = "Type";
-            this.Type.ReadOnly = true;
             // 
             // clbTestScriptList
             // 
@@ -568,7 +567,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(33, 30);
+            this.toolStripLabel2.Size = new System.Drawing.Size(32, 30);
             this.toolStripLabel2.Text = "Type";
             // 
             // toolStripComboBox1
@@ -586,7 +585,7 @@
             "ComboBoxEdit",
             "DataGrid"});
             this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 23);
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 33);
             this.toolStripComboBox1.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
             // 
             // tabControl1
@@ -902,6 +901,11 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Result";
             // 
+            // ViewItemsCol
+            // 
+            this.ViewItemsCol.HeaderText = "Items";
+            this.ViewItemsCol.Name = "ViewItemsCol";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1042,6 +1046,7 @@
         private System.Windows.Forms.ToolStripButton btnPlayTestScript;
         private System.Windows.Forms.ToolStripButton btnCreateSteps;
         private System.Windows.Forms.ToolStripButton btnMoveRowDown;
+        private System.Windows.Forms.DataGridViewButtonColumn ViewItemsCol;
     }
 }
 

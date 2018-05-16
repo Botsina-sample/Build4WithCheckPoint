@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Windows.Automation;
 
 namespace SpyandPlaybackTestTool.Actions
 {
@@ -64,8 +63,6 @@ namespace SpyandPlaybackTestTool.Actions
                             keybd_event(0x14, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP,
                             (UIntPtr)0);
                         }
-                        UiElement.AsTextBox().ClearFocus();
-                        UiElement.AsTextBox().Focus();
                         //(UiElement.AutomationElement.GetCurrentPattern(ValuePattern.Pattern) as ValuePattern).SetValue(PlaybackObject.text);
                         UiElement.AsTextBox().Enter(PlaybackObject.text);
                         int n;

@@ -234,21 +234,21 @@ namespace SpyandPlaybackTestTool
                     ConsolePanelPush.AppendText(DateTime.Now + " - " + "BEGIN RESPY" + Environment.NewLine);
                 }
 
-                ElementList = GrabAUT.SearchbyFramework("WPF");
-                foreach (UiElement a in ElementList)
-                {
-                    if (a.ClassName.Equals("ComboBox"))
-                    {
-                        a.AsComboBox().Expand();
-                    }
-                }
+                //ElementList = GrabAUT.SearchbyFramework("WPF");
+                //foreach (UiElement a in ElementList)
+                //{
+                //    if (a.ClassName.Equals("ComboBox"))
+                //    {
+                //        a.AsComboBox().Expand();
+                //    }
+                //}
                 ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 dataGridView1.Rows.Clear();
                 dataGridView1.AllowUserToAddRows = true;
 
                 SpyObjectList = new SpyObject[ElementList.Count];
-                int SpyObjectIndex = 0;
+              
 
                 toolStripComboBox1.Enabled = false;
                 toolStripTextBox1.Enabled = false;
@@ -261,21 +261,65 @@ namespace SpyandPlaybackTestTool
 
                 for (int i = 0; i < ElementList.Count; i++)
                 {
-                    SpyObjectList[SpyObjectIndex] = new SpyObject();
-                    SpyObjectList[SpyObjectIndex].index = SpyObjectIndex;
-                    if (ElementList[i].AutomationId == "" && SpyObjectIndex - 1 > 0 && ElementList[i - 1].Name != "" && ElementList[i].Name == "")
-                        SpyObjectList[SpyObjectIndex].automationId = (ElementList[i - 1].Name + "_" + ElementList[i].ClassName).Replace(" ", "_").Replace(":", "");
+                    SpyObjectList[i] = new SpyObject();
+                    SpyObjectList[i].index = i;
+                    if (ElementList[i].AutomationId == "" && i - 1 > 0 && ElementList[i - 1].Name != "" && ElementList[i].Name == "")
+                        SpyObjectList[i].automationId = (ElementList[i - 1].Name + "_" + ElementList[i].ClassName).Replace(" ", "_").Replace(":", "");
                     else
-                        SpyObjectList[SpyObjectIndex].automationId = ElementList[i].AutomationId;
-                    SpyObjectList[SpyObjectIndex].name = ElementList[i].Name;
-                    SpyObjectList[SpyObjectIndex].type = ElementList[i].ClassName;
+                        SpyObjectList[i].automationId = ElementList[i].AutomationId;
+                    SpyObjectList[i].name = ElementList[i].Name;
+                    SpyObjectList[i].type = ElementList[i].ClassName;
                     DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[i].Clone();
-                    row.Cells[1].Value = SpyObjectList[SpyObjectIndex].index;
-                    row.Cells[2].Value = SpyObjectList[SpyObjectIndex].automationId;
-                    row.Cells[3].Value = SpyObjectList[SpyObjectIndex].name;
-                    row.Cells[4].Value = SpyObjectList[SpyObjectIndex].type;
+                    row.Cells[1].Value = SpyObjectList[i].index;
+                    row.Cells[2].Value = SpyObjectList[i].automationId;
+                    row.Cells[3].Value = SpyObjectList[i].name;
+                    row.Cells[4].Value = SpyObjectList[i].type;
+                    switch (SpyObjectList[i].type.ToString())
+                    {
+                        case "ComboBox":
+
+                            var cbxItemList = ElementList[i].AsComboBox().Items;
+                            //System.Windows.Forms.MessageBox.Show(cbxItemList.Count.ToString());
+                            foreach (ComboBoxItem item in cbxItemList)
+                            {
+
+
+                                SpyObjectList[i].itemList.Add(item.Text);
+
+                            }
+                            row.Cells[5].Value = "View Items";
+                            break;
+                        case "ComboBoxEdit":
+                            var cbxeItemList = ElementList[i].AsComboBox().Items;
+
+                            foreach (ComboBoxItem item in cbxeItemList)
+                            {
+
+                                SpyObjectList[i].itemList.Add(item.Text);
+
+                            }
+                            row.Cells[5].Value = "View Items";
+                            break;
+                        case "DataGrid":
+                            var dtgItemList = ElementList[i].AsDataGrid().Rows;
+                     
+                            foreach (DataGridRow dtgrow in dtgItemList)
+                            {
+                                string allCells = "";
+                                foreach (Gu.Wpf.UiAutomation.DataGridCell dtgcell in dtgrow.Cells)
+                                {
+                                   allCells += dtgcell.Value.ToString()+" ";
+                                }
+                                SpyObjectList[i].itemList.Add(allCells);
+                            }
+                            row.Cells[5].Value = "View Items";
+                            break;
+                        default:
+                            row.Cells[5].Value = "No Item";
+                            break;
+                    }
+
                     dataGridView1.Rows.Add(row);
-                    SpyObjectIndex++;
                 }
 
                 if (mode == "normal")
@@ -683,14 +727,14 @@ namespace SpyandPlaybackTestTool
 
                 //  PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
 
-                ElementList = GrabAUT.SearchbyFramework("WPF");
-                foreach (UiElement a in ElementList)
-                {
-                    if (a.ClassName.Equals("ComboBox"))
-                    {
-                        a.AsComboBox().Expand();
-                    }
-                }
+                //ElementList = GrabAUT.SearchbyFramework("WPF");
+                //foreach (UiElement a in ElementList)
+                //{
+                //    if (a.ClassName.Equals("ComboBox"))
+                //    {
+                //        a.AsComboBox().Expand();
+                //    }
+                //}
                 ElementList = GrabAUT.SearchbyFramework("WPF");
 
                 foreach (DataGridViewRow row in dataGridView2.Rows)
@@ -1078,10 +1122,12 @@ namespace SpyandPlaybackTestTool
                 {
                     case "Button":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
+                       
                         break;
 
                     case "RadioButton":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
+                       
                         break;
 
                     case "TextBox":
@@ -1123,6 +1169,7 @@ namespace SpyandPlaybackTestTool
                     case "CheckBox":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Unselect");
+                   
                         break;
 
                     case "DataGrid":
@@ -1133,6 +1180,7 @@ namespace SpyandPlaybackTestTool
 
                     case "TabItem":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
+             
                         break;
 
                     default:
@@ -2073,11 +2121,13 @@ namespace SpyandPlaybackTestTool
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
                 if(dataGridView2.SelectedRows.Count>0)
-                selectedRowIndex = dataGridView2.SelectedRows[0].Index;
+                selectedRowIndex = (int)dataGridView2.SelectedRows[0].Cells[0].Value-1;
+                
         }
 
         private void dataGridView2_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
+            System.Windows.Forms.MessageBox.Show(selectedRowIndex.ToString());
                     PlaybackObjectList.RemoveAt(selectedRowIndex);
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 dataGridView2.Rows[i].Cells[0].Value = i + 1;
@@ -2147,6 +2197,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2162,6 +2213,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2177,6 +2229,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2192,6 +2245,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "View Items";
                         }
                     }
                     break;
@@ -2207,6 +2261,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "View Items";
                         }
                     }
                     break;
@@ -2222,6 +2277,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "View Items";
                         }
                     }
                     break;
@@ -2237,6 +2293,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2252,6 +2309,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2267,6 +2325,7 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2289,6 +2348,10 @@ namespace SpyandPlaybackTestTool
                             row.Cells[2].Value = SpyObjectList[i].automationId;
                             row.Cells[3].Value = SpyObjectList[i].name;
                             row.Cells[4].Value = SpyObjectList[i].type;
+                            if (SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid")
+                                row.Cells[5].Value = "View Items";
+                            else
+                                row.Cells[5].Value = "No Item";
                         }
                     }
                     break;
@@ -2302,6 +2365,10 @@ namespace SpyandPlaybackTestTool
                         row.Cells[2].Value = SpyObjectList[i].automationId;
                         row.Cells[3].Value = SpyObjectList[i].name;
                         row.Cells[4].Value = SpyObjectList[i].type;
+                        if (SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid")
+                            row.Cells[5].Value = "View Items";
+                        else
+                            row.Cells[5].Value = "No Items";
                     }
                     break;
 
@@ -2309,7 +2376,6 @@ namespace SpyandPlaybackTestTool
                     break;
             }
             dataGridView1.AllowUserToAddRows = false;
-
         }
 
         private void btnAttachProcess_Click(object sender, EventArgs e)
@@ -2331,6 +2397,8 @@ namespace SpyandPlaybackTestTool
 
         private void btnPlayBackTestStep_Click(object sender, EventArgs e)
         {
+            dataGridView2.ClearSelection();
+            dataGridView2.EndEdit();
             if (ProcessForm.targetproc == null)
             {
                 System.Windows.Forms.MessageBox.Show("Please attach AUT process to execute Playback Test Steps function!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -2369,12 +2437,58 @@ namespace SpyandPlaybackTestTool
 
         private void btnCreateScript_Click(object sender, EventArgs e)
         {
+            dataGridView2.ClearSelection();
+            dataGridView2.EndEdit();
             if (dataGridView2.Rows.Count == 0)
             {
                 System.Windows.Forms.MessageBox.Show("There is no data!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            int pbindex = 0;
+            foreach (DataGridViewRow row in dataGridView2.Rows)
+            {
+                PlaybackObjectList[pbindex].action = (string)row.Cells[5].Value;
+                if (PlaybackObjectList[pbindex].action == "Select" || PlaybackObjectList[pbindex].action == "Unselect")
+                {
+                    PlaybackObjectList[pbindex].text = null;
+                    if (PlaybackObjectList[pbindex].type != "CheckBox")
+                    {
+                        if (PlaybackObjectList[pbindex].type == "ComboBox" && PlaybackObjectList[pbindex].action.Equals("SetText"))
+                        {
+                            PlaybackObjectList[pbindex].text = row.Cells[6].Value.ToString();
+                        }
+                        else if (PlaybackObjectList[pbindex].type == "ComboBox" && PlaybackObjectList[pbindex].action.Equals("Select"))
+                        {
+                            if (row.Cells[6].Value == null)
+                            {
+                                PlaybackObjectList[pbindex].itemIndex = 0;
+                            }
+                            else if (!Regex.IsMatch(row.Cells[6].Value.ToString(), @"^\d+$"))
+                            {
+                                PlaybackObjectList[pbindex].itemIndex = 0;
+                            }
+                            else
+                            {
+                                PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
+                            }
+                        }
+                        else
+                        {
+                            PlaybackObjectList[pbindex].itemIndex = int.Parse(row.Cells[6].Value.ToString());
+                        }
 
+                    }
+                }
+                else if (PlaybackObjectList[pbindex].action == "SetText" ||
+                    PlaybackObjectList[pbindex].action == "WaitEnable" ||
+                    PlaybackObjectList[pbindex].action == "SendKey")
+                {
+                    PlaybackObjectList[pbindex].text = (string)row.Cells[6].Value; ;
+                    PlaybackObjectList[pbindex].itemIndex = -1;
+                }
+
+                pbindex++;
+            }
             for (int i = 0; i < PlaybackObjectList.Count; i++)
             {
                 dynamic TestScriptObject = new ExpandoObject();
@@ -2429,7 +2543,9 @@ namespace SpyandPlaybackTestTool
             {
                 return;
             }
-
+            PlaybackObject pbo = new PlaybackObject();
+            pbo.type = "SendKeyorWaitEnable";
+            PlaybackObjectList.Add(pbo);
             DataGridViewRow row = (DataGridViewRow)dataGridView2.Rows[0].Clone();
 
             row.Cells[0].Value = dataGridView2.Rows.Count + 1;
@@ -2441,7 +2557,7 @@ namespace SpyandPlaybackTestTool
             ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("SendKey");
             ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("WaitEnable");
             row.Cells[6].Value = "";
-
+            row.Cells[7].Value = "Set";
             row.Cells[0].ReadOnly = true;
             row.Cells[1].ReadOnly = true;
             row.Cells[2].ReadOnly = true;
@@ -2610,14 +2726,14 @@ namespace SpyandPlaybackTestTool
 
             readJson();
 
-            ElementList = GrabAUT.SearchbyFramework("WPF");
-            foreach (UiElement a in ElementList)
-            {
-                if (a.ClassName.Equals("ComboBox"))
-                {
-                    a.AsComboBox().Expand();
-                }
-            }
+            //ElementList = GrabAUT.SearchbyFramework("WPF");
+            //foreach (UiElement a in ElementList)
+            //{
+            //    if (a.ClassName.Equals("ComboBox"))
+            //    {
+            //        a.AsComboBox().Expand();
+            //    }
+            //}
             ElementList = GrabAUT.SearchbyFramework("WPF");
 
             //WindowInteraction.FocusWindow(targetProc);
@@ -2833,6 +2949,25 @@ namespace SpyandPlaybackTestTool
                 clbTestScriptList.SetItemChecked(clbTestScriptList.SelectedIndex, true);
             // delete the old occurrence of this item
             clbTestScriptList.Items.RemoveAt(IndexToRemove);
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+         
+                int index = (int)dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].Cells[1].Value;
+                if (dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].Cells[5].Value == "No Item")
+                {
+                    System.Windows.Forms.MessageBox.Show("This control contains 0 item");
+                }
+                else
+                {
+                    ItemForm itemForm = new ItemForm();
+                    ItemForm.information = "AutomationID: " + SpyObjectList[index].automationId + "\nName: " + SpyObjectList[index].name + "\nType: " + SpyObjectList[index].type;
+                    ItemForm.totalitem = SpyObjectList[index].itemList.Count().ToString();
+                    itemForm.itemList = SpyObjectList[index].itemList;
+                    itemForm.ShowDialog();
+                }
+
         }
     }
 }
