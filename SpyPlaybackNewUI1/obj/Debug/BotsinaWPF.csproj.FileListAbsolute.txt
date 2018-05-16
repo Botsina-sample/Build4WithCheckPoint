@@ -67,3 +67,4 @@ E:\junk\Compressed\Build4WithCheckPoint-master\Build4WithCheckPoint-master\SpyPl
 E:\junk\Compressed\Build4WithCheckPoint-master\Build4WithCheckPoint-master\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.exe
 E:\junk\Compressed\Build4WithCheckPoint-master\Build4WithCheckPoint-master\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.pdb
 E:\junk\Compressed\Build4WithCheckPoint-master\Build4WithCheckPoint-master\SpyPlaybackNewUI1\obj\Debug\BotsinaWPF.csprojResolveAssemblyReference.cache
+C:\Users\Viet\Documents\GitHub\Build4WithCheckPoint\SpyPlaybackNewUI1\obj\Debug\SpyandPlaybackTestTool.Views.ItemForm.resources

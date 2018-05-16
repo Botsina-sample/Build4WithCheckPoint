@@ -231,16 +231,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Images\246x0w.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\10_Spy_1 %282%29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\11_Playback %281%29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Images\detective.png" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
