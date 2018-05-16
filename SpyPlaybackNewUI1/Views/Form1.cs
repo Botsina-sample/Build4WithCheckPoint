@@ -2127,7 +2127,7 @@ namespace SpyandPlaybackTestTool
 
         private void dataGridView2_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show(selectedRowIndex.ToString());
+          
                     PlaybackObjectList.RemoveAt(selectedRowIndex);
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 dataGridView2.Rows[i].Cells[0].Value = i + 1;
