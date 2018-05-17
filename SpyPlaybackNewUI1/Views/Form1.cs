@@ -36,7 +36,11 @@ namespace SpyandPlaybackTestTool
 
         //private ScriptFile[] scriptFiles;
         private List<ScriptFile> scriptFiles = new List<ScriptFile>();
-
+        
+        /// <summary>
+        /// CheckPoint Form List
+        /// </summary>
+        CheckPointForm[] CpFormList;
 
         /// <summary>
         /// This application process
@@ -140,9 +144,7 @@ namespace SpyandPlaybackTestTool
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.RowHeadersVisible = false;
-            //dataGridView2.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            //dataGridView2.Columns[1].Visible = false;
-         
+           
 
             redcircleTip.Visible = true;
             greencircleTip.Visible = false;
@@ -166,7 +168,7 @@ namespace SpyandPlaybackTestTool
             else if (ProcessForm.isAttached.Equals(true))
             {
                 AUTPROC = WindowInteraction.GetProcess(ProcessForm.targetproc);
-               
+
                 toolStripStatusLabel1.Text = ProcessForm.targetproc;
                 redcircleTip.Visible = false;
                 greencircleTip.Visible = true;
@@ -250,7 +252,7 @@ namespace SpyandPlaybackTestTool
                 dataGridView1.AllowUserToAddRows = true;
 
                 SpyObjectList = new SpyObject[ElementList.Count];
-              
+
 
                 toolStripComboBox1.Enabled = false;
                 toolStripTextBox1.Enabled = false;
@@ -308,13 +310,13 @@ namespace SpyandPlaybackTestTool
                             break;
                         case "DataGrid":
                             var dtgItemList = ElementList[i].AsDataGrid().Rows;
-                     
+
                             foreach (DataGridRow dtgrow in dtgItemList)
                             {
                                 string allCells = "";
                                 foreach (Gu.Wpf.UiAutomation.DataGridCell dtgcell in dtgrow.Cells)
                                 {
-                                   allCells += dtgcell.Value.ToString()+" ";
+                                    allCells += dtgcell.Value.ToString() + " ";
                                 }
                                 SpyObjectList[i].itemList.Add(allCells);
                             }
@@ -440,9 +442,9 @@ namespace SpyandPlaybackTestTool
                                     buttonaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     buttonaction.DoExecute();
                                     if (buttonaction.Result == true)
-                                        PlaybackLogger(buttonaction.PlaybackObject.index, buttonaction.UiElement.ClassName, true);
+                                        PlaybackLogger(buttonaction.PlaybackObject.index, buttonaction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(buttonaction.PlaybackObject.index, buttonaction.UiElement.ClassName, false);
+                                        PlaybackLogger(buttonaction.PlaybackObject.index, buttonaction.PlaybackObject.type, false);
                                     break;
 
                                 case "TextBox":
@@ -451,9 +453,9 @@ namespace SpyandPlaybackTestTool
                                     textboxaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     textboxaction.DoExecute();
                                     if (textboxaction.Result == true)
-                                        PlaybackLogger(textboxaction.PlaybackObject.index, textboxaction.UiElement.ClassName, true);
+                                        PlaybackLogger(textboxaction.PlaybackObject.index, textboxaction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(textboxaction.PlaybackObject.index, textboxaction.UiElement.ClassName, false);
+                                        PlaybackLogger(textboxaction.PlaybackObject.index, textboxaction.PlaybackObject.type, false);
                                     PlaybackObjectScript[i].CheckPoint.UiElement = textboxaction.UiElement;
                                     (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).DoExecuteCheckPoint();
                                     if ((PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsEmpty == true)
@@ -482,7 +484,7 @@ namespace SpyandPlaybackTestTool
                                             + (PlaybackObjectScript[i].CheckPoint as TextBoxCheckPoint).cpIsReadOnlyResult.ToString().Trim() + Environment.NewLine);
                                     }
                                     break;
-                    
+
 
                                 case "RichTextBox":
                                     AbsAction RichTextBoxAction = new RichTextBoxAction();
@@ -490,9 +492,9 @@ namespace SpyandPlaybackTestTool
                                     RichTextBoxAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     RichTextBoxAction.DoExecute();
                                     if (RichTextBoxAction.Result == true)
-                                        PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.UiElement.ClassName, true);
+                                        PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.UiElement.ClassName, false);
+                                        PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.PlaybackObject.type, false);
                                     break;
 
                                 case "PasswordBox":
@@ -501,9 +503,9 @@ namespace SpyandPlaybackTestTool
                                     PasswordBoxAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     PasswordBoxAction.DoExecute();
                                     if (PasswordBoxAction.Result == true)
-                                        PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.UiElement.ClassName, true);
+                                        PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.UiElement.ClassName, false);
+                                        PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.PlaybackObject.type, false);
                                     break;
 
                                 case "ComboBox":
@@ -512,9 +514,9 @@ namespace SpyandPlaybackTestTool
                                     comboboxaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     comboboxaction.DoExecute();
                                     if (comboboxaction.Result == true)
-                                        PlaybackLogger(comboboxaction.PlaybackObject.index, comboboxaction.UiElement.ClassName, true);
+                                        PlaybackLogger(comboboxaction.PlaybackObject.index, comboboxaction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(comboboxaction.PlaybackObject.index, comboboxaction.UiElement.ClassName, false);
+                                        PlaybackLogger(comboboxaction.PlaybackObject.index, comboboxaction.PlaybackObject.type, false);
                                     break;
 
                                 case "AutoCompleteCombobox":
@@ -523,9 +525,9 @@ namespace SpyandPlaybackTestTool
                                     ATcomboboxaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     ATcomboboxaction.DoExecute();
                                     if (ATcomboboxaction.Result == true)
-                                        PlaybackLogger(ATcomboboxaction.PlaybackObject.index, ATcomboboxaction.UiElement.ClassName, true);
+                                        PlaybackLogger(ATcomboboxaction.PlaybackObject.index, ATcomboboxaction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(ATcomboboxaction.PlaybackObject.index, ATcomboboxaction.UiElement.ClassName, false);
+                                        PlaybackLogger(ATcomboboxaction.PlaybackObject.index, ATcomboboxaction.PlaybackObject.type, false);
                                     break;
 
                                 case "ComboBoxEdit":
@@ -534,9 +536,9 @@ namespace SpyandPlaybackTestTool
                                     comboboxeditaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     comboboxeditaction.DoExecute();
                                     if (comboboxeditaction.Result == true)
-                                        PlaybackLogger(comboboxeditaction.PlaybackObject.index, comboboxeditaction.UiElement.ClassName, true);
+                                        PlaybackLogger(comboboxeditaction.PlaybackObject.index, comboboxeditaction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(comboboxeditaction.PlaybackObject.index, comboboxeditaction.UiElement.ClassName, false);
+                                        PlaybackLogger(comboboxeditaction.PlaybackObject.index, comboboxeditaction.PlaybackObject.type, false);
 
                                     break;
 
@@ -546,9 +548,9 @@ namespace SpyandPlaybackTestTool
                                     datagridaction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     datagridaction.DoExecute();
                                     if (datagridaction.Result == true)
-                                        PlaybackLogger(datagridaction.PlaybackObject.index, datagridaction.UiElement.ClassName, true);
+                                        PlaybackLogger(datagridaction.PlaybackObject.index, datagridaction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(datagridaction.PlaybackObject.index, datagridaction.UiElement.ClassName, false);
+                                        PlaybackLogger(datagridaction.PlaybackObject.index, datagridaction.PlaybackObject.type, false);
                                     break;
 
                                 case "RadioButton":
@@ -557,9 +559,9 @@ namespace SpyandPlaybackTestTool
                                     RadioButtonAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     RadioButtonAction.DoExecute();
                                     if (RadioButtonAction.Result == true)
-                                        PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.UiElement.ClassName, true);
+                                        PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.UiElement.ClassName, false);
+                                        PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.PlaybackObject.type, false);
                                     break;
 
                                 case "CheckBox":
@@ -568,9 +570,9 @@ namespace SpyandPlaybackTestTool
                                     CheckBoxAction.UiElement = ElementList[PlaybackObjectScript[i].index];
                                     CheckBoxAction.DoExecute();
                                     if (CheckBoxAction.Result == true)
-                                        PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.UiElement.ClassName, true);
+                                        PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.UiElement.ClassName, false);
+                                        PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.PlaybackObject.type, false);
                                     break;
 
                                 case "TabItem":
@@ -580,9 +582,9 @@ namespace SpyandPlaybackTestTool
 
                                     TabItemAction.DoExecute();
                                     if (TabItemAction.Result == true)
-                                        PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.UiElement.ClassName, true);
+                                        PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.PlaybackObject.type, true);
                                     else
-                                        PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.UiElement.ClassName, false);
+                                        PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.PlaybackObject.type, false);
                                     break;
 
                                 case "SendKeyorWaitEnable":
@@ -648,7 +650,7 @@ namespace SpyandPlaybackTestTool
                 }
                 else if (ScenarioStatus.Equals(false) && playbackstatus.Equals(true))
                 {
-                    
+
                     playbackstatus = false;
                     playbackprogress = 100;
                     WindowInteraction.FocusWindow(thisProc);
@@ -717,7 +719,7 @@ namespace SpyandPlaybackTestTool
         public void PlaybackTestSteps()
         {
             ExceptionCode excode = new ExceptionCode();
-            
+
             ResultPanelPush.Clear();
             ConsolePanelPush.AppendText(DateTime.Now + " - BEGIN PLAYBACK" + Environment.NewLine);
 
@@ -820,11 +822,11 @@ namespace SpyandPlaybackTestTool
                             ButtonAction.DoExecute();
                             if (ButtonAction.Result == true)
                             {
-                                PlaybackLogger(ButtonAction.PlaybackObject.index, ButtonAction.UiElement.ClassName, true);
+                                PlaybackLogger(ButtonAction.PlaybackObject.index, ButtonAction.PlaybackObject.type, true);
                             }
                             else
                             {
-                                PlaybackLogger(ButtonAction.PlaybackObject.index, ButtonAction.UiElement.ClassName, false);
+                                PlaybackLogger(ButtonAction.PlaybackObject.index, ButtonAction.PlaybackObject.type, false);
                             }
 
                             break;
@@ -835,9 +837,9 @@ namespace SpyandPlaybackTestTool
                             RadioButtonAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             RadioButtonAction.DoExecute();
                             if (RadioButtonAction.Result == true)
-                                PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.UiElement.ClassName, true);
+                                PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.UiElement.ClassName, false);
+                                PlaybackLogger(RadioButtonAction.PlaybackObject.index, RadioButtonAction.PlaybackObject.type, false);
                             break;
 
                         case "TextBox":
@@ -846,9 +848,9 @@ namespace SpyandPlaybackTestTool
                             TextBoxAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             TextBoxAction.DoExecute();
                             if (TextBoxAction.Result == true)
-                                PlaybackLogger(TextBoxAction.PlaybackObject.index, TextBoxAction.UiElement.ClassName, true);
+                                PlaybackLogger(TextBoxAction.PlaybackObject.index, TextBoxAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(TextBoxAction.PlaybackObject.index, TextBoxAction.UiElement.ClassName, false);
+                                PlaybackLogger(TextBoxAction.PlaybackObject.index, TextBoxAction.PlaybackObject.type, false);
                             //Execute Checkpoint
                             PlaybackObjectList[i].CheckPoint.UiElement = TextBoxAction.UiElement;
                             (PlaybackObjectList[i].CheckPoint as TextBoxCheckPoint).DoExecuteCheckPoint();
@@ -885,9 +887,9 @@ namespace SpyandPlaybackTestTool
                             RichTextBoxAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             RichTextBoxAction.DoExecute();
                             if (RichTextBoxAction.Result == true)
-                                PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.UiElement.ClassName, true);
+                                PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.UiElement.ClassName, false);
+                                PlaybackLogger(RichTextBoxAction.PlaybackObject.index, RichTextBoxAction.PlaybackObject.type, false);
                             break;
 
                         case "PasswordBox":
@@ -896,9 +898,9 @@ namespace SpyandPlaybackTestTool
                             PasswordBoxAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             PasswordBoxAction.DoExecute();
                             if (PasswordBoxAction.Result == true)
-                                PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.UiElement.ClassName, true);
+                                PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.UiElement.ClassName, false);
+                                PlaybackLogger(PasswordBoxAction.PlaybackObject.index, PasswordBoxAction.PlaybackObject.type, false);
                             break;
 
                         case "ComboBox":
@@ -907,9 +909,9 @@ namespace SpyandPlaybackTestTool
                             ComboBoxAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             ComboBoxAction.DoExecute();
                             if (ComboBoxAction.Result == true)
-                                PlaybackLogger(ComboBoxAction.PlaybackObject.index, ComboBoxAction.UiElement.ClassName, true);
+                                PlaybackLogger(ComboBoxAction.PlaybackObject.index, ComboBoxAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(ComboBoxAction.PlaybackObject.index, ComboBoxAction.UiElement.ClassName, false);
+                                PlaybackLogger(ComboBoxAction.PlaybackObject.index, ComboBoxAction.PlaybackObject.type, false);
                             break;
 
                         case "ComboBoxEdit":
@@ -918,9 +920,9 @@ namespace SpyandPlaybackTestTool
                             ComboBoxEditAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             ComboBoxEditAction.DoExecute();
                             if (ComboBoxEditAction.Result == true)
-                                PlaybackLogger(ComboBoxEditAction.PlaybackObject.index, ComboBoxEditAction.UiElement.ClassName, true);
+                                PlaybackLogger(ComboBoxEditAction.PlaybackObject.index, ComboBoxEditAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(ComboBoxEditAction.PlaybackObject.index, ComboBoxEditAction.UiElement.ClassName, false);
+                                PlaybackLogger(ComboBoxEditAction.PlaybackObject.index, ComboBoxEditAction.PlaybackObject.type, false);
                             break;
 
                         case "AutoCompleteCombobox":
@@ -929,9 +931,9 @@ namespace SpyandPlaybackTestTool
                             ATComboBoxEditAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             ATComboBoxEditAction.DoExecute();
                             if (ATComboBoxEditAction.Result == true)
-                                PlaybackLogger(ATComboBoxEditAction.PlaybackObject.index, ATComboBoxEditAction.UiElement.ClassName, true);
+                                PlaybackLogger(ATComboBoxEditAction.PlaybackObject.index, ATComboBoxEditAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(ATComboBoxEditAction.PlaybackObject.index, ATComboBoxEditAction.UiElement.ClassName, false);
+                                PlaybackLogger(ATComboBoxEditAction.PlaybackObject.index, ATComboBoxEditAction.PlaybackObject.type, false);
                             break;
 
                         case "DataGrid":
@@ -940,9 +942,9 @@ namespace SpyandPlaybackTestTool
                             DataGridAction.UiElement = ElementList[PlaybackObjectList[i].index];
                             DataGridAction.DoExecute();
                             if (DataGridAction.Result == true)
-                                PlaybackLogger(DataGridAction.PlaybackObject.index, DataGridAction.UiElement.ClassName, true);
+                                PlaybackLogger(DataGridAction.PlaybackObject.index, DataGridAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(DataGridAction.PlaybackObject.index, DataGridAction.UiElement.ClassName, false);
+                                PlaybackLogger(DataGridAction.PlaybackObject.index, DataGridAction.PlaybackObject.type, false);
                             break;
 
                         case "SendKeyorWaitEnable":
@@ -971,13 +973,13 @@ namespace SpyandPlaybackTestTool
                         case "CheckBox":
                             AbsAction CheckBoxAction = new CheckBoxAction();
                             CheckBoxAction.PlaybackObject = PlaybackObjectList[i];
-                            
+
                             CheckBoxAction.UiElement = ElementList[CheckBoxAction.PlaybackObject.index];
                             CheckBoxAction.DoExecute();
                             if (CheckBoxAction.Result == true)
-                                PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.UiElement.ClassName, true);
+                                PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.UiElement.ClassName, false);
+                                PlaybackLogger(CheckBoxAction.PlaybackObject.index, CheckBoxAction.PlaybackObject.type, false);
                             break;
 
                         case "TabItem":
@@ -987,9 +989,9 @@ namespace SpyandPlaybackTestTool
 
                             TabItemAction.DoExecute();
                             if (TabItemAction.Result == true)
-                                PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.UiElement.ClassName, true);
+                                PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.PlaybackObject.type, true);
                             else
-                                PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.UiElement.ClassName, false);
+                                PlaybackLogger(TabItemAction.PlaybackObject.index, TabItemAction.PlaybackObject.type, false);
                             break;
 
                         default:
@@ -1016,7 +1018,7 @@ namespace SpyandPlaybackTestTool
                 ConsolePanelPush.AppendText(Environment.NewLine);
 
                 WindowInteraction.FocusWindow(thisProc);
-                
+
                 this.pf.Dispose();
 
                 //Th_PBTSTEP.Join();
@@ -1068,7 +1070,7 @@ namespace SpyandPlaybackTestTool
             WindowInteraction.FocusWindow(thisProc);
         }
 
-        
+
 
         /// <summary>
         /// Add test steps to the Playback table
@@ -1128,12 +1130,12 @@ namespace SpyandPlaybackTestTool
                 {
                     case "Button":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
-                       
+
                         break;
 
                     case "RadioButton":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
-                       
+
                         break;
 
                     case "TextBox":
@@ -1175,7 +1177,7 @@ namespace SpyandPlaybackTestTool
                     case "CheckBox":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Select");
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Unselect");
-                   
+
                         break;
 
                     case "DataGrid":
@@ -1186,7 +1188,7 @@ namespace SpyandPlaybackTestTool
 
                     case "TabItem":
                         ((DataGridViewComboBoxCell)row.Cells[5]).Items.Add("Click");
-             
+
                         break;
 
                     default:
@@ -1405,7 +1407,7 @@ namespace SpyandPlaybackTestTool
                         row.Cells[6].Value = Convert.ToInt32(PlaybackObjectList[i].itemIndex);
                     row.Cells[7].Value = "Set";
                     dataGridView2.Rows.Add(row);
-                   
+
                     row.Cells[0].ReadOnly = true;
                 }
             }
@@ -1524,53 +1526,53 @@ namespace SpyandPlaybackTestTool
         /// </summary>
         public void readJson()
         {
-            if(PlaybackObjectScript.Count>0)
+            if (PlaybackObjectScript.Count > 0)
                 PlaybackObjectScript.Clear();//Clear the old playback object script list to add the new one.
             string readText = rtxtScript.Text;
             dynamic controls = JsonConvert.DeserializeObject(readText);
             //try
             //{
 
-                foreach (var control in controls)
+            foreach (var control in controls)
+            {
+                PlaybackObject pbo = new PlaybackObject();
+                pbo.index = control.Controller.index;
+                pbo.automationId = control.Controller.automationId;
+                pbo.name = control.Controller.name;
+                pbo.type = control.Controller.type;
+                pbo.action = control.Controller.action;
+                pbo.text = control.Controller.text;
+                pbo.itemIndex = control.Controller.itemIndex;
+                switch (pbo.type)
                 {
-                    PlaybackObject pbo = new PlaybackObject();
-                    pbo.index = control.Controller.index;
-                    pbo.automationId = control.Controller.automationId;
-                    pbo.name = control.Controller.name;
-                    pbo.type = control.Controller.type;
-                    pbo.action = control.Controller.action;
-                    pbo.text = control.Controller.text;
-                    pbo.itemIndex = control.Controller.itemIndex;
-                    switch(pbo.type)
-                    {
-                        case "TextBox":
-                            pbo.CheckPoint = new TextBoxCheckPoint();
-                            if (control.Controller.cpIsEmpty == true)
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEmpty=true;
-                            else
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEmpty = false;
-                            if (control.Controller.cpIsReadOnly == true)
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsReadOnly = control.Controller.cpIsReadOnly;
-                            else
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsReadOnly = false;
-                            if (control.Controller.cpIsEnabled == true)
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEnabled = control.Controller.cpIsEnabled;
-                            else
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEnabled = false;
-                            if (control.Controller.cpIsEqual == true)
-                            {
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEqual = control.Controller.cpIsEqual;
-                                if (control.Controller.expectedVal != null)
-                                    (pbo.CheckPoint as TextBoxCheckPoint).expectedVal = control.Controller.expectedVal;
-                            }
-                            else
-                                (pbo.CheckPoint as TextBoxCheckPoint).cpIsEqual = false;
+                    case "TextBox":
+                        pbo.CheckPoint = new TextBoxCheckPoint();
+                        if (control.Controller.cpIsEmpty == true)
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsEmpty = true;
+                        else
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsEmpty = false;
+                        if (control.Controller.cpIsReadOnly == true)
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsReadOnly = control.Controller.cpIsReadOnly;
+                        else
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsReadOnly = false;
+                        if (control.Controller.cpIsEnabled == true)
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsEnabled = control.Controller.cpIsEnabled;
+                        else
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsEnabled = false;
+                        if (control.Controller.cpIsEqual == true)
+                        {
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsEqual = control.Controller.cpIsEqual;
+                            if (control.Controller.expectedVal != null)
+                                (pbo.CheckPoint as TextBoxCheckPoint).expectedVal = control.Controller.expectedVal;
+                        }
+                        else
+                            (pbo.CheckPoint as TextBoxCheckPoint).cpIsEqual = false;
                         break;
-                        default:
-                            break;
-                    }
-                    PlaybackObjectScript.Add(pbo);
+                    default:
+                        break;
                 }
+                PlaybackObjectScript.Add(pbo);
+            }
             //}
             //catch (Exception ex)
             //{
@@ -1745,11 +1747,12 @@ namespace SpyandPlaybackTestTool
 
         private void clbTestScriptList_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            clbTestScriptList.CheckOnClick = true;
+            
             if (clbTestScriptList.SelectedItem == null)
             {
                 return;
             }
+            clbTestScriptList.CheckOnClick = false;
 
             int i = 0;
             //clbTestScriptList.Refresh();
@@ -1764,6 +1767,8 @@ namespace SpyandPlaybackTestTool
                 }
                 i++;
             }
+            CpFormList = new CheckPointForm[dataGridView2.Rows.Count];
+            checkCheckPoint = new int[dataGridView2.Rows.Count];
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1836,19 +1841,23 @@ namespace SpyandPlaybackTestTool
                     break;
 
                 case Keys.F2:
-                    //btnPlaybackTestSteps.PerformClick();
+                    btnSpy.PerformClick();
                     break;
 
                 case Keys.F3:
-                    //btnPlaybackTestScript.PerformClick();
+                    btnPlayTestStep.PerformClick();
                     break;
 
                 case Keys.F4:
-                    //btnPlaybackScenario.PerformClick();
+                    btnPlayTestScript.PerformClick();
+                    break;
+
+                case Keys.F5:
+                    btnPlayScenario.PerformClick();
                     break;
 
                 case Keys.Escape:
-                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING!!!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
                     if (dialogResult == DialogResult.Yes)
                     {
@@ -1861,17 +1870,13 @@ namespace SpyandPlaybackTestTool
                     }
                     break;
 
-                case Keys.Control | Keys.Shift | Keys.S:
-                    //btnQuickSave.PerformClick();
-                    break;
-
-                case Keys.Control | Keys.S:
-                    exportToolStripMenuItem.PerformClick();
+                case Keys.Control | Keys.Alt | Keys.S:
+                    btnSave.PerformClick();
                     break;
 
                 case Keys.Alt | Keys.F4:
                     e.SuppressKeyPress = true;
-                    DialogResult dialogResults = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+                    DialogResult dialogResults = System.Windows.Forms.MessageBox.Show("Do you really want to exit this program?", "WARNING!!!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
                     if (dialogResults == DialogResult.Yes)
                     {
@@ -1886,6 +1891,10 @@ namespace SpyandPlaybackTestTool
 
                 case Keys.Control | Keys.O:
                     importToolStripMenuItem.PerformClick();
+                    break;
+
+                case Keys.Control | Keys.S:
+                    exportToolStripMenuItem.PerformClick();
                     break;
 
                 default:
@@ -1931,9 +1940,9 @@ namespace SpyandPlaybackTestTool
             }
         }
 
-     
 
-   
+
+
 
 
 
@@ -2008,7 +2017,7 @@ namespace SpyandPlaybackTestTool
                 dataGridView2.Rows[rowIndexOfItemUnderMouseToDrop].Selected = true;
             }
         }
-#endregion
+        #endregion
 
         private void dataGridView2_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
@@ -2092,53 +2101,69 @@ namespace SpyandPlaybackTestTool
             Environment.Exit(Environment.ExitCode);
         }
 
+        int[] checkCheckPoint;
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == 7)
             {
-                int rowIndex = dataGridView2.SelectedRows[0].Index;
-                string type = dataGridView2.Rows[rowIndex].Cells[4].Value.ToString();
-
-                if (type == "TextBox")
-                {
-                    CpForm.ControlType = type;
-
-                    switch (type)
-
+                    //CpFormList = new CheckPointForm[dataGridView2.Rows.Count];
+                    int rowIndex = dataGridView2.SelectedRows[0].Index;
+                //System.Windows.Forms.MessageBox.Show(rowIndex.ToString());
+                checkCheckPoint[rowIndex] = new int();
+                checkCheckPoint[rowIndex] = 1;
+                    string type = dataGridView2.Rows[rowIndex].Cells[4].Value.ToString();
+                    if (type == "TextBox")
                     {
-                        case "TextBox":
+                        CpForm.ControlType = type;
+                        switch (type)
+                        {
+                            case "TextBox":
+                                CpForm.textBoxCP = (PlaybackObjectList[rowIndex].CheckPoint as TextBoxCheckPoint);
+                                break;
+                            default:
+                                break;
 
-                            CpForm.textBoxCP = (PlaybackObjectList[rowIndex].CheckPoint as TextBoxCheckPoint);
-                            break;
-                        default:
-                            break;
-
+                        }
+                        CpForm.ShowDialog();
+                        //tempCpForm.textBoxCP = CpForm.textBoxCP;
+                        CpFormList[rowIndex] = new CheckPointForm();
+                        CpFormList[rowIndex].textBoxCP = CpForm.textBoxCP;
+                        PlaybackObjectList[rowIndex].CheckPoint = CpForm.textBoxCP;
                     }
-                    CpForm.ShowDialog();
-                    PlaybackObjectList[rowIndex].CheckPoint = CpForm.textBoxCP;
-                }
-                else
-                {
-                    System.Windows.Forms.MessageBox.Show("Type of control must be TextBox!");
-                }
+                    else
+                    {
+                        System.Windows.Forms.MessageBox.Show("Type of control must be TextBox!");
+                    }
             }
         }
-        int selectedRowIndex;
+      
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
-                if(dataGridView2.SelectedRows.Count>0)
-                selectedRowIndex = (int)dataGridView2.SelectedRows[0].Cells[0].Value-1;
-                
+
+            
         }
+
 
         private void dataGridView2_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
         {
-          
-                    PlaybackObjectList.RemoveAt(selectedRowIndex);
-            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            //dataGridView2.UserDeletingRow += (sa, ea) =>
+            //{
+            //    System.Windows.Forms.MessageBox.Show(ea.Row.Index.ToString());
+            // };
+
+        }
+        private void dataGridView2_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+           if(dataGridView2.Rows.Count==dataGridView2.SelectedRows.Count)
+            {
+                PlaybackObjectList.Clear();
+            }
+           else
+           PlaybackObjectList.RemoveAt(e.Row.Index);
+            for (int i = 0; i < dataGridView2.RowCount; i++)
                 dataGridView2.Rows[i].Cells[0].Value = i + 1;
-        }               
-       
+        }
+
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -2374,7 +2399,7 @@ namespace SpyandPlaybackTestTool
                         if (SpyObjectList[i].type == "ComboBox" || SpyObjectList[i].type == "ComboBoxEdit" || SpyObjectList[i].type == "DataGrid")
                             row.Cells[5].Value = "View Items";
                         else
-                            row.Cells[5].Value = "No Items";
+                            row.Cells[5].Value = "No Item";
                     }
                     break;
 
@@ -2454,6 +2479,7 @@ namespace SpyandPlaybackTestTool
             foreach (DataGridViewRow row in dataGridView2.Rows)
             {
                 PlaybackObjectList[pbindex].action = (string)row.Cells[5].Value;
+
                 if (PlaybackObjectList[pbindex].action == "Select" || PlaybackObjectList[pbindex].action == "Unselect")
                 {
                     PlaybackObjectList[pbindex].text = null;
@@ -2802,16 +2828,16 @@ namespace SpyandPlaybackTestTool
 
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        public void btnSave_Click(object sender, EventArgs e)
         {
             if (clbTestScriptList.Items.Count == 0)
             {
-                System.Windows.Forms.MessageBox.Show("There is no Test Script file!", "Lack Of Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Windows.Forms.MessageBox.Show("There is no Test Script file!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             if (clbTestScriptList.SelectedItems.Count <= 0)
             {
-                System.Windows.Forms.MessageBox.Show("There is no selected Test Script file!", "Lack Of Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                System.Windows.Forms.MessageBox.Show("There is no selected Test Script file!", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
@@ -2828,53 +2854,124 @@ namespace SpyandPlaybackTestTool
                 {
                     if (scriptFile.Name == clbTestScriptList.SelectedItem.ToString())
                     {
-                        // PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
+                        //if (PlaybackObjectList.Count > 0)
+                        //{
+                        //    PlaybackObjectList.Clear();
+                        //}
+                        //System.Windows.Forms.MessageBox.Show(PlaybackObjectList.Count.ToString());
+                        //PlaybackObjectList = new PlaybackObject[dataGridView2.Rows.Count];
                         int pbindex = 0;
                         foreach (DataGridViewRow row in dataGridView2.Rows)
                         {
-                            //System.Windows.Forms.MessageBox.Show(row.Cells[1].Value.ToString());
-                            PlaybackObjectList[pbindex] = new PlaybackObject();
-                            PlaybackObjectList[pbindex].index = Convert.ToInt32(row.Cells[1].Value);
-                            PlaybackObjectList[pbindex].automationId = Convert.ToString(row.Cells[2].Value);
-                            PlaybackObjectList[pbindex].name = Convert.ToString(row.Cells[3].Value);
-                            PlaybackObjectList[pbindex].type = Convert.ToString(row.Cells[4].Value);
-                            PlaybackObjectList[pbindex].action = Convert.ToString(row.Cells[5].Value);
-                            int n;
-                            bool isNumeric = int.TryParse(Convert.ToString(row.Cells[6].Value), out n);
-                            if (PlaybackObjectList[pbindex].type.Trim() == "DataGrid"
-                                || PlaybackObjectList[pbindex].type.Trim() == "ComboBox"
-                                || PlaybackObjectList[pbindex].type.Trim() == "ComboBoxEdit"
-                                || PlaybackObjectList[pbindex].type.Trim() == "AutoCompleteCombobox")
+
+                            dynamic tempPlaybackObject = new ExpandoObject();
+                            tempPlaybackObject.index = Convert.ToInt32(row.Cells[1].Value);
+                            tempPlaybackObject.automationId = Convert.ToString(row.Cells[2].Value);
+                            tempPlaybackObject.name = Convert.ToString(row.Cells[3].Value);
+                            tempPlaybackObject.type = Convert.ToString(row.Cells[4].Value);
+                            tempPlaybackObject.action = Convert.ToString(row.Cells[5].Value);
+                            var check = dataGridView2.Rows[row.Index].Cells[7].Value as bool?;
+
+                            if (checkCheckPoint[row.Index] == 1)
                             {
-                                if (isNumeric)
+                                switch (tempPlaybackObject.type)
                                 {
-                                    PlaybackObjectList[pbindex].itemIndex = Convert.ToInt32(row.Cells[6].Value);
-                                    PlaybackObjectList[pbindex].text = "";
-                                }
-                                else
-                                {
-                                    PlaybackObjectList[pbindex].itemIndex = -1;
-                                    PlaybackObjectList[pbindex].text = Convert.ToString(row.Cells[6].Value);
+                                    case "TextBox":
+                                        try
+                                        {
+                                            if (CpFormList[row.Index].textBoxCP.cpIsEmpty == true)
+                                                tempPlaybackObject.cpIsEmpty = true;
+                                            if (CpFormList[row.Index].textBoxCP.cpIsReadOnly == true)
+                                                tempPlaybackObject.cpIsReadOnly = true;
+                                            if (CpFormList[row.Index].textBoxCP.cpIsEnabled == true)
+                                                tempPlaybackObject.cpIsEnabled = true;
+                                            if (CpFormList[row.Index].textBoxCP.cpIsEqual == true)
+                                            {
+                                                tempPlaybackObject.cpIsEqual = true;
+                                                if (CpFormList[row.Index].textBoxCP.expectedVal != null)
+                                                    tempPlaybackObject.expectedVal = CpFormList[row.Index].textBoxCP.expectedVal;
+                                            }
+                                        }
+                                        catch (Exception)
+                                        {
+                                            break;
+                                            //throw;
+                                        }
+                                        break;
+                                    default:
+                                        break;
                                 }
                             }
                             else
                             {
-                                PlaybackObjectList[pbindex].text = Convert.ToString(row.Cells[6].Value);
-                                PlaybackObjectList[pbindex].itemIndex = -1;
+                                switch (tempPlaybackObject.type)
+                                {
+                                    case "TextBox":
+                                        try
+                                        {
+                                            if ((PlaybackObjectList[row.Index].CheckPoint as TextBoxCheckPoint).cpIsEmpty == true)
+                                                tempPlaybackObject.cpIsEmpty = true;
+                                            if ((PlaybackObjectList[row.Index].CheckPoint as TextBoxCheckPoint).cpIsReadOnly == true)
+                                                tempPlaybackObject.cpIsReadOnly = true;
+                                            if ((PlaybackObjectList[row.Index].CheckPoint as TextBoxCheckPoint).cpIsEnabled == true)
+                                                tempPlaybackObject.cpIsEnabled = true;
+                                            if ((PlaybackObjectList[row.Index].CheckPoint as TextBoxCheckPoint).cpIsEqual == true)
+                                            {
+                                                tempPlaybackObject.cpIsEqual = true;
+                                                if ((PlaybackObjectList[row.Index].CheckPoint as TextBoxCheckPoint).expectedVal != null)
+                                                    tempPlaybackObject.expectedVal = (PlaybackObjectList[row.Index].CheckPoint as TextBoxCheckPoint).expectedVal;
+                                            }
+                                        }
+                                        catch (Exception)
+                                        {
+                                            break;
+                                            //throw;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            
+
+                            if (tempPlaybackObject.type.Trim() == "DataGrid"
+                                || tempPlaybackObject.type.Trim() == "ComboBox"
+                                || tempPlaybackObject.type.Trim() == "ComboBoxEdit"
+                                || tempPlaybackObject.type.Trim() == "AutoCompleteCombobox")
+                            {
+                                int n;
+                                bool isNumeric = int.TryParse(Convert.ToString(row.Cells[6].Value), out n);
+                                if (isNumeric)
+                                {
+                                    tempPlaybackObject.itemIndex = Convert.ToInt32(row.Cells[6].Value);
+                                    tempPlaybackObject.text = "";
+                                }
+                                else
+                                {
+                                    tempPlaybackObject.itemIndex = -1;
+                                    tempPlaybackObject.text = Convert.ToString(row.Cells[6].Value.ToString().Trim());
+                                }
+                            }
+                            else
+                            {
+                                tempPlaybackObject.text = Convert.ToString(row.Cells[6].Value.ToString().Trim());
+                                tempPlaybackObject.itemIndex = -1;
                             }
 
-                            if (PlaybackObjectList[pbindex].type == "SendKeyorWaitEnable" && PlaybackObjectList[pbindex].action == "WaitEnable")
+                            if (tempPlaybackObject.type == "SendKeyorWaitEnable" && PlaybackObjectList[pbindex].action == "WaitEnable")
                             {
-                                if (string.IsNullOrEmpty(PlaybackObjectList[pbindex].text))
+                                if (string.IsNullOrEmpty(tempPlaybackObject.text))
                                 {
                                     System.Windows.Forms.MessageBox.Show("Dont Leave any blank");
                                 }
                                 else
-                                    PlaybackObjectList[pbindex].text = Convert.ToString(row.Cells[6].Value);
-                                PlaybackObjectList[pbindex].itemIndex = -1;
+                                    tempPlaybackObject.text = Convert.ToString(row.Cells[6].Value);
+                                tempPlaybackObject.itemIndex = -1;
                             }
 
-                            string json = JsonConvert.SerializeObject(PlaybackObjectList[pbindex], Formatting.Indented);
+                            string json = JsonConvert.SerializeObject(tempPlaybackObject, Formatting.Indented);
+                            //System.Windows.Forms.MessageBox.Show(json);
+
                             if (dataGridView2.Rows.Count == 1)
                             {
                                 System.IO.File.WriteAllText(scriptFiles[i].Path, "[{\"Controller\":" + json + "}]");
@@ -2888,7 +2985,7 @@ namespace SpyandPlaybackTestTool
                                 System.IO.File.AppendAllText(scriptFiles[i].Path, "},{\"Controller\":" + json);
                             pbindex++;
                         }
-                        System.Windows.Forms.MessageBox.Show("Saved!", "NOTICE", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        System.Windows.Forms.MessageBox.Show(scriptFile.Name + " is saved!", "NOTICE", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return;
                     }
                     i++;
@@ -2901,9 +2998,17 @@ namespace SpyandPlaybackTestTool
                 {
                     if (scriptFile.Name == clbTestScriptList.SelectedItem.ToString())
                     {
-                        File.WriteAllText(scriptFiles[i].Path, rtxtScript.Text);
-                        System.Windows.Forms.MessageBox.Show("Saved!", "NOTICE", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        if (ValidateJSON(rtxtScript.Text))
+                        {
+                            File.WriteAllText(scriptFiles[i].Path, rtxtScript.Text);
+                            System.Windows.Forms.MessageBox.Show(scriptFile.Name + " is saved!", "NOTICE", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            return;
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Test Script's format is invalid Json", "WARNING!!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
                     }
                     i++;
                 }
@@ -2917,7 +3022,7 @@ namespace SpyandPlaybackTestTool
             {
                 return;
             }
-            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this row?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Do you really want to delete this Test Script?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
             if (dialogResult == DialogResult.Yes)
             {
                 scriptFiles.RemoveAt(clbTestScriptList.SelectedIndex);
@@ -2975,5 +3080,7 @@ namespace SpyandPlaybackTestTool
                 }
 
         }
+
+
     }
 }

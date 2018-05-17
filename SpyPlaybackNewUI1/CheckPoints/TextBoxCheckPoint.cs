@@ -29,9 +29,9 @@ namespace SpyandPlaybackTestTool.CheckPoints
                     //string b = "";
 
                     if (string.IsNullOrEmpty(a))
-                        cpIsEmpty = true;
+                        cpIsEmptyResult = true;
                     else
-                        cpIsEmpty = false;
+                        cpIsEmptyResult = false;
                 }
                 catch (Exception)
                 {

@@ -50,6 +50,7 @@
             this.AutomationId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Names = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ViewItemsCol = new System.Windows.Forms.DataGridViewButtonColumn();
             this.clbTestScriptList = new System.Windows.Forms.CheckedListBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.TestSteps = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,7 +105,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ViewItemsCol = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -181,7 +181,7 @@
             this.InspectorToolStripMenuItem,
             this.viewLogsToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // InspectorToolStripMenuItem
@@ -231,7 +231,7 @@
             this.ConsolePanelPush.Location = new System.Drawing.Point(3, 18);
             this.ConsolePanelPush.Name = "ConsolePanelPush";
             this.ConsolePanelPush.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.ConsolePanelPush.Size = new System.Drawing.Size(413, 172);
+            this.ConsolePanelPush.Size = new System.Drawing.Size(413, 159);
             this.ConsolePanelPush.TabIndex = 0;
             this.ConsolePanelPush.Text = "";
             this.ConsolePanelPush.TextChanged += new System.EventHandler(this.ConsolePanelPush_TextChanged);
@@ -243,7 +243,7 @@
             this.ResultPanelPush.Location = new System.Drawing.Point(3, 18);
             this.ResultPanelPush.Name = "ResultPanelPush";
             this.ResultPanelPush.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedBoth;
-            this.ResultPanelPush.Size = new System.Drawing.Size(912, 172);
+            this.ResultPanelPush.Size = new System.Drawing.Size(912, 159);
             this.ResultPanelPush.TabIndex = 0;
             this.ResultPanelPush.Text = "";
             this.ResultPanelPush.TextChanged += new System.EventHandler(this.ResultPanelPush_TextChanged_1);
@@ -264,8 +264,13 @@
             this.dataGridView1.Location = new System.Drawing.Point(0, 33);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+<<<<<<< HEAD
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(419, 526);
+=======
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(419, 487);
+>>>>>>> b4efbe91b6c1bf07ae8f8786858ec1ee6680b8f5
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -276,6 +281,7 @@
             this.Select.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Select.HeaderText = "Select";
             this.Select.Name = "Select";
+            this.Select.ReadOnly = true;
             this.Select.Width = 43;
             // 
             // Index
@@ -283,6 +289,7 @@
             this.Index.FillWeight = 59.71831F;
             this.Index.HeaderText = "Index";
             this.Index.Name = "Index";
+            this.Index.ReadOnly = true;
             this.Index.Width = 53;
             // 
             // AutomationId
@@ -291,12 +298,14 @@
             this.AutomationId.FillWeight = 110.0698F;
             this.AutomationId.HeaderText = "AutomationId";
             this.AutomationId.Name = "AutomationId";
+            this.AutomationId.ReadOnly = true;
             // 
             // Names
             // 
             this.Names.FillWeight = 138.0625F;
             this.Names.HeaderText = "Name";
             this.Names.Name = "Names";
+            this.Names.ReadOnly = true;
             this.Names.Width = 122;
             // 
             // Type
@@ -305,6 +314,13 @@
             this.Type.FillWeight = 92.14939F;
             this.Type.HeaderText = "Type";
             this.Type.Name = "Type";
+            this.Type.ReadOnly = true;
+            // 
+            // ViewItemsCol
+            // 
+            this.ViewItemsCol.HeaderText = "Items";
+            this.ViewItemsCol.Name = "ViewItemsCol";
+            this.ViewItemsCol.ReadOnly = true;
             // 
             // clbTestScriptList
             // 
@@ -316,7 +332,7 @@
             this.clbTestScriptList.Location = new System.Drawing.Point(0, 33);
             this.clbTestScriptList.Margin = new System.Windows.Forms.Padding(0);
             this.clbTestScriptList.Name = "clbTestScriptList";
-            this.clbTestScriptList.Size = new System.Drawing.Size(163, 494);
+            this.clbTestScriptList.Size = new System.Drawing.Size(163, 455);
             this.clbTestScriptList.TabIndex = 27;
             this.clbTestScriptList.ThreeDCheckBoxes = true;
             this.clbTestScriptList.SelectedIndexChanged += new System.EventHandler(this.clbTestScriptList_SelectedIndexChanged_1);
@@ -339,13 +355,14 @@
             this.dataGridView2.Location = new System.Drawing.Point(3, 36);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(723, 462);
+            this.dataGridView2.Size = new System.Drawing.Size(723, 423);
             this.dataGridView2.TabIndex = 1;
             this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             this.dataGridView2.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridView2_CellValidating);
             this.dataGridView2.SelectionChanged += new System.EventHandler(this.dataGridView2_SelectionChanged);
             this.dataGridView2.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridView2_UserDeletedRow);
+            this.dataGridView2.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dataGridView2_UserDeletingRow);
             this.dataGridView2.DragDrop += new System.Windows.Forms.DragEventHandler(this.dataGridView2_DragDrop);
             this.dataGridView2.DragOver += new System.Windows.Forms.DragEventHandler(this.dataGridView2_DragOver);
             this.dataGridView2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGridView2_KeyDown);
@@ -421,7 +438,7 @@
             this.redcircleTip,
             this.greencircleTip,
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 780);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 728);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1341, 22);
             this.statusStrip1.TabIndex = 1;
@@ -465,8 +482,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1341, 756);
-            this.splitContainer1.SplitterDistance = 559;
+            this.splitContainer1.Size = new System.Drawing.Size(1341, 704);
+            this.splitContainer1.SplitterDistance = 520;
             this.splitContainer1.TabIndex = 14;
             // 
             // splitContainer3
@@ -483,7 +500,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer3.Size = new System.Drawing.Size(1341, 559);
+            this.splitContainer3.Size = new System.Drawing.Size(1341, 520);
             this.splitContainer3.SplitterDistance = 419;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -567,7 +584,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(32, 30);
+            this.toolStripLabel2.Size = new System.Drawing.Size(33, 30);
             this.toolStripLabel2.Text = "Type";
             // 
             // toolStripComboBox1
@@ -595,7 +612,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(918, 559);
+            this.tabControl1.Size = new System.Drawing.Size(918, 520);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
@@ -605,7 +622,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(910, 533);
+            this.tabPage1.Size = new System.Drawing.Size(910, 494);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Playback Table";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -624,7 +641,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.tctrlPlayback);
-            this.splitContainer4.Size = new System.Drawing.Size(904, 527);
+            this.splitContainer4.Size = new System.Drawing.Size(904, 488);
             this.splitContainer4.SplitterDistance = 163;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -712,7 +729,7 @@
             this.tctrlPlayback.Location = new System.Drawing.Point(0, 0);
             this.tctrlPlayback.Name = "tctrlPlayback";
             this.tctrlPlayback.SelectedIndex = 0;
-            this.tctrlPlayback.Size = new System.Drawing.Size(737, 527);
+            this.tctrlPlayback.Size = new System.Drawing.Size(737, 488);
             this.tctrlPlayback.TabIndex = 0;
             // 
             // tpgPlaybackTable
@@ -722,7 +739,7 @@
             this.tpgPlaybackTable.Location = new System.Drawing.Point(4, 22);
             this.tpgPlaybackTable.Name = "tpgPlaybackTable";
             this.tpgPlaybackTable.Padding = new System.Windows.Forms.Padding(3);
-            this.tpgPlaybackTable.Size = new System.Drawing.Size(729, 501);
+            this.tpgPlaybackTable.Size = new System.Drawing.Size(729, 462);
             this.tpgPlaybackTable.TabIndex = 0;
             this.tpgPlaybackTable.Text = "Test Steps ";
             this.tpgPlaybackTable.UseVisualStyleBackColor = true;
@@ -875,7 +892,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
-            this.splitContainer2.Size = new System.Drawing.Size(1341, 193);
+            this.splitContainer2.Size = new System.Drawing.Size(1341, 180);
             this.splitContainer2.SplitterDistance = 419;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -885,7 +902,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(419, 193);
+            this.groupBox1.Size = new System.Drawing.Size(419, 180);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Console";
@@ -896,21 +913,16 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(918, 193);
+            this.groupBox2.Size = new System.Drawing.Size(918, 180);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Result";
-            // 
-            // ViewItemsCol
-            // 
-            this.ViewItemsCol.HeaderText = "Items";
-            this.ViewItemsCol.Name = "ViewItemsCol";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1341, 802);
+            this.ClientSize = new System.Drawing.Size(1341, 750);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
